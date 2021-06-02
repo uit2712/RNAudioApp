@@ -112,23 +112,6 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     const [duration, setDuration] = React.useState(0);
     const [player, setPlayer] = React.useState<SoundPlayer>();
 
-    function configNewPlayer({
-        newPlayer,
-        audioIndex,
-    }: {
-        newPlayer?: SoundPlayer,
-        audioIndex: number,
-    }) {
-        if (newPlayer) {
-            setIndex(audioIndex);
-            newPlayer.setSpeed(speed);
-            newPlayer.setCurrentTime(0);
-            setDuration(newPlayer.getDuration());
-            changeVolume(newPlayer, volume);
-            setPlayer(newPlayer);
-        }
-    }
-
     function initPlayer(audioIndex: number) {
         return new Promise((resolve: (value?: SoundPlayer) => void) => {
             if (audioIndex >= 0 && audioIndex < listSounds.length) {
