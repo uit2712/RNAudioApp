@@ -10,6 +10,7 @@ import React from 'react';
 import { SoundPlayerContext } from './context-api';
 import { useAudioHelper, useGetAllMusicFiles } from './hooks';
 import RootNavigator from './navigators/components/root';
+import { MenuProvider } from 'react-native-popup-menu';
 
 function App() {
     const { listTracks } = useGetAllMusicFiles();
@@ -20,9 +21,11 @@ function App() {
     });
 
     return (
-        <SoundPlayerContext.Provider value={player}>
-            <RootNavigator/>
-        </SoundPlayerContext.Provider>
+        <MenuProvider>
+            <SoundPlayerContext.Provider value={player}>
+                <RootNavigator/>
+            </SoundPlayerContext.Provider>
+        </MenuProvider>
     );
 };
 
