@@ -1,17 +1,21 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Loading from '../common/components/Loading';
 import { SoundFileType, useGetAllMusicFiles } from '../hooks';
-import FontistoIcon from 'react-native-vector-icons/Fontisto';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SoundPlayerContext } from '../context-api';
+import { AvatarHelper } from '../helpers/songs-screen-helpers';
+import FastImage from 'react-native-fast-image';
 
 function SoundsScreen() {
     const player = React.useContext(SoundPlayerContext);
     const { listTracks, isLoading } = useGetAllMusicFiles();
+    const avatarHelper = new AvatarHelper();
     React.useEffect(() => {
-        player.setListSounds(listTracks);
+        player.setListSounds(listTracks.map(item => ({
+            ...item,
+            cover: item.cover !== '' && item.cover !== null && item.cover !== undefined ? item.cover : avatarHelper.getAvatar(),
+        })));
     }, [listTracks]);
 
     if (isLoading === true) {
@@ -19,17 +23,22 @@ function SoundsScreen() {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {
-                listTracks.map((value: SoundFileType, index: number) => 
-                    <ListSoundItem
-                        key={index}
-                        value={value}
-                        isActive={index === player.currentIndex}
-                    />
-                )
-            }
-        </ScrollView>
+        <FlatList
+            data={player.listSounds}
+            renderItem={({ item, index }) => (
+                <ListSoundItem
+                    value={item}
+                    isActive={index === player.currentIndex}
+                />
+            )}
+            keyExtractor={item => item.path.toString()}
+            // Performance settings
+            removeClippedSubviews={true} // Unmount components when outside of window 
+            initialNumToRender={2} // Reduce initial render amount
+            maxToRenderPerBatch={1} // Reduce number in each render batch
+            updateCellsBatchingPeriod={100} // Increase time between renders
+            windowSize={7} // Reduce the window size
+        />
     )
 }
 
@@ -40,8 +49,6 @@ function ListSoundItem({
     value: SoundFileType,
     isActive: boolean,
 }) {
-    // const navigation = useNavigation<MyNavigationProp>();
-
     return (
         <ListItem
             Component={TouchableOpacity}
@@ -52,11 +59,18 @@ function ListSoundItem({
             }}
             bottomDivider
         >
-            <FontistoIcon
-                name='music-note'
-                size={30}
-                color={isActive === true ? 'white': 'black'}
-            />
+            {
+                value.cover && (
+                    <FastImage
+                        style={{ width: 50, height: 50, borderRadius: 10, }}
+                        source={{
+                            uri: value.cover,
+                            priority: FastImage.priority.normal,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                )
+            }
             <ListItem.Content>
                 <ListItem.Title style={{
                     color: isActive === true ? 'white': 'black',
@@ -77,10 +91,6 @@ const styles = StyleSheet.create({
         flex: 1,
         // padding: 24,
         backgroundColor: 'grey',
-    },
-    contentContainer: {
-        flex: 1,
-        alignItems: 'center',
     },
 });
 

@@ -59,7 +59,7 @@ const iconSize = 25;
 
 function DrawerHomeNavigator() {
     return (
-        <DrawerHome.Navigator>
+        <DrawerHome.Navigator initialRouteName='TabSongs'>
             {
                 screens.map((screen: IDrawerHomeNavigatorScreen, index: number) => (
                     <DrawerHome.Screen

@@ -74,6 +74,7 @@ export interface IResponseAudioHelper {
     isMuted: boolean;
     volume: number; // percents from 0-100
     currentIndex: number;
+    listSounds: SoundFileType[];
 }
 
 export function useAudioHelper(request: IRequestAudioHelper = {
@@ -440,12 +441,14 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         volume,
         currentIndex: index,
         setListSounds,
+        listSounds,
     }
 }
 
 import MusicFiles from 'react-native-get-music-files';
 import RN, { PermissionsAndroid } from 'react-native';
 import { check, PERMISSIONS } from 'react-native-permissions';
+import { IMAGE_RESOURCE_URL, LIST_IMAGE_NAMES } from '../constants';
 
 export interface ITrackInfo {
     id?: number;

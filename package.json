@@ -19,6 +19,7 @@
     "react": "17.0.1",
     "react-native": "0.64.1",
     "react-native-elements": "^3.4.1",
+    "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-music-files": "github:uit2712/react-native-get-music-files",
     "react-native-permissions": "^3.0.4",
