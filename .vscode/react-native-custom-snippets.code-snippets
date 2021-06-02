@@ -1,0 +1,20 @@
+{
+    "Generate react native component": {
+        "prefix": "rn-component",
+        "body": [
+            "import * as React from 'react';",
+            "import { View, Text } from 'react-native';",
+            "",
+            "function ${1:component-name}() {",
+            "    return (",
+            "        <View>",
+            "            <Text>${2:description}</Text>",
+            "        </View>",
+            "    )",
+            "}",
+            "",
+            "export default ${1:component-name};"
+        ],
+        "description": "Generate react native component"
+    }
+}
