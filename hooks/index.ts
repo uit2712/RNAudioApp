@@ -11,35 +11,32 @@ interface IRequestAudioHelper {
     isAutoplayOnLoad?: boolean;
 }
 
-export type SoundFileType = {
-    type: 'app-bundle';
+interface ISoundFile {
     name: string;
+    author?: string;
+    album?: string;
+    genre?: string;
+    cover?: string;
+    duration?: string;
+}
+
+interface IAppBundleSoundFile extends ISoundFile {
+    type: 'app-bundle';
     path: string;
     basePath: string;
-    author?: string;
-    album?: string;
-    genre?: string;
-    cover?: string;
-    duration?: string;
-} | {
-    type: 'network';
-    name: string;
+}
+
+interface IOtherSoundFile extends ISoundFile {
+    type: 'other';
     path: string;
-    author?: string;
-    album?: string;
-    genre?: string;
-    cover?: string;
-    duration?: string;
-} | {
-    type: 'directory';
-    name: string;
+}
+
+interface IDirectorySoundFile extends ISoundFile {
+    type: 'directory'
     path: NodeRequire;
-    author?: string;
-    album?: string;
-    genre?: string;
-    cover?: string;
-    duration?: string;
-};
+}
+
+export type SoundFileType = IAppBundleSoundFile | IOtherSoundFile | IDirectorySoundFile;
 
 export interface IResponseAudioHelper {
     play: () => void;
@@ -152,7 +149,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
                     case 'app-bundle':
                         newPlayer = new SoundPlayer(currentAudio.path, currentAudio.basePath, (error: Error) => callback(error, newPlayer));
                         break;
-                    case 'network':
+                    case 'other':
                         newPlayer = new SoundPlayer(currentAudio.path, undefined, (error) => callback(error, newPlayer));
                         break;
                     case 'directory':
@@ -447,7 +444,6 @@ export function useAudioHelper(request: IRequestAudioHelper = {
 import MusicFiles from 'react-native-get-music-files';
 import RN, { PermissionsAndroid } from 'react-native';
 import { check, PERMISSIONS } from 'react-native-permissions';
-import { IMAGE_RESOURCE_URL, LIST_IMAGE_NAMES } from '../constants';
 
 export interface ITrackInfo {
     id?: number;
@@ -479,7 +475,7 @@ export function useGetAllMusicFiles() {
                 fileName: true, // get file name
             }).then((tracks: ITrackInfo[]) => {
                 const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
-                    type: 'network',
+                    type: 'other',
                     name: getFileName(item.path) ?? '',
                     path: item.path ?? '',
                     author: item.author,

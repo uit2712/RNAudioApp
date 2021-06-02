@@ -6,6 +6,7 @@ import { SoundFileType, useGetAllMusicFiles } from '../hooks';
 import { SoundPlayerContext } from '../context-api';
 import { AvatarHelper } from '../helpers/songs-screen-helpers';
 import FastImage from 'react-native-fast-image';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function SoundsScreen() {
     const player = React.useContext(SoundPlayerContext);
@@ -79,10 +80,13 @@ function ListSoundItem({
                     (value.author || value.duration) && <ListItem.Subtitle style={{
                         color: isActive === true ? 'white': 'gray',
                         fontSize: 12,
-                    }}>{value.author ? `${value.author} - ${value.duration}` : (value.duration ?? '')}</ListItem.Subtitle>
+                    }}>{value.author ? `${value.author} - ${value.duration}` : value.duration}</ListItem.Subtitle>
                 }
             </ListItem.Content>
-            <ListItem.Chevron size={30}/>
+            <MaterialCommunityIcon
+                name='dots-vertical-circle'
+                size={30}
+            />
         </ListItem>
     )
 }
