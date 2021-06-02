@@ -7,14 +7,22 @@
  */
 //https://stackoverflow.com/questions/58505345/create-sticky-component-for-bottom-tab-with-react-navigation
 import React from 'react';
-import {
-    View,
-} from 'react-native';
+import { SoundPlayerContext } from './context-api';
+import { useAudioHelper, useGetAllMusicFiles } from './hooks';
 import RootNavigator from './navigators/components/root';
 
 function App() {
+    const { listTracks } = useGetAllMusicFiles();
+    const player = useAudioHelper({
+        listSounds: listTracks,
+        isAutoplayOnLoad: false,
+        isLogStatus: true,
+    });
+
     return (
-        <RootNavigator/>
+        <SoundPlayerContext.Provider value={player}>
+            <RootNavigator/>
+        </SoundPlayerContext.Provider>
     );
 };
 

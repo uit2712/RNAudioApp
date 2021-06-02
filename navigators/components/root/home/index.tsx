@@ -55,7 +55,7 @@ const screens: IDrawerHomeNavigatorScreen[] = [
     }
 ]
 
-const iconSize = 30;
+const iconSize = 25;
 
 function DrawerHomeNavigator() {
     return (
