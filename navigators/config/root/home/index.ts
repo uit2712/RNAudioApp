@@ -1,4 +1,5 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RouteProp } from '@react-navigation/native';
 import { TabAlbumsNavigatorScreenParams } from './tab-albums';
 import { TabArtistsNavigatorScreenParams } from './tab-artists';
 import { TabPlaylistsNavigatorScreenParams } from './tab-playlists';
