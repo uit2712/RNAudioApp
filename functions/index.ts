@@ -9,3 +9,7 @@ export function shuffleArray<T>(array: T[]) {
 
     return array;
 }
+
+export function formatTimeString(miliseconds: number) {
+    return miliseconds > 0 ? new Date(miliseconds).toISOString().substr(11, 8) : '';
+}

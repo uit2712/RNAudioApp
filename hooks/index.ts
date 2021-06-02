@@ -1,6 +1,6 @@
 import SoundPlayer from 'react-native-sound';
 import React from 'react';
-import { shuffleArray } from '../functions';
+import { formatTimeString, shuffleArray } from '../functions';
 
 type AudioStatusType = 'loading' | 'success' | 'error' | 'play' | 'pause' | 'next' | 'previous' | 'stop';
 
@@ -20,6 +20,7 @@ export type SoundFileType = {
     album?: string;
     genre?: string;
     cover?: string;
+    duration?: string;
 } | {
     type: 'network';
     name: string;
@@ -28,6 +29,7 @@ export type SoundFileType = {
     album?: string;
     genre?: string;
     cover?: string;
+    duration?: string;
 } | {
     type: 'directory';
     name: string;
@@ -36,6 +38,7 @@ export type SoundFileType = {
     album?: string;
     genre?: string;
     cover?: string;
+    duration?: string;
 };
 
 export interface IResponseAudioHelper {
@@ -369,16 +372,12 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
-    function formatTimeString(value: number) {
-        return new Date(value * 1000).toISOString().substr(11, 8)
-    }
-
     function getDurationString() {
-        return formatTimeString(duration);
+        return formatTimeString(duration * 1000);
     }
 
     function getCurrentTimeString() {
-        return formatTimeString(currentTime);
+        return formatTimeString(currentTime * 1000);
     }
 
     function getCurrentAudioName() {
@@ -456,7 +455,7 @@ export interface ITrackInfo {
     author?: string;
     album?: string;
     genre?: string;
-    duration?: number; // miliseconds
+    duration?: string; // miliseconds
     cover?: string;
     blur?: string;
     path?: string;
@@ -487,6 +486,7 @@ export function useGetAllMusicFiles() {
                     album: item.album,
                     genre: item.genre,
                     cover: item.cover,
+                    duration: formatTimeString(item.duration ? Number(item.duration) : 0),
                 }));
                 setListTracks(listFiles);
                 resolve();

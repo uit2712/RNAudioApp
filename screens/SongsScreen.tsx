@@ -76,9 +76,10 @@ function ListSoundItem({
                     color: isActive === true ? 'white': 'black',
                 }}>{value.name}</ListItem.Title>
                 {
-                    value.author && <ListItem.Subtitle style={{
-                        color: isActive === true ? 'white': 'black',
-                    }}>{value.author}</ListItem.Subtitle>
+                    (value.author || value.duration) && <ListItem.Subtitle style={{
+                        color: isActive === true ? 'white': 'gray',
+                        fontSize: 12,
+                    }}>{value.author ? `${value.author} - ${value.duration}` : (value.duration ?? '')}</ListItem.Subtitle>
                 }
             </ListItem.Content>
             <ListItem.Chevron size={30}/>
