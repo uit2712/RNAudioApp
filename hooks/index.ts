@@ -509,7 +509,6 @@ export function useGetAllMusicFiles() {
                 albumArtist: true,
                 author: true,
                 album: true,
-                minimumSongDuration: 10000,
             }).then((tracks: ITrackInfo[]) => {
                 const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
                     type: 'other',

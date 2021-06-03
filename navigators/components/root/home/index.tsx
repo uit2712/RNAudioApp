@@ -90,54 +90,64 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps<Bott
     return (
         <>
             <MiniPlayer/>
-            <View style={{ flexDirection: 'row' }}>
-                {state.routes.map((route, index) => {
-                    const screen = screens[index];
-                    const { options } = descriptors[route.key];
-                    const isFocused = state.index === index;
-
-                    const onPress = () => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-
-                        if (!isFocused && !event.defaultPrevented) {
-                            navigation.navigate(route.name);
-                        }
-                    };
-
-                    const onLongPress = () => {
-                        navigation.emit({
-                            type: 'tabLongPress',
-                            target: route.key,
-                        });
-                    };
-
-                    return (
-                        <TouchableOpacity
-                            key={index}
-                            accessibilityRole="button"
-                            accessibilityState={isFocused ? { selected: true } : {}}
-                            accessibilityLabel={options.tabBarAccessibilityLabel}
-                            testID={options.tabBarTestID}
-                            onPress={onPress}
-                            onLongPress={onLongPress}
-                            style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            {screen.icon({ color: screen.getColor(isFocused) })}
-                            {screen.label({ title: screen.title, color: screen.getColor(isFocused) })}
-                        </TouchableOpacity>
-                    );
-                })}
-            </View>
+            <ListTabs
+                state={state}
+                descriptors={descriptors}
+                navigation={navigation}
+            />
         </>
     );
+}
+
+function ListTabs({ state, descriptors, navigation }: BottomTabBarProps<BottomTabBarOptions>) {
+    return (
+        <View style={{ flexDirection: 'row' }}>
+            {state.routes.map((route, index) => {
+                const screen = screens[index];
+                const { options } = descriptors[route.key];
+                const isFocused = state.index === index;
+
+                const onPress = () => {
+                    const event = navigation.emit({
+                        type: 'tabPress',
+                        target: route.key,
+                        canPreventDefault: true,
+                    });
+
+                    if (!isFocused && !event.defaultPrevented) {
+                        navigation.navigate(route.name);
+                    }
+                };
+
+                const onLongPress = () => {
+                    navigation.emit({
+                        type: 'tabLongPress',
+                        target: route.key,
+                    });
+                };
+
+                return (
+                    <TouchableOpacity
+                        key={index}
+                        accessibilityRole="button"
+                        accessibilityState={isFocused ? { selected: true } : {}}
+                        accessibilityLabel={options.tabBarAccessibilityLabel}
+                        testID={options.tabBarTestID}
+                        onPress={onPress}
+                        onLongPress={onLongPress}
+                        style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {screen.icon({ color: screen.getColor(isFocused) })}
+                        {screen.label({ title: screen.title, color: screen.getColor(isFocused) })}
+                    </TouchableOpacity>
+                );
+            })}
+        </View>
+    )
 }
 
 function MiniPlayer() {
@@ -159,7 +169,7 @@ function MiniPlayer() {
                 }}
             >
                 <TouchableOpacity style={{ width: '60%', }}>
-                    <Text style={{ color: 'white' }}>{player.currentAudioInfo.name}</Text>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>{player.currentAudioInfo.name}</Text>
                     <Text style={{ color: 'white' }}>{player.currentAudioInfo.other}</Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row' }}>
