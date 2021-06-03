@@ -13,11 +13,12 @@ interface IRequestAudioHelper {
 
 interface ISoundFile {
     name: string;
-    author?: string;
+    artist?: string;
     album?: string;
     genre?: string;
     cover?: string;
     duration?: string;
+    other: string; // author => artist => album => albumArtist
 }
 
 interface IAppBundleSoundFile extends ISoundFile {
@@ -75,6 +76,17 @@ export interface IResponseAudioHelper {
     volume: number; // percents from 0-100
     currentIndex: number;
     listSounds: SoundFileType[];
+    currentAudioInfo: {
+        name: string;
+        genre: string | undefined;
+        artist: string | undefined;
+        album: string | undefined;
+        other: string;
+        durationString: string;
+        currentTimeString: string;
+        duration: number;
+        currentTime: number;
+    } | null;
 }
 
 export function useAudioHelper(request: IRequestAudioHelper = {
@@ -381,6 +393,25 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         return listSounds.length > 0 && index >= 0 && index < listSounds.length ? listSounds[index].name : '';
     }
 
+    function getCurrentAudioInfo() {
+        if (listSounds.length > 0 && index >= 0) {
+            const currentSound = listSounds[index];
+            return {
+                name: currentSound.name,
+                genre: currentSound.genre,
+                artist: currentSound.artist,
+                album: currentSound.album,
+                other: currentSound.other,
+                durationString: getDurationString(),
+                currentTimeString: getCurrentTimeString(),
+                duration,
+                currentTime,
+            }
+        }
+
+        return null;
+    }
+
     function isDisabledButtonPlay() {
         return status === 'loading' || status === 'play';
     }
@@ -423,6 +454,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         durationString: getDurationString(),
         currentTimeString: getCurrentTimeString(),
         currentAudioName: getCurrentAudioName(),
+        currentAudioInfo: getCurrentAudioInfo(),
         isDisabledButtonPlay: isDisabledButtonPlay(),
         isDisabledButtonPause: isDisabledButtonPause(),
         isDisabledButtonStop: isDisabledButtonStop(),
@@ -448,21 +480,21 @@ import { check, PERMISSIONS } from 'react-native-permissions';
 export interface ITrackInfo {
     id?: number;
     title?: string;
-    author?: string;
+    artist?: string;
     album?: string;
     genre?: string;
     duration?: string; // miliseconds
     cover?: string;
     blur?: string;
     path?: string;
+    displayName?: string;
+    fileName?: string;
+    albumArtist?: string;
+    author?: string;
 }
 
 export function useGetAllMusicFiles() {
     const [isLoading, setIsLoading] = React.useState(false);
-
-    function getFileName(path?: string) {
-        return path?.replace(/^.*[\\\/]/, '')?.replace(/\.[^/.]+$/, '');
-    }
 
     function getAllMusicFiles() {
         return new Promise((resolve: (value?: any) => void) => {
@@ -473,16 +505,22 @@ export function useGetAllMusicFiles() {
                 genre: true, // get genre
                 title: true, // get title
                 fileName: true, // get file name
+                displayName: true,
+                albumArtist: true,
+                author: true,
+                album: true,
+                minimumSongDuration: 10000,
             }).then((tracks: ITrackInfo[]) => {
                 const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
                     type: 'other',
-                    name: getFileName(item.path) ?? '',
+                    name: item.title ?? '',
                     path: item.path ?? '',
-                    author: item.author,
+                    author: item.artist,
                     album: item.album,
                     genre: item.genre,
                     cover: item.cover,
                     duration: formatTimeString(item.duration ? Number(item.duration) : 0),
+                    other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
                 }));
                 setListTracks(listFiles);
                 resolve();
@@ -531,4 +569,19 @@ export function useGetAllMusicFiles() {
         errorMessage,
         isLoading,
     };
+}
+
+import { RNAndroidAudioStore } from 'react-native-get-music-files';
+
+export function useGetAllAlbums() {
+    const [albums, setAlbums] = React.useState<any>();
+    React.useEffect(() => {
+        RNAndroidAudioStore.getAlbums()
+            .then((result: any) => setAlbums(result))
+            .catch(() => {});
+    }, []);
+
+    return {
+        albums,
+    }
 }

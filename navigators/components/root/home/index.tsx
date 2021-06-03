@@ -9,8 +9,9 @@ import TabSongsNavigators from './tab-songs';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SoundPlayerContext } from '../../../../context-api';
-import Slider from '@react-native-community/slider';
+import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -142,42 +143,78 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps<Bott
 function MiniPlayer() {
     const player = React.useContext(SoundPlayerContext);
 
-    if (!player.currentAudioName) {
+    if (!player.currentAudioInfo || !player.currentAudioInfo.name) {
         return null;
     }
 
     return (
         <>
-            <TouchableOpacity style={{ flexDirection: 'row', height: 50, }}>
-                <TouchableOpacity style={{ width: '70%' }}>
-                    <Text>{player.currentAudioName}</Text>
+            <TouchableOpacity
+                style={{
+                    flexDirection: 'row',
+                    height: 60,
+                    backgroundColor: 'black',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <TouchableOpacity style={{ width: '60%', }}>
+                    <Text style={{ color: 'white' }}>{player.currentAudioInfo.name}</Text>
+                    <Text style={{ color: 'white' }}>{player.currentAudioInfo.other}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={player.previous}>
+                        <AntDesign
+                            name='stepbackward'
+                            size={30}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                    {
+                        player.status === 'play' ? (
+                            <TouchableOpacity onPress={player.pause}>
+                                <AntDesign
+                                    name='pausecircle'
+                                    size={30}
+                                    color='white'
+                                />
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity onPress={player.play}>
+                                <AntDesign
+                                    name='play'
+                                    size={30}
+                                    color='white'
+                                />
+                            </TouchableOpacity>
+                        )
+                    }
+                    <TouchableOpacity onPress={player.next}>
+                        <AntDesign
+                            name='stepforward'
+                            size={30}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ marginLeft: 10, }}>
+                        <AntDesign
+                            name='heart'
+                            size={30}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
-            <Slider
-                style={{ width: '100%', height: 10 }}
-                minimumValue={0}
-                maximumValue={player.duration}
-                value={player.currentTime}
-                minimumTrackTintColor="violet"
-                maximumTrackTintColor="gray"
-                thumbTintColor='white'
-                // thumbTintColor='#FFFFFF'
-                // onSlidingComplete={(volume) => player.setVolume(volume)}
-            />
-            {/* <Slider
-                style={{ width: '100%', height: 5 }}
-                minimumValue={0}
-                maximumValue={player.duration}
-                value={player.currentTime}
-                minimumTrackTintColor="violet"
-                maximumTrackTintColor="gray"
-                thumbTintColor='violet'
-                thumbStyle={{ height: 0 }}
-                allowTouchTrack={false}
-            /> */}
+            {
+                player.duration > 0 && (
+                    <LinearProgress
+                        value={player.currentTime / player.duration}
+                        variant='determinate'
+                        trackColor='gray'
+                        color='blue'
+                    />
+                )
+            }
         </>
     )
 }

@@ -22,6 +22,7 @@ export const SoundPlayerContext = React.createContext<IResponseAudioHelper>({
     volume: 100, // percent
     currentIndex: -1,
     listSounds: [],
+    currentAudioInfo: null,
     decreaseTime: () => {},
     increaseTime: () => {},
     loop: () => {},

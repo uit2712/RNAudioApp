@@ -92,10 +92,10 @@ function ListSoundItem({
                     color: isActive === true ? 'white': 'black',
                 }}>{value.name}</ListItem.Title>
                 {
-                    (value.author || value.duration) && <ListItem.Subtitle style={{
+                    (value.other || value.duration) && <ListItem.Subtitle style={{
                         color: isActive === true ? 'white': 'gray',
                         fontSize: 12,
-                    }}>{value.author ? `${value.author} - ${value.duration}` : value.duration}</ListItem.Subtitle>
+                    }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
                 }
             </ListItem.Content>
             <Menu>
