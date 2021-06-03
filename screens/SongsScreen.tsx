@@ -9,6 +9,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { IMenuSelection } from '../interfaces';
+import { navigate } from '../navigators/config/root';
 
 function SoundsScreen() {
     const player = React.useContext(SoundPlayerContext);
@@ -68,7 +69,18 @@ function ListSoundItem({
     return (
         <ListItem
             Component={TouchableOpacity}
-            onPress={() => {}}
+            onPress={() => {
+                player.playAudio(index);
+                navigate('Home', {
+                    screen: 'TabSoundPlayerDetail',
+                    params: {
+                        screen: 'SoundPlayerDetail',
+                        params: {
+    
+                        }
+                    }
+                })
+            }}
             style={{
                 backgroundColor: isActive === true ? '#0099ff' : 'white',
                 width: '100%',

@@ -584,3 +584,13 @@ export function useGetAllAlbums() {
         albums,
     }
 }
+
+import { IDrawerHomeContext } from '../interfaces';
+export function useDrawHomeSettings(): IDrawerHomeContext {
+    const [isShowTabBar, setIsShowTabBar] = React.useState(true);
+
+    return {
+        isShowTabBar,
+        setIsShowTabBar,
+    }
+}

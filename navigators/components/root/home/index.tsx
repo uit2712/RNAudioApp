@@ -10,9 +10,11 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { SoundPlayerContext } from '../../../../context-api';
+import { DrawerHomeContext, SoundPlayerContext } from '../../../../context-api';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 import { navigate } from '../../../config/root';
+import TabSoundPlayerDetailNavigator from './tab-detail';
+import { useDrawHomeSettings } from '../../../../hooks';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -23,6 +25,7 @@ interface IDrawerHomeNavigatorScreen {
     label: ({ title, color }: { title: string, color: string }) => JSX.Element;
     getColor: (isFocused: boolean) => string;
     icon: ({ color, size }: { color: string, size?: number }) => JSX.Element;
+    isVisible: boolean;
 }
 const screens: IDrawerHomeNavigatorScreen[] = [
     {
@@ -32,6 +35,7 @@ const screens: IDrawerHomeNavigatorScreen[] = [
         getColor: (isFocused: boolean) => isFocused === true ? '#C70039' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='playlist-music' size={size ?? 35} color={color} />,
+        isVisible: true,
     },
     {
         name: 'TabSongs',
@@ -40,6 +44,7 @@ const screens: IDrawerHomeNavigatorScreen[] = [
         getColor: (isFocused: boolean) => isFocused === true ? '#FFC300' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <Fontisto name='applemusic' size={size ?? 35} color={color} />,
+        isVisible: true,
     },
     {
         name: 'TabArtists',
@@ -48,6 +53,7 @@ const screens: IDrawerHomeNavigatorScreen[] = [
         getColor: (isFocused: boolean) => isFocused === true ? '#A569BD' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <Ionicons name='md-person-circle-sharp' size={size ?? 35} color={color} />,
+        isVisible: true,
     },
     {
         name: 'TabAlbums',
@@ -56,34 +62,48 @@ const screens: IDrawerHomeNavigatorScreen[] = [
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: true,
+    },
+    {
+        name: 'TabSoundPlayerDetail',
+        title: 'Trình chơi nhạc',
+        component: TabSoundPlayerDetailNavigator,
+        getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
+        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
+        icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: false,
     }
 ]
 
 const iconSize = 25;
 
 function DrawerHomeNavigator() {
+    const settings = useDrawHomeSettings();
+
     return (
-        <DrawerHome.Navigator
-            initialRouteName='TabSongs'
-            tabBar={(props) => <CustomTabBar {...props}/>}
-            tabBarOptions={{
-                keyboardHidesTabBar: true,
-            }}
-        >
-            {
-                screens.map((screen: IDrawerHomeNavigatorScreen, index: number) => (
-                    <DrawerHome.Screen
-                        key={index}
-                        name={screen.name}
-                        component={screen.component}
-                        options={() => ({
-                            tabBarIcon: ({ focused }) => screen.icon({ color: screen.getColor(focused), size: iconSize }),
-                            tabBarLabel: ({ focused }) => screen.label({ title: screen.title, color: screen.getColor(focused) }),
-                        })}
-                    />
-                ))
-            }
-        </DrawerHome.Navigator>
+        <DrawerHomeContext.Provider value={settings}>
+            <DrawerHome.Navigator
+                initialRouteName='TabSongs'
+                tabBar={(props) => <CustomTabBar {...props}/>}
+                tabBarOptions={{
+                    keyboardHidesTabBar: true,
+                }}
+            >
+                {
+                    screens.map((screen: IDrawerHomeNavigatorScreen, index: number) => (
+                        <DrawerHome.Screen
+                            key={index}
+                            name={screen.name}
+                            component={screen.component}
+                            options={() => ({
+                                tabBarIcon: ({ focused }) => screen.icon({ color: screen.getColor(focused), size: iconSize }),
+                                tabBarLabel: ({ focused }) => screen.label({ title: screen.title, color: screen.getColor(focused) }),
+                            })}
+                        />
+                    ))
+                }
+            </DrawerHome.Navigator>
+        </DrawerHomeContext.Provider>
     )
 }
 
@@ -102,52 +122,62 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps<Bott
 
 function ListTabs({ state, descriptors, navigation }: BottomTabBarProps<BottomTabBarOptions>) {
     return (
-        <View style={{ flexDirection: 'row' }}>
-            {state.routes.map((route, index) => {
-                const screen = screens[index];
-                const { options } = descriptors[route.key];
-                const isFocused = state.index === index;
+        <DrawerHomeContext.Consumer>
+        {
+            ({ isShowTabBar }) => isShowTabBar === true && (
+                <View style={{ flexDirection: 'row' }}>
+                    {state.routes.map((route, index) => {
+                        const screen = screens[index];
+                        const { options } = descriptors[route.key];
+                        const isFocused = state.index === index;
 
-                const onPress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
+                        const onPress = () => {
+                            const event = navigation.emit({
+                                type: 'tabPress',
+                                target: route.key,
+                                canPreventDefault: true,
+                            });
 
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name);
-                    }
-                };
+                            if (!isFocused && !event.defaultPrevented) {
+                                navigation.navigate(route.name);
+                            }
+                        };
 
-                const onLongPress = () => {
-                    navigation.emit({
-                        type: 'tabLongPress',
-                        target: route.key,
-                    });
-                };
+                        const onLongPress = () => {
+                            navigation.emit({
+                                type: 'tabLongPress',
+                                target: route.key,
+                            });
+                        };
 
-                return (
-                    <TouchableOpacity
-                        key={index}
-                        accessibilityRole="button"
-                        accessibilityState={isFocused ? { selected: true } : {}}
-                        accessibilityLabel={options.tabBarAccessibilityLabel}
-                        testID={options.tabBarTestID}
-                        onPress={onPress}
-                        onLongPress={onLongPress}
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {screen.icon({ color: screen.getColor(isFocused) })}
-                        {screen.label({ title: screen.title, color: screen.getColor(isFocused) })}
-                    </TouchableOpacity>
-                );
-            })}
-        </View>
+                        if (screen.isVisible === false) {
+                            return <TouchableOpacity key={index}></TouchableOpacity>
+                        }
+
+                        return (
+                            <TouchableOpacity
+                                key={index}
+                                accessibilityRole="button"
+                                accessibilityState={isFocused ? { selected: true } : {}}
+                                accessibilityLabel={options.tabBarAccessibilityLabel}
+                                testID={options.tabBarTestID}
+                                onPress={onPress}
+                                onLongPress={onLongPress}
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                {screen.icon({ color: screen.getColor(isFocused) })}
+                                {screen.label({ title: screen.title, color: screen.getColor(isFocused) })}
+                            </TouchableOpacity>
+                        );
+                    })}
+                </View>
+            )
+        }
+        </DrawerHomeContext.Consumer>
     )
 }
 
@@ -170,11 +200,11 @@ function MiniPlayer() {
                 }}
                 onPress={() => {
                     navigate('Home', {
-                        screen: 'TabSongs',
+                        screen: 'TabSoundPlayerDetail',
                         params: {
-                            screen: 'SongDetail',
+                            screen: 'SoundPlayerDetail',
                             params: {
-                                title: '123',
+
                             }
                         }
                     })

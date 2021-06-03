@@ -40,3 +40,9 @@ export const SoundPlayerContext = React.createContext<IResponseAudioHelper>({
     playAudio: (audioIndex: number) => {},
     setListSounds: (listSounds: SoundFileType[]) => {},
 });
+
+import { IDrawerHomeContext } from '../interfaces';
+export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({
+    isShowTabBar: true,
+    setIsShowTabBar: (isShowTabBar: boolean) => {},
+});
