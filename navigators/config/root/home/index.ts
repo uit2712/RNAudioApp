@@ -1,6 +1,5 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { RouteProp } from '@react-navigation/native';
-import { IScreenParams } from '../../../route-params';
+import { NavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import { TabAlbumsNavigatorScreenParams } from './tab-albums';
 import { TabArtistsNavigatorScreenParams } from './tab-artists';
 import { TabPlaylistsNavigatorScreenParams } from './tab-playlists';
@@ -11,7 +10,7 @@ export type DrawerHomeParams = {
     TabArtists: TabArtistsNavigatorScreenParams;
     TabPlaylists: TabPlaylistsNavigatorScreenParams;
     TabSongs: TabSongsNavigatorScreenParams;
-    Temp: IScreenParams,
 }
 
 export type DrawerHomeNavigationProp = BottomTabNavigationProp<DrawerHomeParams>;
+export type DrawerHomeScreenParams = NavigatorScreenParams<DrawerHomeParams>;

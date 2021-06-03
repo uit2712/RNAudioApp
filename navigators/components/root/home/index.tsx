@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SoundPlayerContext } from '../../../../context-api';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
+import { navigate } from '../../../config/root';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -166,6 +167,17 @@ function MiniPlayer() {
                     backgroundColor: 'black',
                     justifyContent: 'center',
                     alignItems: 'center',
+                }}
+                onPress={() => {
+                    navigate('Home', {
+                        screen: 'TabSongs',
+                        params: {
+                            screen: 'SongDetail',
+                            params: {
+                                title: '123',
+                            }
+                        }
+                    })
                 }}
             >
                 <TouchableOpacity style={{ width: '60%', }}>
