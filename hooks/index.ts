@@ -542,28 +542,32 @@ export function useGetAllMusicFiles() {
                 if (result === 'granted') {
                     getAllMusicFiles().then(() => setIsLoading(false)).catch(() => setIsLoading(false));
                 } else {
-                    PermissionsAndroid.request(permission, {
-                        title: 'Quyền truy cập bộ nhớ',
-                        message: 'Music App cần đọc bộ nhớ của bạn để bạn có thể nghe nhạc.',
-                        buttonNeutral: 'Hỏi tôi sau',
-                        buttonNegative: 'Hủy',
-                        buttonPositive: 'Đồng ý'
-                    }).then((granted: RN.PermissionStatus) => {
-                        if (granted === 'granted') {
-                            getAllMusicFiles().then(() => setIsLoading(false)).catch(() => setIsLoading(false));
-                        } else {
-                            setIsLoading(false);
-                        }
-                    }).catch((error: Error) => {
-                        setErrorMessage(error.message);
-                        setIsLoading(false);
-                    });
+                    requestPermission();
                 }
             }).catch((err: Error) => {
                 setErrorMessage(err.message);
                 setIsLoading(false);
             });
     }, []);
+
+    function requestPermission() {
+        PermissionsAndroid.request(permission, {
+            title: 'Quyền truy cập bộ nhớ',
+            message: 'Music App cần đọc bộ nhớ của bạn để bạn có thể nghe nhạc.',
+            buttonNeutral: 'Hỏi tôi sau',
+            buttonNegative: 'Hủy',
+            buttonPositive: 'Đồng ý'
+        }).then((granted: RN.PermissionStatus) => {
+            if (granted === 'granted') {
+                getAllMusicFiles().then(() => setIsLoading(false)).catch(() => setIsLoading(false));
+            } else {
+                setIsLoading(false);
+            }
+        }).catch((error: Error) => {
+            setErrorMessage(error.message);
+            setIsLoading(false);
+        });
+    }
 
     return {
         listTracks,
@@ -572,14 +576,24 @@ export function useGetAllMusicFiles() {
     };
 }
 
-import { RNAndroidAudioStore } from 'react-native-get-music-files';
-
+export interface IAlbum {
+    id: string;
+    album: string;
+    author: string;
+    cover?: string;
+    numberOfSongs: number | string;
+}
 export function useGetAllAlbums() {
-    const [albums, setAlbums] = React.useState<any>();
+    const [albums, setAlbums] = React.useState<IAlbum[]>([]);
     React.useEffect(() => {
-        RNAndroidAudioStore.getAlbums()
-            .then((result: any) => setAlbums(result))
-            .catch(() => {});
+        MusicFiles.getAlbums()
+            .then((result: IAlbum[]) => setAlbums(result.map(item => ({
+                ...item,
+                numberOfSongs: Number(item.numberOfSongs),
+            }))))
+            .catch((error: Error) => {
+                console.log(error.message);
+            });
     }, []);
 
     return {
@@ -594,5 +608,35 @@ export function useDrawHomeSettings(): IDrawerHomeContext {
     return {
         isShowTabBar,
         setIsShowTabBar,
+    }
+}
+
+export function useGetAllArtists() {
+    const [artists, setArtists] = React.useState<any>();
+    React.useEffect(() => {
+        MusicFiles.getArtists()
+            .then((result: any) => setArtists(result))
+            .catch((error: Error) => {
+                console.log(error.message);
+            });
+    }, []);
+
+    return {
+        artists,
+    }
+}
+
+export function useGetAllPlaylists() {
+    const [playlists, setPlaylists] = React.useState<any>();
+    React.useEffect(() => {
+        MusicFiles.getArtists()
+            .then((result: any) => setPlaylists(result))
+            .catch((error: Error) => {
+                console.log(error.message);
+            });
+    }, []);
+
+    return {
+        playlists,
     }
 }

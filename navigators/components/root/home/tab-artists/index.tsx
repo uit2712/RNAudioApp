@@ -11,6 +11,9 @@ function TabArtistsNavigators() {
             <TabArtists.Screen
                 name='Artists'
                 component={ArtistsScreen}
+                options={{
+                    title: 'Nghệ sĩ'
+                }}
             />
         </TabArtists.Navigator>
     )
