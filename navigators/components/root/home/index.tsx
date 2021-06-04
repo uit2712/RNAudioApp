@@ -183,8 +183,9 @@ function ListTabs({ state, descriptors, navigation }: BottomTabBarProps<BottomTa
 
 function MiniPlayer() {
     const player = React.useContext(SoundPlayerContext);
+    const { isShowTabBar } = React.useContext(DrawerHomeContext);
 
-    if (!player.currentAudioInfo || !player.currentAudioInfo.name) {
+    if (isShowTabBar === false || !player.currentAudioInfo || !player.currentAudioInfo.name) {
         return null;
     }
 
@@ -204,7 +205,6 @@ function MiniPlayer() {
                         params: {
                             screen: 'SoundPlayerDetail',
                             params: {
-
                             }
                         }
                     })

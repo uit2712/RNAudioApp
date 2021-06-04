@@ -9,6 +9,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { View } from 'react-native';
 import { IMenuSelection } from '../../../../../interfaces';
 import CustomMenu from '../../../../../common/components/CustomMenu';
+import { SoundPlayerDetailThemeContext } from '../../../../themes';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
 
@@ -21,7 +22,8 @@ function TabSoundPlayerDetailNavigator() {
                 options={({ navigation }) => ({
                     title: '',
                     headerLeft: () => <SoundPlayerDetailScreenHeaderLeft navigation={navigation}/>,
-                    headerRight: () => <SoundPlayerDetailScreenHeaderRight/>
+                    headerRight: () => <SoundPlayerDetailScreenHeaderRight/>,
+                    headerTransparent: true,
                 })}
             />
         </TabSoundPlayerDetail.Navigator>
@@ -29,6 +31,7 @@ function TabSoundPlayerDetailNavigator() {
 }
 
 function SoundPlayerDetailScreenHeaderLeft({ navigation }: { navigation: any }) {
+    const theme = React.useContext(SoundPlayerDetailThemeContext);
     const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
 
     return (
@@ -41,12 +44,14 @@ function SoundPlayerDetailScreenHeaderLeft({ navigation }: { navigation: any }) 
             <AntDesignIcon
                 name='left'
                 size={30}
+                color={theme.colors.iconInactive}
             />
         </TouchableOpacity>
     );
 }
 
 function SoundPlayerDetailScreenHeaderRight() {
+    const theme = React.useContext(SoundPlayerDetailThemeContext);
     const listMenuSelections: IMenuSelection[] = [
         { text: 'Chia sẻ', },
         { text: 'Đặt tốc độ phát lại' },
@@ -65,7 +70,7 @@ function SoundPlayerDetailScreenHeaderRight() {
                 <AntDesignIcon
                     name='hearto'
                     size={30}
-                    color='black'
+                    color={theme.colors.iconInactive}
                 />
             </TouchableOpacity>
             <CustomMenu
@@ -74,7 +79,7 @@ function SoundPlayerDetailScreenHeaderRight() {
                     <EntypoIcon
                         name='dots-three-vertical'
                         size={30}
-                        color='black'
+                        color={theme.colors.iconInactive}
                     />
                 )}
             />

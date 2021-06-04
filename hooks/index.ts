@@ -86,6 +86,7 @@ export interface IResponseAudioHelper {
         currentTimeString: string;
         duration: number;
         currentTime: number;
+        cover?: string;
     } | null;
 }
 
@@ -406,6 +407,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
                 currentTimeString: getCurrentTimeString(),
                 duration,
                 currentTime,
+                cover: currentSound.cover,
             }
         }
 

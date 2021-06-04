@@ -1,5 +1,6 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
+import { SoundFileType } from '../../../../../hooks';
 import { IScreenParams } from '../../../../route-params';
 
 export interface ISoundPlayerDetailScreenParams extends IScreenParams {

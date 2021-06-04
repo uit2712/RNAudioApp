@@ -7,7 +7,7 @@ import { SoundPlayerContext } from '../context-api';
 import { AvatarHelper } from '../helpers/songs-screen-helpers';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { MenuOption, } from 'react-native-popup-menu';
 import { IMenuSelection } from '../interfaces';
 import { navigate } from '../navigators/config/root';
 import CustomMenu from '../common/components/CustomMenu';
