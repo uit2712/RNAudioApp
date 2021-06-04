@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Loading from '../common/components/Loading';
 import { SoundFileType, useGetAllMusicFiles } from '../hooks';
@@ -10,6 +10,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { IMenuSelection } from '../interfaces';
 import { navigate } from '../navigators/config/root';
+import CustomMenu from '../common/components/CustomMenu';
 
 function SoundsScreen() {
     const player = React.useContext(SoundPlayerContext);
@@ -110,14 +111,15 @@ function ListSoundItem({
                     }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
                 }
             </ListItem.Content>
-            <Menu>
-                <MenuTrigger>
+            <CustomMenu
+                listMenuSelections={listMenuSelections}
+                triggerComponent={() => (
                     <MaterialCommunityIcon
                         name='dots-vertical-circle'
                         size={30}
                     />
-                </MenuTrigger>
-                <MenuOptions>
+                )}
+                headerComponent={() => (
                     <MenuOption
                         text={value.name}
                         disabled
@@ -129,25 +131,8 @@ function ListSoundItem({
                             }
                         }}
                     />
-                    {
-                        listMenuSelections.map((item: IMenuSelection, index: number) => (
-                            <MenuOption
-                                key={index}
-                                text={item.text}
-                                onSelect={() => item.onSelect && item.onSelect()}
-                                style={{
-                                    paddingVertical: 10,
-                                }}
-                                customStyles={{
-                                    optionText: {
-                                        fontSize: 18,
-                                    }
-                                }}
-                            />
-                        ))
-                    }
-                </MenuOptions>
-            </Menu>
+                )}
+            />
         </ListItem>
     )
 }
