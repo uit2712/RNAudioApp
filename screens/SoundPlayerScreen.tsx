@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, BackHandler, StyleSheet, ImageBackground, ImageBase, Image } from 'react-native';
+import { View, Text, BackHandler, StyleSheet, ImageBackground, ImageBase, Image, StyleProp, TextStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DrawerHomeContext, SoundPlayerContext, } from '../context-api';
@@ -8,6 +8,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Slider from '@react-native-community/slider';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { Icon, IconProps, } from 'react-native-vector-icons/Icon';
 
 const themeSettings = {
     iconDefaultColor: 'white',

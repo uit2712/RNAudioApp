@@ -1,27 +1,19 @@
 import * as React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, } from 'react-native';
+import { FlatList, TouchableOpacity, } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Loading from '../common/components/Loading';
 import { SoundFileType, useGetAllMusicFiles } from '../hooks';
 import { SoundPlayerContext } from '../context-api';
-import { AvatarHelper } from '../helpers/songs-screen-helpers';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MenuOption, } from 'react-native-popup-menu';
 import { IMenuSelection } from '../interfaces';
 import { navigate } from '../navigators/config/root';
 import CustomMenu from '../common/components/CustomMenu';
+import { avatarHelper } from '../helpers/songs-screen-helpers';
 
 function SoundsScreen() {
-    const player = React.useContext(SoundPlayerContext);
-    const { listTracks, isLoading } = useGetAllMusicFiles();
-    const avatarHelper = new AvatarHelper();
-    React.useEffect(() => {
-        player.setListSounds(listTracks.map(item => ({
-            ...item,
-            cover: item.cover !== '' && item.cover !== null && item.cover !== undefined ? item.cover : avatarHelper.getAvatar(),
-        })));
-    }, [listTracks]);
+    const { isLoading, player } = useGetPlayerInfo();
 
     if (isLoading === true) {
         return <Loading/>
@@ -31,7 +23,7 @@ function SoundsScreen() {
         <FlatList
             data={player.listSounds}
             renderItem={({ item, index }) => (
-                <ListSoundItem
+                <Sound
                     value={item}
                     index={index}
                     isActive={index === player.currentIndex}
@@ -48,7 +40,24 @@ function SoundsScreen() {
     )
 }
 
-function ListSoundItem({
+function useGetPlayerInfo() {
+    const player = React.useContext(SoundPlayerContext);
+    const { listTracks, isLoading } = useGetAllMusicFiles();
+    // console.log(listTracks);
+    React.useEffect(() => {
+        player.setListSounds(listTracks.map(item => ({
+            ...item,
+            cover: item.cover ?? avatarHelper.getAvatar(),
+        })));
+    }, [listTracks]);
+
+    return {
+        player,
+        isLoading,
+    }
+}
+
+function Sound({
     value,
     index,
     isActive,
@@ -58,36 +67,43 @@ function ListSoundItem({
     isActive: boolean,
 }) {
     const player = React.useContext(SoundPlayerContext);
-    const listMenuSelections: IMenuSelection[] = [
-        { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },
-        { text: 'Thêm vào hàng đợi' },
-        { text: 'Thêm vào danh sách phát' },
-        { text: 'Thêm vào Mục ưa thích' },
-        { text: 'Đặt làm nhạc chuông' },
-        { text: 'Xóa' },
-    ]
+    function goToSoundPlayerDetail() {
+        player.playAudio(index);
+        navigate('Home', {
+            screen: 'TabSoundPlayerDetail',
+            params: {
+                screen: 'SoundPlayerDetail',
+                params: {
+
+                }
+            }
+        });
+    }
 
     return (
         <ListItem
             Component={TouchableOpacity}
-            onPress={() => {
-                player.playAudio(index);
-                navigate('Home', {
-                    screen: 'TabSoundPlayerDetail',
-                    params: {
-                        screen: 'SoundPlayerDetail',
-                        params: {
-    
-                        }
-                    }
-                })
-            }}
+            onPress={goToSoundPlayerDetail}
             style={{
                 backgroundColor: isActive === true ? '#0099ff' : 'white',
                 width: '100%',
             }}
             bottomDivider
         >
+            <SoundCover value={value}/>
+            <SoundInfo value={value} isActive={isActive}/>
+            <SoundMenu value={value} index={index}/>
+        </ListItem>
+    )
+}
+
+function SoundCover({
+    value,
+}: {
+    value: SoundFileType,
+}) {
+    return (
+        <>
             {
                 value.cover && (
                     <FastImage
@@ -100,49 +116,73 @@ function ListSoundItem({
                     />
                 )
             }
-            <ListItem.Content>
-                <ListItem.Title style={{
-                    color: isActive === true ? 'white': 'black',
-                }}>{value.name}</ListItem.Title>
-                {
-                    (value.other || value.duration) && <ListItem.Subtitle style={{
-                        color: isActive === true ? 'white': 'gray',
-                        fontSize: 12,
-                    }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
-                }
-            </ListItem.Content>
-            <CustomMenu
-                listMenuSelections={listMenuSelections}
-                triggerComponent={() => (
-                    <MaterialCommunityIcon
-                        name='dots-vertical-circle'
-                        size={30}
-                    />
-                )}
-                headerComponent={() => (
-                    <MenuOption
-                        text={value.name}
-                        disabled
-                        customStyles={{
-                            optionText: {
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                                color: 'black'
-                            }
-                        }}
-                    />
-                )}
-            />
-        </ListItem>
+        </>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // padding: 24,
-        backgroundColor: 'grey',
-    },
-});
+function SoundInfo({
+    value,
+    isActive,
+}: {
+    value: SoundFileType,
+    isActive: boolean,
+}) {
+    return (
+        <ListItem.Content>
+            <ListItem.Title style={{
+                color: isActive === true ? 'white': 'black',
+            }}>{value.name}</ListItem.Title>
+            {
+                (value.other || value.duration) && <ListItem.Subtitle style={{
+                    color: isActive === true ? 'white': 'gray',
+                    fontSize: 12,
+                }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
+            }
+        </ListItem.Content>
+    )
+}
+
+function SoundMenu({
+    value,
+    index,
+}: {
+    value: SoundFileType,
+    index: number,
+}) {
+    const player = React.useContext(SoundPlayerContext);
+    const listMenuSelections: IMenuSelection[] = [
+        { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },
+        { text: 'Thêm vào hàng đợi' },
+        { text: 'Thêm vào danh sách phát' },
+        { text: 'Thêm vào Mục ưa thích' },
+        { text: 'Đặt làm nhạc chuông' },
+        { text: 'Xóa' },
+    ]
+
+    return (
+        <CustomMenu
+            listMenuSelections={listMenuSelections}
+            triggerComponent={() => (
+                <MaterialCommunityIcon
+                    name='dots-vertical-circle'
+                    size={30}
+                />
+            )}
+            headerComponent={() => (
+                <MenuOption
+                    text={value.name}
+                    disabled
+                    customStyles={{
+                        optionText: {
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                            color: 'black'
+                        }
+                    }}
+                />
+            )}
+        />
+    )
+}
 
 export default SoundsScreen;

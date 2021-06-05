@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { View, Text, FlatList, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { MenuOption } from 'react-native-popup-menu';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { AvatarHelper } from '../helpers/songs-screen-helpers';
+import CustomMenu from '../common/components/CustomMenu';
+import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { IAlbum, useGetAllAlbums } from '../hooks';
+import { IMenuSelection } from '../interfaces';
 
 function AlbumsScreen() {
     const { albums } = useGetAllAlbums();
-    console.log(albums);
 
     return (
         <FlatList
-            data={[...albums, ...albums, ...albums]}
+            data={albums}
             numColumns={2}
             style={{
                 paddingHorizontal: 10,
@@ -36,8 +38,6 @@ function AlbumItem({
     value: IAlbum,
     index: number,
 }) {
-    const avatarHelper = new AvatarHelper();
-
     return (
         <View
             style={{
@@ -79,8 +79,10 @@ function AlbumItem({
             >
                 <Image
                     source={{
-                        uri: value.cover ?? avatarHelper.getAvatar(),
+                        uri: avatarHelper.getAvatar(),
                     }}
+                    width={150}
+                    height={150}
                     style={{
                         width: 150,
                         height: 150,
@@ -105,16 +107,55 @@ function AlbumItem({
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, }}>
                     <Text style={{ flex: 0.5, textAlign: 'left', }}>{value.numberOfSongs} bài hát</Text>
                     <View style={{ flex: 0.5, alignItems: 'flex-end', }}>
-                        <TouchableOpacity>
-                            <Entypo
-                                name='dots-three-horizontal'
-                                size={30}
-                            />
-                        </TouchableOpacity>
+                        <AlbumItemMenu name={value.album}/>
                     </View>
                 </View>
             </View>
         </View>
+    )
+}
+
+function AlbumItemMenu({
+    name,
+}: {
+    name: string,
+}) {
+    const listMenuSelections: IMenuSelection[] = [
+        { text: 'Phát', },
+        { text: 'Phát tiếp theo', },
+        { text: 'Trộn' },
+        { text: 'Thêm vào hàng đợi' },
+        { text: 'Thêm vào danh sách phát' },
+        { text: 'Ghim Album' },
+        { text: 'Ẩn Album' },
+        { text: 'Chia sẻ' },
+    ]
+
+    return (
+        <CustomMenu
+            listMenuSelections={listMenuSelections}
+            triggerComponent={() => (
+                <TouchableOpacity>
+                    <Entypo
+                        name='dots-three-horizontal'
+                        size={30}
+                    />
+                </TouchableOpacity>
+            )}
+            headerComponent={() => (
+                <MenuOption
+                    text={name}
+                    disabled
+                    customStyles={{
+                        optionText: {
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                            color: 'black'
+                        }
+                    }}
+                />
+            )}
+        />
     )
 }
 

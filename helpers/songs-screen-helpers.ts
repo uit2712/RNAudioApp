@@ -1,6 +1,6 @@
 import { IMAGE_RESOURCE_URL, LIST_IMAGE_NAMES } from '../constants';
 
-export class AvatarHelper {
+class AvatarHelper {
     private listImageNames = LIST_IMAGE_NAMES;
 
     public getAvatar() {
@@ -15,3 +15,5 @@ export class AvatarHelper {
         return '';
     }
 }
+
+export const avatarHelper = new AvatarHelper();

@@ -19,6 +19,8 @@ interface ISoundFile {
     cover?: string;
     duration?: string;
     other: string; // author => artist => album => albumArtist
+    bluredImage?: string;
+    coverTemp?: string;
 }
 
 interface IAppBundleSoundFile extends ISoundFile {
@@ -493,6 +495,7 @@ export interface ITrackInfo {
     fileName?: string;
     albumArtist?: string;
     author?: string;
+    coverTemp?: string;
 }
 
 export function useGetAllMusicFiles() {
@@ -511,6 +514,7 @@ export function useGetAllMusicFiles() {
                 albumArtist: true,
                 author: true,
                 album: true,
+                blured: true,
             }).then((tracks: ITrackInfo[]) => {
                 const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
                     type: 'other',
@@ -519,9 +523,10 @@ export function useGetAllMusicFiles() {
                     author: item.artist,
                     album: item.album,
                     genre: item.genre,
-                    cover: item.cover,
+                    cover: item.coverTemp ?? item.cover,
                     duration: formatTimeString(item.duration ? Number(item.duration) : 0),
                     other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
+                    bluredImage: item.blur,
                 }));
                 setListTracks(listFiles);
                 resolve();
