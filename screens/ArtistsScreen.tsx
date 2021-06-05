@@ -1,24 +1,21 @@
 import * as React from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import { MenuOption } from 'react-native-popup-menu';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomMenu from '../common/components/CustomMenu';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { IArtist, useGetAllArtists } from '../hooks';
 import { IMenuSelection } from '../interfaces';
 
 function ArtistsScreen() {
     const { artists } = useGetAllArtists();
-    console.log(artists?.length);
 
     return (
         <FlatList
             data={artists}
             style={{
                 paddingHorizontal: 10,
-                marginTop: 40,
             }}
             renderItem={({ item }) => (
                 <ArtistItem

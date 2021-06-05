@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
-import { useGetAllPlaylists } from '../hooks';
+import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
 
 function PlaylistsScreen() {
-    const { playlists } = useGetAllPlaylists();
-
+    const playlists = useGetPlaylists();
+    console.log(playlists);
     return (
         <View>
-            <Text>{JSON.stringify(playlists)}</Text>
+            <Text></Text>
         </View>
     )
 }

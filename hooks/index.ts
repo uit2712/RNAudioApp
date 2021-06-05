@@ -12,6 +12,7 @@ interface IRequestAudioHelper {
 }
 
 interface ISoundFile {
+    id?: string;
     name: string;
     artist?: string;
     album?: string;
@@ -482,7 +483,7 @@ import RN, { PermissionsAndroid } from 'react-native';
 import { check, PERMISSIONS } from 'react-native-permissions';
 
 export interface ITrackInfo {
-    id?: number;
+    id?: string;
     title?: string;
     artist?: string;
     album?: string;
@@ -518,6 +519,7 @@ export function useGetAllMusicFiles() {
             }).then((tracks: ITrackInfo[]) => {
                 const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
                     type: 'other',
+                    id: item.id,
                     name: item.title ?? '',
                     path: item.path ?? '',
                     author: item.artist,
@@ -640,20 +642,5 @@ export function useGetAllArtists() {
 
     return {
         artists,
-    }
-}
-
-export function useGetAllPlaylists() {
-    const [playlists, setPlaylists] = React.useState<any>();
-    React.useEffect(() => {
-        MusicFiles.getArtists()
-            .then((result: any) => setPlaylists(result))
-            .catch((error: Error) => {
-                console.log(error.message);
-            });
-    }, []);
-
-    return {
-        playlists,
     }
 }
