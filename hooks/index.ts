@@ -595,6 +595,7 @@ export function useGetAllAlbums() {
             .then((result: IAlbum[]) => setAlbums(result.map(item => ({
                 ...item,
                 numberOfSongs: Number(item.numberOfSongs),
+                cover: avatarHelper.getAvatar(),
             }))))
             .catch((error: Error) => {
                 console.log(error.message);
@@ -607,6 +608,7 @@ export function useGetAllAlbums() {
 }
 
 import { IDrawerHomeContext } from '../interfaces';
+import { avatarHelper } from '../helpers/songs-screen-helpers';
 export function useDrawHomeSettings(): IDrawerHomeContext {
     const [isShowTabBar, setIsShowTabBar] = React.useState(true);
 
@@ -616,11 +618,21 @@ export function useDrawHomeSettings(): IDrawerHomeContext {
     }
 }
 
+export interface IArtist {
+    id: string;
+    artist: string;
+    numberOfSongs: number;
+    cover: string;
+}
 export function useGetAllArtists() {
-    const [artists, setArtists] = React.useState<any>();
+    const [artists, setArtists] = React.useState<IArtist[]>();
     React.useEffect(() => {
         MusicFiles.getArtists()
-            .then((result: any) => setArtists(result))
+            .then((result: IArtist[]) => setArtists(result.map(item => ({
+                ...item,
+                numberOfSongs: Number(item.numberOfSongs),
+                cover: avatarHelper.getAvatar(),
+            }))))
             .catch((error: Error) => {
                 console.log(error.message);
             });

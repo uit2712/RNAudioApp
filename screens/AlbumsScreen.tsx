@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MenuOption } from 'react-native-popup-menu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomMenu from '../common/components/CustomMenu';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { IAlbum, useGetAllAlbums } from '../hooks';
 import { IMenuSelection } from '../interfaces';
 
@@ -79,7 +78,7 @@ function AlbumItem({
             >
                 <Image
                     source={{
-                        uri: avatarHelper.getAvatar(),
+                        uri: value.cover,
                     }}
                     width={150}
                     height={150}
