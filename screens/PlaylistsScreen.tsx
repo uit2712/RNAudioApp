@@ -2,9 +2,7 @@ import * as React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
-import { MenuOption } from 'react-native-popup-menu';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import CustomMenu from '../common/components/CustomMenu';
+import SettingsMenu from '../common/components/SettingsMenu';
 import { IMenuSelection } from '../interfaces';
 import { IPlaylist } from '../interfaces/playlists-screen-interfaces';
 import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
@@ -81,27 +79,9 @@ function PlaylistsItemMenu({
     ]
 
     return (
-        <CustomMenu
+        <SettingsMenu
             listMenuSelections={listMenuSelections}
-            triggerComponent={() => (
-                <MaterialCommunityIcons
-                    name='dots-vertical-circle'
-                    size={30}
-                />
-            )}
-            headerComponent={() => (
-                <MenuOption
-                    text={name}
-                    disabled
-                    customStyles={{
-                        optionText: {
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                            color: 'black'
-                        }
-                    }}
-                />
-            )}
+            title={name}
         />
     )
 }

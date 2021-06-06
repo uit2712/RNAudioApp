@@ -5,12 +5,10 @@ import Loading from '../common/components/Loading';
 import { SoundFileType, useGetAllMusicFiles } from '../hooks';
 import { SoundPlayerContext } from '../context-api';
 import FastImage from 'react-native-fast-image';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { MenuOption, } from 'react-native-popup-menu';
 import { IMenuSelection } from '../interfaces';
 import { navigate } from '../navigators/config/root';
-import CustomMenu from '../common/components/CustomMenu';
 import { avatarHelper } from '../helpers/songs-screen-helpers';
+import SettingsMenu from '../common/components/SettingsMenu';
 
 function SoundsScreen() {
     const { isLoading, player } = useGetPlayerInfo();
@@ -162,27 +160,9 @@ function SoundMenu({
     ]
 
     return (
-        <CustomMenu
+        <SettingsMenu
             listMenuSelections={listMenuSelections}
-            triggerComponent={() => (
-                <MaterialCommunityIcon
-                    name='dots-vertical-circle'
-                    size={30}
-                />
-            )}
-            headerComponent={() => (
-                <MenuOption
-                    text={value.name}
-                    disabled
-                    customStyles={{
-                        optionText: {
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                            color: 'black'
-                        }
-                    }}
-                />
-            )}
+            title={value.name}
         />
     )
 }
