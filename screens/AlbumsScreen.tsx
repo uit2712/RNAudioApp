@@ -30,7 +30,7 @@ function AlbumsScreen() {
     )
 }
 
-function AlbumItem({
+export function AlbumItem({
     value,
     index,
 }: {

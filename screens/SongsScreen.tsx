@@ -30,7 +30,7 @@ function SoundsScreen() {
             keyExtractor={item => item.path.toString()}
             // Performance settings
             removeClippedSubviews={true} // Unmount components when outside of window 
-            initialNumToRender={2} // Reduce initial render amount
+            initialNumToRender={7} // Reduce initial render amount
             maxToRenderPerBatch={1} // Reduce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
             windowSize={7} // Reduce the window size
@@ -55,7 +55,7 @@ function useGetPlayerInfo() {
     }
 }
 
-function Sound({
+export function Sound({
     value,
     index,
     isActive,
@@ -68,7 +68,7 @@ function Sound({
 
     function goToSoundPlayerDetail() {
         // setIsShowTabBar(false);
-        player.playAudio(index);
+        // player.playAudio(index);
         navigate('Home', {
             screen: 'TabSoundPlayerDetail',
             params: {
