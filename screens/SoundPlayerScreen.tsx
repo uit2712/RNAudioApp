@@ -1,14 +1,13 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, BackHandler, StyleSheet, ImageBackground, ImageBase, Image, StyleProp, TextStyle } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { DrawerHomeContext, SoundPlayerContext, } from '../context-api';
+import { SoundPlayerContext, } from '../context-api';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import { Icon, IconProps, } from 'react-native-vector-icons/Icon';
+import { useHomeBottomTabHelper } from '../hooks';
 
 const themeSettings = {
     iconDefaultColor: 'white',
@@ -18,30 +17,7 @@ const themeSettings = {
 }
 
 function SoundPlayerScreen() {
-    const navigation = useNavigation();
-    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', onFocus);
-        // Return the function to unsubscribe from the event so it gets removed on unmount
-        return unsubscribe;
-    }, [navigation]);
-
-    function onFocus() {
-        setIsShowTabBar(false);
-    }
-
-    useFocusEffect(
-        React.useCallback(() => {
-            const onBackPress = () => {
-                setIsShowTabBar(true);
-                return false;
-            };
-
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-        }, [])
-    );
+    useHomeBottomTabHelper();
 
     const player = React.useContext(SoundPlayerContext);
     if (!player.currentAudioInfo) {

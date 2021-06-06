@@ -479,7 +479,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
 }
 
 import MusicFiles from 'react-native-get-music-files';
-import RN, { PermissionsAndroid } from 'react-native';
+import RN, { BackHandler, PermissionsAndroid } from 'react-native';
 import { check, PERMISSIONS } from 'react-native-permissions';
 
 export interface ITrackInfo {
@@ -611,6 +611,8 @@ export function useGetAllAlbums() {
 
 import { IDrawerHomeContext } from '../interfaces';
 import { avatarHelper } from '../helpers/songs-screen-helpers';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { DrawerHomeContext } from '../context-api';
 export function useDrawHomeSettings(): IDrawerHomeContext {
     const [isShowTabBar, setIsShowTabBar] = React.useState(true);
 
@@ -642,5 +644,31 @@ export function useGetAllArtists() {
 
     return {
         artists,
+    }
+}
+
+export function useHomeBottomTabHelper() {
+    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
+    const navigation = useNavigation();
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => setIsShowTabBar(false));
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                setIsShowTabBar(true);
+                return false;
+            };
+
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
+
+    return {
+        setIsShowTabBar,
     }
 }

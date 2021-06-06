@@ -59,13 +59,15 @@ function HomeHeaderSearch() {
 
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate('Home', {
-                screen: 'TabSearch',
-                params: {
-                    screen: 'Search',
-                    params: {}
-                }
-            })}
+            onPress={() => {
+                navigation.navigate('Home', {
+                    screen: 'TabSearch',
+                    params: {
+                        screen: 'Search',
+                        params: {}
+                    }
+                })
+            }}
         >
             <Feather
                 name='search'

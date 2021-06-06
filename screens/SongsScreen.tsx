@@ -67,7 +67,9 @@ function Sound({
     isActive: boolean,
 }) {
     const player = React.useContext(SoundPlayerContext);
+
     function goToSoundPlayerDetail() {
+        // setIsShowTabBar(false);
         player.playAudio(index);
         navigate('Home', {
             screen: 'TabSoundPlayerDetail',
