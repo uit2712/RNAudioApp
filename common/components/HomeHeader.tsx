@@ -6,6 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { DrawerHomeContext } from '../../context-api';
 import { IMenuSelection } from '../../interfaces';
 import { RootNavigationProp } from '../../navigators/config/root';
 import CustomMenu from './CustomMenu';
@@ -56,10 +57,12 @@ function HomeHeaderLeftMenu() {
 
 function HomeHeaderSearch() {
     const navigation = useNavigation<RootNavigationProp>();
+    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
 
     return (
         <TouchableOpacity
             onPress={() => {
+                setIsShowTabBar(false);
                 navigation.navigate('Home', {
                     screen: 'TabSearch',
                     params: {

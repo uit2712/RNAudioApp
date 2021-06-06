@@ -193,7 +193,7 @@ function ListTabs({ state, descriptors, navigation }: BottomTabBarProps<BottomTa
 
 function MiniPlayer() {
     const player = React.useContext(SoundPlayerContext);
-    const { isShowTabBar } = React.useContext(DrawerHomeContext);
+    const { isShowTabBar, setIsShowTabBar } = React.useContext(DrawerHomeContext);
 
     if (isShowTabBar === false || !player.currentAudioInfo || !player.currentAudioInfo.name) {
         return null;
@@ -210,6 +210,7 @@ function MiniPlayer() {
                     alignItems: 'center',
                 }}
                 onPress={() => {
+                    setIsShowTabBar(false);
                     navigate('Home', {
                         screen: 'TabSoundPlayerDetail',
                         params: {
