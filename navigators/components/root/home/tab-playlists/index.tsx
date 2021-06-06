@@ -11,6 +11,9 @@ function TabPlaylistsNavigator() {
             <TabPlaylists.Screen
                 name='Playlists'
                 component={PlaylistsScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
         </TabPlaylists.Navigator>
     )
