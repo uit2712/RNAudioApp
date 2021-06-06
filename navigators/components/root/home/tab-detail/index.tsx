@@ -1,15 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import SoundPlayerScreen from '../../../../../screens/SoundPlayerScreen';
-import { TabSoundPlayerDetailParams } from '../../../../config/root/home/tab-detail';
+
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import CustomMenu from '../../../../../common/components/CustomMenu';
 import { DrawerHomeContext } from '../../../../../context-api';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import { View } from 'react-native';
 import { IMenuSelection } from '../../../../../interfaces';
-import CustomMenu from '../../../../../common/components/CustomMenu';
 import { SoundPlayerDetailThemeContext } from '../../../../themes';
+import SoundPlayerScreen from '../../../../../screens/SoundPlayerScreen';
+import { TabSoundPlayerDetailParams } from '../../../../config/root/home/tab-detail';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
 

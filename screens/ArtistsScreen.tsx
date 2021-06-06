@@ -1,11 +1,13 @@
 import * as React from 'react';
+
 import { FlatList, TouchableOpacity } from 'react-native';
-import { ListItem } from 'react-native-elements';
+
 import FastImage from 'react-native-fast-image';
+import { IArtist } from '../interfaces/artists-screen-interfaces';
+import { IMenuSelection } from '../interfaces';
+import { ListItem } from 'react-native-elements';
 import SettingsMenu from '../common/components/SettingsMenu';
 import { useGetAllArtists } from '../hooks/artists-screen-hooks';
-import { IMenuSelection } from '../interfaces';
-import { IArtist } from '../interfaces/artists-screen-interfaces';
 
 function ArtistsScreen() {
     const { artists } = useGetAllArtists();

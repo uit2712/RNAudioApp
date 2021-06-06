@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { IDrawerHomeContext, IPlayer } from '../interfaces';
+
 import { SoundFileType } from '../types/songs-screen-types';
 
 export const SoundPlayerContext = React.createContext<IPlayer>({

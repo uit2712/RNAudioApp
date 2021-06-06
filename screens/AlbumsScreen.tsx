@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { MenuOption } from 'react-native-popup-menu';
-import Entypo from 'react-native-vector-icons/Entypo';
+
+import { FlatList, Image, Text, View } from 'react-native';
+
 import CustomMenu from '../common/components/CustomMenu';
-import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
-import { IMenuSelection } from '../interfaces';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { IAlbum } from '../interfaces/albums-screen-interfaces';
+import { IMenuSelection } from '../interfaces';
+import { MenuOption } from 'react-native-popup-menu';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
 
 function AlbumsScreen() {
     const { albums, ...result } = useGetAllAlbums();

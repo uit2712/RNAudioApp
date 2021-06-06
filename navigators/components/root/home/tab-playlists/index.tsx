@@ -1,8 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+
 import HomeHeader from '../../../../../common/components/HomeHeader';
 import PlaylistsScreen from '../../../../../screens/PlaylistsScreen';
 import { TabPlaylistsParams } from '../../../../config/root/home/tab-playlists';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const TabPlaylists = createStackNavigator<TabPlaylistsParams>();
 

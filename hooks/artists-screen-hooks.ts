@@ -1,9 +1,9 @@
-import React from 'react';
-import MusicFiles from 'react-native-get-music-files';
-import { useDispatch } from 'react-redux';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { IArtist } from '../interfaces/artists-screen-interfaces';
+import MusicFiles from 'react-native-get-music-files';
+import React from 'react';
+import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { setListArtists } from '../store/actions/artists-screen-actions';
+import { useDispatch } from 'react-redux';
 import { useGetAllArtistsSelector } from '../store/selectors/artists-screen-selectors';
 
 export function useGetAllArtists() {

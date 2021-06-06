@@ -1,4 +1,3 @@
-import { IPlayer } from '../../interfaces';
 import { IAlbum } from '../../interfaces/albums-screen-interfaces';
 import { IArtist } from '../../interfaces/artists-screen-interfaces';
 import { IPlaylist } from '../../interfaces/playlists-screen-interfaces';

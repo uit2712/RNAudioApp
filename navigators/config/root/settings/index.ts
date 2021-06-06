@@ -1,6 +1,6 @@
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { NavigatorScreenParams } from "@react-navigation/native";
 import { IScreenParams } from "../../../route-params";
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 export interface ISettingsScreenParams extends IScreenParams {
 }

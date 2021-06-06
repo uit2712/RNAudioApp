@@ -1,14 +1,15 @@
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View } from 'react-native';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
+import { DrawerHomeContext } from '../../../../../context-api';
+import { Input } from 'react-native-elements';
 import { RootNavigationProp } from '../../../../config/root';
 import { TabSearchParams } from '../../../../config/root/home/tab-search';
-import { Input } from 'react-native-elements';
-import { DrawerHomeContext } from '../../../../../context-api';
 import TabSourceNavigator from './tab-source';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSearchParams>();
 

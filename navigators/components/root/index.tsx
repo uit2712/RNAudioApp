@@ -1,11 +1,13 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
-import { SoundPlayerContext } from '../../../context-api';
-import { useAudioHelper } from '../../../hooks';
-import { navigationRef, RootParams } from '../../config/root';
+
+import { RootParams, navigationRef } from '../../config/root';
+
 import DrawerHomeNavigator from './home';
 import DrawerSettingsNavigator from './settings';
+import { NavigationContainer } from '@react-navigation/native';
+import { SoundPlayerContext } from '../../../context-api';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { useAudioHelper } from '../../../hooks';
 
 const Root = createDrawerNavigator<RootParams>();
 

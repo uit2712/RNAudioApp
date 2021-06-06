@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { MenuOption } from 'react-native-popup-menu';
+
+import CustomMenu from './CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IMenuSelection } from '../../interfaces';
-import CustomMenu from './CustomMenu';
+import { MenuOption } from 'react-native-popup-menu';
 
 function SettingsMenu({
     title,

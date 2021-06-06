@@ -1,8 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import HomeHeader from '../../../../../common/components/HomeHeader';
+
 import AlbumsScreen from '../../../../../screens/AlbumsScreen';
+import HomeHeader from '../../../../../common/components/HomeHeader';
 import { TabAlbumsParams } from '../../../../config/root/home/tab-albums';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const TabAlbums = createStackNavigator<TabAlbumsParams>();
 

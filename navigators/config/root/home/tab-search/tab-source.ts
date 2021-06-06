@@ -1,6 +1,6 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { NavigatorScreenParams, } from '@react-navigation/native';
 import { IScreenParams } from '../../../../route-params';
+import { NavigatorScreenParams, } from '@react-navigation/native';
 
 export interface ISongsOfflineScreenParams extends IScreenParams {
 }

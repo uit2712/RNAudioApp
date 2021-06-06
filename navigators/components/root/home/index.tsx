@@ -1,21 +1,23 @@
-import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
+
+import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DrawerHomeContext, SoundPlayerContext, } from '../../../../context-api';
 import { Text, TouchableOpacity, View } from 'react-native';
+
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DrawerHomeParams } from '../../../config/root/home';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabAlbumsNavigator from './tab-albums';
 import TabArtistsNavigators from './tab-artists';
 import TabPlaylistsNavigator from './tab-playlists';
-import TabSongsNavigators from './tab-songs';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { DrawerHomeContext, SoundPlayerContext, } from '../../../../context-api';
-import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
-import { navigate } from '../../../config/root';
-import TabSoundPlayerDetailNavigator from './tab-detail';
-import { useDrawHomeSettings } from '../../../../hooks';
 import TabSearchNavigator from './tab-search';
+import TabSongsNavigators from './tab-songs';
+import TabSoundPlayerDetailNavigator from './tab-detail';
+import { navigate } from '../../../config/root';
+import { useDrawHomeSettings } from '../../../../hooks';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 

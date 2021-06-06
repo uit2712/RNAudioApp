@@ -1,7 +1,12 @@
-import SoundPlayer from 'react-native-sound';
-import React from 'react';
+import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '../interfaces';
 import { formatTimeString, shuffleArray } from '../functions';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
 import { AudioStatusType } from '../types/index';
+import { BackHandler } from 'react-native';
+import { DrawerHomeContext } from '../context-api';
+import React from 'react';
+import SoundPlayer from 'react-native-sound';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],
@@ -388,10 +393,6 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     }
 }
 
-import { IDrawerHomeContext, IRequestAudioHelper, IPlayer } from '../interfaces';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { DrawerHomeContext } from '../context-api';
-import { BackHandler } from 'react-native';
 export function useDrawHomeSettings(): IDrawerHomeContext {
     const [isShowTabBar, setIsShowTabBar] = React.useState(true);
 

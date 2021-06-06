@@ -1,8 +1,9 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainerRef, NavigatorScreenParams, RouteProp } from '@react-navigation/native';
-import React from 'react';
+
 import { DrawerHomeScreenParams } from './home';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerSettingsScreenParams } from './settings';
+import React from 'react';
 
 export type RootParams = {
     Home: DrawerHomeScreenParams;

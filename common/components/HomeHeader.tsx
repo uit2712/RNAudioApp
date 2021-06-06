@@ -1,15 +1,16 @@
-import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
-import { View, } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import CustomMenu from './CustomMenu';
+import { DrawerHomeContext } from '../../context-api';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
+import { IMenuSelection } from '../../interfaces';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { DrawerHomeContext } from '../../context-api';
-import { IMenuSelection } from '../../interfaces';
 import { RootNavigationProp } from '../../navigators/config/root';
-import CustomMenu from './CustomMenu';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 function HomeHeader({
     listMenuSelections,
