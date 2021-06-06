@@ -1,5 +1,6 @@
 import { IAlbum } from '../../interfaces/albums-screen-interfaces';
 import { IApplicationState } from '../interfaces';
+import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';
 
 export function useGetAllAlbumsSelector() {
@@ -7,4 +8,16 @@ export function useGetAllAlbumsSelector() {
         albums: state.albums.albums,
         isLoadFirstTime: state.albums.isLoadListAlbumsFirstTime,
     }));
+}
+
+export function useGetSearchedAlbumsSelector() {
+    const searchText = useGetSearchTextSelector();
+    return useSelector<IApplicationState, IAlbum[]>(state => {
+        const albums = state.albums.albums;
+        if (!searchText) {
+            return albums;
+        }
+
+        return albums.filter(item => item.album.includes(searchText) === true);
+    });
 }

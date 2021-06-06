@@ -9,6 +9,10 @@ import TabSourceNavigator from './tab-source';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { setSearchText } from '../../../../../store/actions/search-screen-actions';
+import { useDebounce } from '../../../../../hooks/search-screen-hooks';
+import { useDispatch } from 'react-redux';
+import { useGetSearchTextSelector } from '../../../../../store/selectors/search-screen-selectors';
 import { useNavigation } from '@react-navigation/native';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSearchParams>();
@@ -59,6 +63,13 @@ function SearchScreenHeader() {
 }
 
 function SearchScreenHeaderInput() {
+    const dispatch = useDispatch();
+    const [value, setValue] = React.useState('');
+    const debouncedValue = useDebounce(value, 100);
+    React.useEffect(() => {
+        dispatch(setSearchText(debouncedValue));
+    }, [debouncedValue])
+    
     return (
         <Input
             autoFocus={true}
@@ -70,6 +81,8 @@ function SearchScreenHeaderInput() {
                 height: 40,
             }}
             placeholder='Tìm kiếm'
+            value={value}
+            onChangeText={setValue}
         />
     )
 }

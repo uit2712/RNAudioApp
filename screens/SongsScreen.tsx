@@ -5,19 +5,14 @@ import { FlatList, TouchableOpacity, } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
 import { ListItem } from 'react-native-elements';
-import Loading from '../common/components/Loading';
 import SettingsMenu from '../common/components/SettingsMenu';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '../context-api';
 import { navigate } from '../navigators/config/root';
-import { useGetAllMusicFiles } from '../hooks/songs-screen-hooks';
+import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selectors';
 
 function SoundsScreen() {
-    const { isLoading, player } = useGetPlayerInfo();
-
-    if (isLoading === true) {
-        return <Loading/>
-    }
+    const { player } = useGetPlayerInfo();
 
     return (
         <FlatList
@@ -41,7 +36,7 @@ function SoundsScreen() {
 }
 
 function useGetPlayerInfo() {
-    const { songs, isLoading } = useGetAllMusicFiles();
+    const { songs } = useGetAllSongsSelector();
     const player = React.useContext(SoundPlayerContext);
     React.useEffect(() => {
         player.setListSounds(songs);
@@ -49,7 +44,6 @@ function useGetPlayerInfo() {
 
     return {
         player,
-        isLoading,
     }
 }
 

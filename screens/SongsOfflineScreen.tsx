@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text
 } from 'react-native';
+import { SongsOfflineSectionItemType, SongsOfflineSectionType } from '../types/songs-offline-screen-types';
 
 import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
@@ -14,29 +15,14 @@ import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '../context-api';
-import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
-import { useGetAllArtists } from '../hooks/artists-screen-hooks';
-import { useGetAllMusicFiles } from '../hooks/songs-screen-hooks';
-
-type SongsOfflineSectionItemType = SoundFileType | IAlbum | IArtist;
-type SongsOfflineSectionType = {
-    type: 'songs';
-    data: SongsOfflineSectionItemType[];
-    headerComponent: React.ComponentType<any>;
-} | {
-    type: 'albums';
-    data: SongsOfflineSectionItemType[];
-    headerComponent: React.ComponentType<any>;
-} | {
-    type: 'artists';
-    data: SongsOfflineSectionItemType[];
-    headerComponent: React.ComponentType<any>;
-}
+import { useGetSearchedAlbumsSelector } from '../store/selectors/albums-screen-selectors';
+import { useGetSearchedArtistsSelector } from '../store/selectors/artists-screen-selectors';
+import { useGetSearchedSongsSelector } from '../store/selectors/songs-screen-selectors';
 
 function SongsOfflineScreen() {
-    const { songs } = useGetAllMusicFiles();
-    const { albums } = useGetAllAlbums();
-    const { artists } = useGetAllArtists();
+    const songs = useGetSearchedSongsSelector();
+    const albums = useGetSearchedAlbumsSelector();
+    const artists = useGetSearchedArtistsSelector();
     const data: SongsOfflineSectionType[] = [{
         type: 'songs',
         data: songs,
@@ -64,7 +50,7 @@ function SongsOfflineScreen() {
                 <SongsOfflineSection {...props} />
             )}
             renderSectionHeader={({ section }) => (
-                <section.headerComponent/>
+                section.data.length > 0 ? <section.headerComponent/> : null
             )}
         />
     )

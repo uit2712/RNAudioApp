@@ -1,6 +1,7 @@
 import AlbumsScreenReducer from './albums-screen-reducer';
 import ArtistsScreenReducer from './artists-screen-reducer';
 import PlaylistsScreenReducer from './playlists-screen-reducer';
+import SearchScreenReducer from './search-screen-reducer';
 import SongsScreenReducer from './songs-screen-reducer';
 import { combineReducers } from 'redux';
 
@@ -9,6 +10,7 @@ const reducer = combineReducers({
     artists: ArtistsScreenReducer,
     albums: AlbumsScreenReducer,
     songs: SongsScreenReducer,
+    search: SearchScreenReducer,
 });
 
 export default reducer;

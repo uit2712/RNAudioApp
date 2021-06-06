@@ -18,6 +18,9 @@ import TabSongsNavigators from './tab-songs';
 import TabSoundPlayerDetailNavigator from './tab-detail';
 import { navigate } from '../../../config/root';
 import { useDrawHomeSettings } from '../../../../hooks';
+import { useGetAllAlbums } from '../../../../hooks/albums-screen-hooks';
+import { useGetAllArtists } from '../../../../hooks/artists-screen-hooks';
+import { useGetAllMusicFiles } from '../../../../hooks/songs-screen-hooks';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -91,6 +94,9 @@ const iconSize = 25;
 
 function DrawerHomeNavigator() {
     const settings = useDrawHomeSettings();
+    useGetAllMusicFiles();
+    useGetAllArtists();
+    useGetAllAlbums();
 
     return (
         <DrawerHomeContext.Provider value={settings}>
