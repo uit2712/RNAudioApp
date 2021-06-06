@@ -67,7 +67,10 @@ function HomeHeaderSearch() {
                     screen: 'TabSearch',
                     params: {
                         screen: 'Search',
-                        params: {}
+                        params: {
+                            screen: 'Offline',
+                            params: {}
+                        }
                     }
                 })
             }}

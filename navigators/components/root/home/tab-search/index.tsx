@@ -1,28 +1,29 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { TextInput, View } from 'react-native';
-import SearchScreen from '../../../../../screens/SearchScreen';
+import { View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigationProp } from '../../../../config/root';
 import { TabSearchParams } from '../../../../config/root/home/tab-search';
 import { Input } from 'react-native-elements';
 import { DrawerHomeContext } from '../../../../../context-api';
+import TabSourceNavigator from './tab-source';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSearchParams>();
 
 function TabSearchNavigator() {
     return (
-        <TabSoundPlayerDetail.Navigator>
+        <TabSoundPlayerDetail.Navigator
+            screenOptions={{
+                header: () => (
+                    <SearchScreenHeader/>
+                )
+            }}
+        >
             <TabSoundPlayerDetail.Screen
                 name='Search'
-                component={SearchScreen}
-                options={{
-                    header: () => (
-                        <SearchScreenHeader/>
-                    )
-                }}
+                component={TabSourceNavigator}
             />
         </TabSoundPlayerDetail.Navigator>
     )

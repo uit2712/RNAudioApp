@@ -1,12 +1,9 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams, } from '@react-navigation/native';
-import { IScreenParams } from '../../../../route-params';
-
-export interface ISearchScreenParams extends IScreenParams {
-}
+import { TabSourceNavigatorScreenParams } from './tab-source';
 
 export type TabSearchParams = {
-    Search: ISearchScreenParams;
+    Search: TabSourceNavigatorScreenParams;
 }
 
 export type TabSearchNavigationProp = BottomTabNavigationProp<TabSearchParams>;
