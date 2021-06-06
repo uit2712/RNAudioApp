@@ -5,6 +5,6 @@ import { IApplicationState } from '../interfaces';
 export function useGetAllAlbumsSelector() {
     return useSelector<IApplicationState, { albums: IAlbum[], isLoadFirstTime: boolean }>(state => ({
         albums: state.albums.albums,
-        isLoadFirstTime: state.artists.isLoadListArtistsFirstTime,
+        isLoadFirstTime: state.albums.isLoadListAlbumsFirstTime,
     }));
 }

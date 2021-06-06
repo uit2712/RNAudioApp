@@ -4,11 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MenuOption } from 'react-native-popup-menu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomMenu from '../common/components/CustomMenu';
-import { IAlbum, useGetAllAlbums } from '../hooks';
+import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
 import { IMenuSelection } from '../interfaces';
+import { IAlbum } from '../interfaces/albums-screen-interfaces';
 
 function AlbumsScreen() {
-    const { albums } = useGetAllAlbums();
+    const { albums, ...result } = useGetAllAlbums();
 
     return (
         <FlatList

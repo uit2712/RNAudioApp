@@ -9,7 +9,6 @@ import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
 
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();
-    console.log(playlists);
     return (
         <FlatList
             data={playlists}

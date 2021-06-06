@@ -8,11 +8,12 @@ const initializeState: IAlbumsScreenState = {
 
 export default function AlbumsScreenReducer(state = initializeState, action: AlbumsScreenActions): IAlbumsScreenState {
     switch(action.type) {
+        default: return state;
         case 'SET_LIST_ALBUMS':
             return {
                 ...state,
                 albums: action.payload,
+                isLoadListAlbumsFirstTime: true,
             }
-        default: return state;
     }
 }

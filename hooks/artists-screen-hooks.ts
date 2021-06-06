@@ -18,18 +18,20 @@ export function useGetAllArtists() {
     const [errorMessage, setErrorMessage] = React.useState('');
     const dispatch = useDispatch();
     function getArtists() {
+        setIsLoading(true);
         MusicFiles.getArtists()
             .then((result: IArtist[]) => {
                 setIsLoading(false);
+                setIsRefresh(false);
                 const artists = result.map(item => ({
                     ...item,
                     numberOfSongs: Number(item.numberOfSongs),
                     cover: avatarHelper.getAvatar(),
                 }));
                 dispatch(setListArtists(artists));
-            })
-            .catch((error: Error) => {
+            }).catch((error: Error) => {
                 setIsLoading(false);
+                setIsRefresh(false);
                 setErrorMessage(error.message);
             });
     }

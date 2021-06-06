@@ -525,7 +525,7 @@ export function useGetAllMusicFiles() {
                     author: item.artist,
                     album: item.album,
                     genre: item.genre,
-                    cover: item.coverTemp ?? item.cover,
+                    cover: item.cover ?? avatarHelper.getAvatar(),
                     duration: formatTimeString(item.duration ? Number(item.duration) : 0),
                     other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
                     bluredImage: item.blur,

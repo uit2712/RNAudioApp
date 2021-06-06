@@ -41,12 +41,8 @@ function SoundsScreen() {
 function useGetPlayerInfo() {
     const player = React.useContext(SoundPlayerContext);
     const { listTracks, isLoading } = useGetAllMusicFiles();
-    // console.log(listTracks);
     React.useEffect(() => {
-        player.setListSounds(listTracks.map(item => ({
-            ...item,
-            cover: item.cover ?? avatarHelper.getAvatar(),
-        })));
+        player.setListSounds(listTracks);
     }, [listTracks]);
 
     return {

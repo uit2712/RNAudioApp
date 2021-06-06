@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import AlbumsScreenReducer from './artists-screen-reducer';
+import AlbumsScreenReducer from './albums-screen-reducer';
 import ArtistsScreenReducer from './artists-screen-reducer';
 import PlaylistsScreenReducer from './playlists-screen-reducer';
 

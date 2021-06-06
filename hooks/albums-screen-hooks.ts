@@ -8,7 +8,6 @@ import { setListAlbums } from '../store/actions/albums-screen-actions';
 
 export function useGetAllAlbums() {
     const { albums, isLoadFirstTime } = useGetAllAlbumsSelector();
-
     React.useEffect(() => {
         if (isLoadFirstTime === false) {
             getAlbums();
@@ -23,15 +22,16 @@ export function useGetAllAlbums() {
         MusicFiles.getAlbums()
             .then((result: IAlbum[]) => {
                 setIsLoading(false);
+                setIsRefresh(false);
                 const albums = result.map(item => ({
                     ...item,
                     numberOfSongs: Number(item.numberOfSongs),
                     cover: avatarHelper.getAvatar(),
                 }));
                 dispatch(setListAlbums(albums));
-            })
-            .catch((error: Error) => {
+            }).catch((error: Error) => {
                 setIsLoading(false);
+                setIsRefresh(false);
                 setErrorMessage(error.message)
             });
     }
