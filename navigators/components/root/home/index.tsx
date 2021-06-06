@@ -195,6 +195,18 @@ function MiniPlayer() {
     const player = React.useContext(SoundPlayerContext);
     const { isShowTabBar, setIsShowTabBar } = React.useContext(DrawerHomeContext);
 
+    function goToSoundPlayerDetail() {
+        setIsShowTabBar(false);
+        navigate('Home', {
+            screen: 'TabSoundPlayerDetail',
+            params: {
+                screen: 'SoundPlayerDetail',
+                params: {
+                }
+            }
+        })
+    }
+
     if (isShowTabBar === false || !player.currentAudioInfo || !player.currentAudioInfo.name) {
         return null;
     }
@@ -209,19 +221,9 @@ function MiniPlayer() {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
-                onPress={() => {
-                    setIsShowTabBar(false);
-                    navigate('Home', {
-                        screen: 'TabSoundPlayerDetail',
-                        params: {
-                            screen: 'SoundPlayerDetail',
-                            params: {
-                            }
-                        }
-                    })
-                }}
+                onPress={goToSoundPlayerDetail}
             >
-                <TouchableOpacity style={{ width: '60%', }}>
+                <TouchableOpacity style={{ width: '60%', }} onPress={goToSoundPlayerDetail}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>{player.currentAudioInfo.name}</Text>
                     <Text style={{ color: 'white' }}>{player.currentAudioInfo.other}</Text>
                 </TouchableOpacity>
