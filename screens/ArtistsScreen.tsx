@@ -3,8 +3,9 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import SettingsMenu from '../common/components/SettingsMenu';
-import { IArtist, useGetAllArtists } from '../hooks';
+import { useGetAllArtists } from '../hooks/artists-screen-hooks';
 import { IMenuSelection } from '../interfaces';
+import { IArtist } from '../interfaces/artists-screen-interfaces';
 
 function ArtistsScreen() {
     const { artists } = useGetAllArtists();

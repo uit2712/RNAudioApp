@@ -622,31 +622,6 @@ export function useDrawHomeSettings(): IDrawerHomeContext {
     }
 }
 
-export interface IArtist {
-    id: string;
-    artist: string;
-    numberOfSongs: number;
-    cover: string;
-}
-export function useGetAllArtists() {
-    const [artists, setArtists] = React.useState<IArtist[]>([]);
-    React.useEffect(() => {
-        MusicFiles.getArtists()
-            .then((result: IArtist[]) => setArtists(result.map(item => ({
-                ...item,
-                numberOfSongs: Number(item.numberOfSongs),
-                cover: avatarHelper.getAvatar(),
-            }))))
-            .catch((error: Error) => {
-                console.log(error.message);
-            });
-    }, []);
-
-    return {
-        artists,
-    }
-}
-
 export function useHomeBottomTabHelper() {
     const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
     const navigation = useNavigation();
