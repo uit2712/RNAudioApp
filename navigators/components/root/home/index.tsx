@@ -10,7 +10,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { DrawerHomeContext, SoundPlayerContext } from '../../../../context-api';
+import { DrawerHomeContext, SoundPlayerContext, } from '../../../../context-api';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 import { navigate } from '../../../config/root';
 import TabSoundPlayerDetailNavigator from './tab-detail';

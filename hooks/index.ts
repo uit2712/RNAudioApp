@@ -1,104 +1,14 @@
 import SoundPlayer from 'react-native-sound';
 import React from 'react';
 import { formatTimeString, shuffleArray } from '../functions';
-
-type AudioStatusType = 'loading' | 'success' | 'error' | 'play' | 'pause' | 'next' | 'previous' | 'stop';
-
-interface IRequestAudioHelper {
-    listSounds: SoundFileType[];
-    timeRate?: number; // seconds
-    isLogStatus?: boolean;
-    isAutoplayOnLoad?: boolean;
-}
-
-interface ISoundFile {
-    id?: string;
-    name: string;
-    artist?: string;
-    album?: string;
-    genre?: string;
-    cover?: string;
-    duration?: string;
-    other: string; // author => artist => album => albumArtist
-    bluredImage?: string;
-    coverTemp?: string;
-}
-
-interface IAppBundleSoundFile extends ISoundFile {
-    type: 'app-bundle';
-    path: string;
-    basePath: string;
-}
-
-interface IOtherSoundFile extends ISoundFile {
-    type: 'other';
-    path: string;
-}
-
-interface IDirectorySoundFile extends ISoundFile {
-    type: 'directory'
-    path: NodeRequire;
-}
-
-export type SoundFileType = IAppBundleSoundFile | IOtherSoundFile | IDirectorySoundFile;
-
-export interface IResponseAudioHelper {
-    play: () => void;
-    pause: () => void;
-    stop: () => void;
-    next: () => void;
-    previous: () => void;
-    increaseTime: () => void;
-    decreaseTime: () => void;
-    seekToTime: (seconds: number) => void;
-    setSpeed: (speed: number) => void;
-    shuffle: () => void;
-    loop: () => void;
-    mute: () => void;
-    unmute: () => void;
-    setVolume: (volume: number) => void;
-    playAudio: (audioIndex: number) => void;
-    setListSounds: (listSounds: SoundFileType[]) => void;
-    status: AudioStatusType;
-    duration: number; // seconds
-    currentTime: number; // seconds
-    durationString: string;
-    currentTimeString: string;
-    currentAudioName: string;
-    isDisabledButtonPlay: boolean;
-    isDisabledButtonPause: boolean;
-    isDisabledButtonStop: boolean;
-    isDisabledButtonNext: boolean;
-    isDisabledButtonPrevious: boolean;
-    timeRate: number; // seconds
-    speed: number;
-    isShuffle: boolean;
-    errorMessage: string;
-    isLoop: boolean;
-    isMuted: boolean;
-    volume: number; // percents from 0-100
-    currentIndex: number;
-    listSounds: SoundFileType[];
-    currentAudioInfo: {
-        name: string;
-        genre: string | undefined;
-        artist: string | undefined;
-        album: string | undefined;
-        other: string;
-        durationString: string;
-        currentTimeString: string;
-        duration: number;
-        currentTime: number;
-        cover?: string;
-    } | null;
-}
+import { AudioStatusType } from '../types/index';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],
     isLogStatus: false,
     timeRate: 15,
     isAutoplayOnLoad: false,
-}): IResponseAudioHelper {
+}): IPlayer {
     const [timeRate, setTimeRate] = React.useState(request.timeRate ?? 15); // seconds
     const [status, setStatus] = React.useState<AudioStatusType>('loading');
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -478,115 +388,10 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     }
 }
 
-import MusicFiles from 'react-native-get-music-files';
-import RN, { BackHandler, PermissionsAndroid } from 'react-native';
-import { check, PERMISSIONS } from 'react-native-permissions';
-
-export interface ITrackInfo {
-    id?: string;
-    title?: string;
-    artist?: string;
-    album?: string;
-    genre?: string;
-    duration?: string; // miliseconds
-    cover?: string;
-    blur?: string;
-    path?: string;
-    displayName?: string;
-    fileName?: string;
-    albumArtist?: string;
-    author?: string;
-    coverTemp?: string;
-}
-
-export function useGetAllMusicFiles() {
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    function getAllMusicFiles() {
-        return new Promise((resolve: (value?: any) => void) => {
-            MusicFiles.getAll({
-                id: true, // get id
-                artist: true, // get artist
-                duration: true, // get duration
-                genre: true, // get genre
-                title: true, // get title
-                fileName: true, // get file name
-                displayName: true,
-                albumArtist: true,
-                author: true,
-                album: true,
-                blured: true,
-            }).then((tracks: ITrackInfo[]) => {
-                const listFiles: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
-                    type: 'other',
-                    id: item.id,
-                    name: item.title ?? '',
-                    path: item.path ?? '',
-                    author: item.artist,
-                    album: item.album,
-                    genre: item.genre,
-                    cover: item.cover ?? avatarHelper.getAvatar(),
-                    duration: formatTimeString(item.duration ? Number(item.duration) : 0),
-                    other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
-                    bluredImage: item.blur,
-                }));
-                setListTracks(listFiles);
-                resolve();
-            }).catch((error: Error) => {
-                setErrorMessage(error.message);
-                resolve();
-            });
-        });
-    }
-
-    const [listTracks, setListTracks] = React.useState<SoundFileType[]>([]);
-    const [errorMessage, setErrorMessage] = React.useState('');
-    const permission = PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE;
-    React.useEffect(() => {
-        setIsLoading(true);
-        check(permission)
-            .then((result) => {
-                if (result === 'granted') {
-                    getAllMusicFiles().then(() => setIsLoading(false)).catch(() => setIsLoading(false));
-                } else {
-                    requestPermission();
-                }
-            }).catch((err: Error) => {
-                setErrorMessage(err.message);
-                setIsLoading(false);
-            });
-    }, []);
-
-    function requestPermission() {
-        PermissionsAndroid.request(permission, {
-            title: 'Quyền truy cập bộ nhớ',
-            message: 'Music App cần đọc bộ nhớ của bạn để bạn có thể nghe nhạc.',
-            buttonNeutral: 'Hỏi tôi sau',
-            buttonNegative: 'Hủy',
-            buttonPositive: 'Đồng ý'
-        }).then((granted: RN.PermissionStatus) => {
-            if (granted === 'granted') {
-                getAllMusicFiles().then(() => setIsLoading(false)).catch(() => setIsLoading(false));
-            } else {
-                setIsLoading(false);
-            }
-        }).catch((error: Error) => {
-            setErrorMessage(error.message);
-            setIsLoading(false);
-        });
-    }
-
-    return {
-        listTracks,
-        errorMessage,
-        isLoading,
-    };
-}
-
-import { IDrawerHomeContext } from '../interfaces';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
+import { IDrawerHomeContext, IRequestAudioHelper, IPlayer } from '../interfaces';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DrawerHomeContext } from '../context-api';
+import { BackHandler } from 'react-native';
 export function useDrawHomeSettings(): IDrawerHomeContext {
     const [isShowTabBar, setIsShowTabBar] = React.useState(true);
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { IResponseAudioHelper, SoundFileType } from '../hooks';
+import { IDrawerHomeContext, IPlayer } from '../interfaces';
+import { SoundFileType } from '../types/songs-screen-types';
 
-export const SoundPlayerContext = React.createContext<IResponseAudioHelper>({
+export const SoundPlayerContext = React.createContext<IPlayer>({
     currentAudioName: '',
     currentTime: 0,
     currentTimeString: '',
@@ -41,7 +42,6 @@ export const SoundPlayerContext = React.createContext<IResponseAudioHelper>({
     setListSounds: (listSounds: SoundFileType[]) => {},
 });
 
-import { IDrawerHomeContext } from '../interfaces';
 export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({
     isShowTabBar: true,
     setIsShowTabBar: (isShowTabBar: boolean) => {},

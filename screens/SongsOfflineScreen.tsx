@@ -1,19 +1,22 @@
 import * as React from 'react';
+
 import {
-    Text,
     SectionList,
     SectionListRenderItemInfo,
-    StyleSheet
+    StyleSheet,
+    Text
 } from 'react-native';
-import { SoundPlayerContext } from '../context-api';
-import { SoundFileType, } from '../hooks';
-import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
-import { useGetAllArtists } from '../hooks/artists-screen-hooks';
-import { IAlbum } from '../interfaces/albums-screen-interfaces';
-import { IArtist } from '../interfaces/artists-screen-interfaces';
+
 import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
+import { IAlbum } from '../interfaces/albums-screen-interfaces';
+import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
+import { SoundFileType } from '../types/songs-screen-types';
+import { SoundPlayerContext } from '../context-api';
+import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
+import { useGetAllArtists } from '../hooks/artists-screen-hooks';
+import { useGetAllMusicFiles } from '../hooks/songs-screen-hooks';
 
 type SongsOfflineSectionItemType = SoundFileType | IAlbum | IArtist;
 type SongsOfflineSectionType = {
@@ -31,12 +34,12 @@ type SongsOfflineSectionType = {
 }
 
 function SongsOfflineScreen() {
-    const player = React.useContext(SoundPlayerContext);
+    const { songs } = useGetAllMusicFiles();
     const { albums } = useGetAllAlbums();
     const { artists } = useGetAllArtists();
     const data: SongsOfflineSectionType[] = [{
         type: 'songs',
-        data: player.listSounds,
+        data: songs,
         headerComponent: () => (
             <Text style={styles.sectionTitle}>Bài hát</Text>
         )

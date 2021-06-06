@@ -1,14 +1,16 @@
 import * as React from 'react';
+
 import { FlatList, TouchableOpacity, } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import Loading from '../common/components/Loading';
-import { SoundFileType, useGetAllMusicFiles } from '../hooks';
-import { SoundPlayerContext } from '../context-api';
+
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
-import { navigate } from '../navigators/config/root';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
+import { ListItem } from 'react-native-elements';
+import Loading from '../common/components/Loading';
 import SettingsMenu from '../common/components/SettingsMenu';
+import { SoundFileType } from '../types/songs-screen-types';
+import { SoundPlayerContext } from '../context-api';
+import { navigate } from '../navigators/config/root';
+import { useGetAllMusicFiles } from '../hooks/songs-screen-hooks';
 
 function SoundsScreen() {
     const { isLoading, player } = useGetPlayerInfo();
@@ -39,11 +41,11 @@ function SoundsScreen() {
 }
 
 function useGetPlayerInfo() {
+    const { songs, isLoading } = useGetAllMusicFiles();
     const player = React.useContext(SoundPlayerContext);
-    const { listTracks, isLoading } = useGetAllMusicFiles();
     React.useEffect(() => {
-        player.setListSounds(listTracks);
-    }, [listTracks]);
+        player.setListSounds(songs);
+    }, [songs]);
 
     return {
         player,

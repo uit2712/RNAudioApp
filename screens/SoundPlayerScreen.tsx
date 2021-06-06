@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ImageBackground, } from 'react-native';
+
+import { ImageBackground, StyleSheet, Text, View, } from 'react-native';
+
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SoundPlayerContext, } from '../context-api';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { SoundPlayerContext } from '../context-api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useHomeBottomTabHelper } from '../hooks';
 
 const themeSettings = {
