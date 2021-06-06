@@ -1,4 +1,4 @@
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainerRef, NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import React from 'react';
 import { DrawerHomeScreenParams } from './home';
@@ -9,7 +9,7 @@ export type RootParams = {
     Settings: DrawerSettingsScreenParams;
 }
 
-export type RootNavigationProp = BottomTabNavigationProp<RootParams>;
+export type RootNavigationProp = DrawerNavigationProp<RootParams>;
 export type RootNavigatorScreenParams = NavigatorScreenParams<RootParams>;
 export type DrawerHomeRouteProp = RouteProp<RootParams, 'Home'>;
 
