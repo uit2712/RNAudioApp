@@ -26,7 +26,7 @@ function ArtistsScreen() {
     )
 }
 
-function ArtistItem({
+export function ArtistItem({
     value,
 }: {
     value: IArtist,

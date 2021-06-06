@@ -629,7 +629,7 @@ export interface IArtist {
     cover: string;
 }
 export function useGetAllArtists() {
-    const [artists, setArtists] = React.useState<IArtist[]>();
+    const [artists, setArtists] = React.useState<IArtist[]>([]);
     React.useEffect(() => {
         MusicFiles.getArtists()
             .then((result: IArtist[]) => setArtists(result.map(item => ({

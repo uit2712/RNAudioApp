@@ -6,11 +6,12 @@ import {
     StyleSheet
 } from 'react-native';
 import { SoundPlayerContext } from '../context-api';
-import { IAlbum, SoundFileType, useGetAllAlbums } from '../hooks';
+import { IAlbum, IArtist, SoundFileType, useGetAllAlbums, useGetAllArtists } from '../hooks';
 import { AlbumItem } from './AlbumsScreen';
+import { ArtistItem } from './ArtistsScreen';
 import { Sound } from './SongsScreen';
 
-type SongsOfflineSectionItemType = SoundFileType | IAlbum;
+type SongsOfflineSectionItemType = SoundFileType | IAlbum | IArtist;
 type SongsOfflineSectionType = {
     type: 'songs';
     data: SongsOfflineSectionItemType[];
@@ -19,11 +20,16 @@ type SongsOfflineSectionType = {
     type: 'albums';
     data: SongsOfflineSectionItemType[];
     headerComponent: React.ComponentType<any>;
+} | {
+    type: 'artists';
+    data: SongsOfflineSectionItemType[];
+    headerComponent: React.ComponentType<any>;
 }
 
 function SongsOfflineScreen() {
     const player = React.useContext(SoundPlayerContext);
     const { albums } = useGetAllAlbums();
+    const { artists } = useGetAllArtists();
     const data: SongsOfflineSectionType[] = [{
         type: 'songs',
         data: player.listSounds,
@@ -35,6 +41,12 @@ function SongsOfflineScreen() {
         data: albums,
         headerComponent: () => (
             <Text style={styles.sectionTitle}>Albums</Text>
+        )
+    }, {
+        type: 'artists',
+        data: artists,
+        headerComponent: () => (
+            <Text style={styles.sectionTitle}>Nghệ sĩ</Text>
         )
     }];
 
@@ -74,6 +86,10 @@ function SongsOfflineSection({
                     index={index}
                     value={item as IAlbum}
                 />
+            )
+        case 'artists':
+            return (
+                <ArtistItem value={item as IArtist}/>
             )
     }
 }
