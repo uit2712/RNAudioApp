@@ -583,32 +583,6 @@ export function useGetAllMusicFiles() {
     };
 }
 
-export interface IAlbum {
-    id: string;
-    album: string;
-    author: string;
-    cover?: string;
-    numberOfSongs: number | string;
-}
-export function useGetAllAlbums() {
-    const [albums, setAlbums] = React.useState<IAlbum[]>([]);
-    React.useEffect(() => {
-        MusicFiles.getAlbums()
-            .then((result: IAlbum[]) => setAlbums(result.map(item => ({
-                ...item,
-                numberOfSongs: Number(item.numberOfSongs),
-                cover: avatarHelper.getAvatar(),
-            }))))
-            .catch((error: Error) => {
-                console.log(error.message);
-            });
-    }, []);
-
-    return {
-        albums,
-    }
-}
-
 import { IDrawerHomeContext } from '../interfaces';
 import { avatarHelper } from '../helpers/songs-screen-helpers';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';

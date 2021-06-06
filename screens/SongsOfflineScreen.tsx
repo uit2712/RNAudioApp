@@ -6,8 +6,10 @@ import {
     StyleSheet
 } from 'react-native';
 import { SoundPlayerContext } from '../context-api';
-import { IAlbum, SoundFileType, useGetAllAlbums, } from '../hooks';
+import { SoundFileType, } from '../hooks';
+import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
 import { useGetAllArtists } from '../hooks/artists-screen-hooks';
+import { IAlbum } from '../interfaces/albums-screen-interfaces';
 import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
