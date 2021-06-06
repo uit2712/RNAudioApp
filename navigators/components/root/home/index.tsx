@@ -15,6 +15,7 @@ import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProg
 import { navigate } from '../../../config/root';
 import TabSoundPlayerDetailNavigator from './tab-detail';
 import { useDrawHomeSettings } from '../../../../hooks';
+import TabSearchNavigator from './tab-search';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -68,6 +69,15 @@ const screens: IDrawerHomeNavigatorScreen[] = [
         name: 'TabSoundPlayerDetail',
         title: 'Trình chơi nhạc',
         component: TabSoundPlayerDetailNavigator,
+        getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
+        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
+        icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: false,
+    },
+    {
+        name: 'TabSearch',
+        title: 'Tìm kiếm',
+        component: TabSearchNavigator,
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,

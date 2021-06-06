@@ -15,8 +15,6 @@ function HomeHeader({
 }: {
     listMenuSelections?: IMenuSelection[],
 }) {
-    const navigation = useNavigation<RootNavigationProp>();
-
     return (
         <View
             style={{
@@ -27,20 +25,10 @@ function HomeHeader({
             }}
         >
             <View style={{ flex: 4, }}>
-                <TouchableOpacity onPress={navigation.toggleDrawer}>
-                    <MaterialIcons
-                        name='menu'
-                        size={30}
-                    />
-                </TouchableOpacity>
+                <HomeHeaderLeftMenu/>
             </View>
             <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <TouchableOpacity>
-                    <Feather
-                        name='search'
-                        size={30}
-                    />
-                </TouchableOpacity>
+                <HomeHeaderSearch/>
                 <TouchableOpacity>
                     <Ionicons
                         name='mic'
@@ -50,6 +38,40 @@ function HomeHeader({
                 <HomeHeaderRightMenu listMenuSelections={listMenuSelections}/>
             </View>
         </View>
+    )
+}
+
+function HomeHeaderLeftMenu() {
+    const navigation = useNavigation<RootNavigationProp>();
+
+    return (
+        <TouchableOpacity onPress={navigation.toggleDrawer}>
+            <MaterialIcons
+                name='menu'
+                size={30}
+            />
+        </TouchableOpacity>
+    )
+}
+
+function HomeHeaderSearch() {
+    const navigation = useNavigation<RootNavigationProp>();
+
+    return (
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Home', {
+                screen: 'TabSearch',
+                params: {
+                    screen: 'Search',
+                    params: {}
+                }
+            })}
+        >
+            <Feather
+                name='search'
+                size={30}
+            />
+        </TouchableOpacity>
     )
 }
 

@@ -10,17 +10,12 @@ import { View } from 'react-native';
 import { IMenuSelection } from '../../../../../interfaces';
 import CustomMenu from '../../../../../common/components/CustomMenu';
 import { SoundPlayerDetailThemeContext } from '../../../../themes';
-import HomeHeader from '../../../../../common/components/HomeHeader';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
 
 function TabSoundPlayerDetailNavigator() {
     return (
-        <TabSoundPlayerDetail.Navigator
-            screenOptions={{
-                header: () => <HomeHeader/>
-            }}
-        >
+        <TabSoundPlayerDetail.Navigator>
             <TabSoundPlayerDetail.Screen
                 name='SoundPlayerDetail'
                 component={SoundPlayerScreen}
