@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { TabSourceParams } from '../../../../config/root/home/tab-search/tab-source';
 import SongsOfflineScreen from '../../../../../screens/SongsOfflineScreen';
 import SongsOnlineScreen from '../../../../../screens/SongsOnlineScreen';
+import { Text } from 'react-native';
 
 const TabSource = createMaterialTopTabNavigator<TabSourceParams>();
 
@@ -13,14 +14,14 @@ function TabSourceNavigator() {
                 name='Offline'
                 component={SongsOfflineScreen}
                 options={{
-                    title: 'Thư viện'
+                    tabBarLabel: () => <Text>Thư viện</Text>
                 }}
             />
             <TabSource.Screen
                 name='Online'
                 component={SongsOnlineScreen}
                 options={{
-                    title: 'Trực tuyến'
+                    tabBarLabel: () => <Text>Trực tuyến</Text>
                 }}
             />
         </TabSource.Navigator>

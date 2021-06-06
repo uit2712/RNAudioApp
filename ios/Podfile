@@ -16,7 +16,6 @@ target 'RNMusicApp' do
 
   pod 'RNReactNativeGetMusicFiles', :path => '../node_modules/react-native-get-music-files'
 
-  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
 
   target 'RNMusicAppTests' do
     inherit! :complete

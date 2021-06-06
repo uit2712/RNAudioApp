@@ -1,6 +1,4 @@
 rootProject.name = 'RNMusicApp'
-include ':react-native-i18n'
-project(':react-native-i18n').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-i18n/android')
 include ':react-native-get-music-files'
 project(':react-native-get-music-files').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-get-music-files/android')
 include ':react-native-vector-icons'

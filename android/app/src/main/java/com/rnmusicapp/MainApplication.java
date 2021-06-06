@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.cinder92.musicfiles.RNReactNativeGetMusicFilesPackage;
 import com.drazail.rnandroidstore.RNAndroidStorePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
