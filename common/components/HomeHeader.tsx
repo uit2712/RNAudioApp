@@ -6,9 +6,15 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { IMenuSelection } from '../../interfaces';
 import { RootNavigationProp } from '../../navigators/config/root';
+import CustomMenu from './CustomMenu';
 
-function HomeHeader() {
+function HomeHeader({
+    listMenuSelections,
+}: {
+    listMenuSelections?: IMenuSelection[],
+}) {
     const navigation = useNavigation<RootNavigationProp>();
 
     return (
@@ -41,14 +47,31 @@ function HomeHeader() {
                         size={30}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Entypo
-                        name='dots-three-vertical'
-                        size={30}
-                    />
-                </TouchableOpacity>
+                <HomeHeaderRightMenu listMenuSelections={listMenuSelections}/>
             </View>
         </View>
+    )
+}
+
+function HomeHeaderRightMenu({
+    listMenuSelections
+}: {
+    listMenuSelections?: IMenuSelection[],
+}) {
+    if (!listMenuSelections) {
+        return null;
+    }
+    
+    return (
+        <CustomMenu
+            listMenuSelections={listMenuSelections}
+            triggerComponent={() => (
+                <Entypo
+                    name='dots-three-vertical'
+                    size={30}
+                />
+            )}
+        />
     )
 }
 

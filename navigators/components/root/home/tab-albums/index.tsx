@@ -10,7 +10,15 @@ function TabAlbumsNavigator() {
     return (
         <TabAlbums.Navigator
             screenOptions={{
-                header: () => <HomeHeader/>
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Hiển thị album ẩn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo' },
+                        ]}
+                    />
+                )
             }}
         >
             <TabAlbums.Screen

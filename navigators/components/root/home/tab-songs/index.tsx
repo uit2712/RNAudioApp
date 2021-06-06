@@ -10,7 +10,15 @@ function TabSongsNavigators() {
     return (
         <TabSongs.Navigator
             screenOptions={{
-                header: () => <HomeHeader/>
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Trộn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo' },
+                        ]}
+                    />
+                )
             }}
         >
             <TabSongs.Screen

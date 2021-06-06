@@ -10,15 +10,22 @@ function TabPlaylistsNavigator() {
     return (
         <TabPlaylists.Navigator
             screenOptions={{
-                header: () => <HomeHeader/>
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Danh sách phát dự phòng' },
+                            { text: 'Khôi phục danh sách phát' },
+                            { text: 'Cân bằng' },
+                            { text: 'Hiển thị danh sách phát ẩn' },
+                            { text: 'Sắp xếp theo' },
+                        ]}
+                    />
+                )
             }}
         >
             <TabPlaylists.Screen
                 name='Playlists'
                 component={PlaylistsScreen}
-                options={{
-                    headerShown: false,
-                }}
             />
         </TabPlaylists.Navigator>
     )

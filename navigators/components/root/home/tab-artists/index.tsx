@@ -10,7 +10,15 @@ function TabArtistsNavigators() {
     return (
         <TabArtists.Navigator
             screenOptions={{
-                header: () => <HomeHeader/>
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Hiển thị nghệ sĩ ẩn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo' },
+                        ]}
+                    />
+                )
             }}
         >
             <TabArtists.Screen
