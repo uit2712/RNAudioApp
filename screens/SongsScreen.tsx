@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FlatList, TouchableOpacity, VirtualizedList, } from 'react-native';
+import { TouchableOpacity, VirtualizedList, } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
@@ -13,12 +13,14 @@ import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selector
 
 function SoundsScreen() {
     const { player } = useGetPlayerInfo();
+    console.log(player.listSounds)
 
     return (
         <VirtualizedList
             data={player.listSounds}
             renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
                 <Sound
+                    key={item.id}
                     value={item}
                     index={index}
                     isActive={index === player.currentIndex}

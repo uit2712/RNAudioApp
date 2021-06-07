@@ -23,11 +23,12 @@ function SongsOfflineScreen() {
         <SectionList
             sections={data}
             renderItem={(props) => (
-                <SongsOfflineSection {...props} />
+                <SongsOfflineSection key={props.section.type} {...props} />
             )}
             renderSectionHeader={({ section }) => (
                 section.data.length > 0 ? <section.headerComponent/> : null
             )}
+            keyExtractor={(item: SongsOfflineSectionItemType, index: number) => `${index}`}
         />
     )
 }
