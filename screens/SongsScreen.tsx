@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FlatList, TouchableOpacity, } from 'react-native';
+import { FlatList, TouchableOpacity, VirtualizedList, } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
@@ -15,9 +15,9 @@ function SoundsScreen() {
     const { player } = useGetPlayerInfo();
 
     return (
-        <FlatList
+        <VirtualizedList
             data={player.listSounds}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
                 <Sound
                     value={item}
                     index={index}
@@ -25,12 +25,9 @@ function SoundsScreen() {
                 />
             )}
             keyExtractor={item => item.path.toString()}
-            // Performance settings
-            removeClippedSubviews={true} // Unmount components when outside of window 
             initialNumToRender={7} // Reduce initial render amount
-            maxToRenderPerBatch={1} // Reduce number in each render batch
-            updateCellsBatchingPeriod={100} // Increase time between renders
-            windowSize={7} // Reduce the window size
+            getItemCount={(data: SoundFileType[]) => data.length}
+            getItem={(data: SoundFileType[], index: number) => data[index]}
         />
     )
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FlatList, TouchableOpacity } from 'react-native';
+import { TouchableOpacity, VirtualizedList } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { IArtist } from '../interfaces/artists-screen-interfaces';
@@ -13,18 +13,20 @@ function ArtistsScreen() {
     const { artists } = useGetAllArtists();
 
     return (
-        <FlatList
+        <VirtualizedList
             data={artists}
             style={{
                 paddingHorizontal: 10,
             }}
-            renderItem={({ item }) => (
+            renderItem={({ item }: { item: IArtist }) => (
                 <ArtistItem
                     key={item.id}
                     value={item}
                 />
             )}
-            keyExtractor={(item, index) => item.id + index}
+            keyExtractor={(item: IArtist, index) => item.id + index}
+            getItemCount={(data: IArtist[]) => data.length}
+            getItem={(data: IArtist[], index: number) => data[index]}
         />
     )
 }

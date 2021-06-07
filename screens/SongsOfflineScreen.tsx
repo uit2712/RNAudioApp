@@ -15,6 +15,7 @@ import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '../context-api';
+import { listToMatrix } from '../functions';
 import { useGetSearchedAlbumsSelector } from '../store/selectors/albums-screen-selectors';
 import { useGetSearchedArtistsSelector } from '../store/selectors/artists-screen-selectors';
 import { useGetSearchedSongsSelector } from '../store/selectors/songs-screen-selectors';
@@ -31,7 +32,7 @@ function SongsOfflineScreen() {
         )
     }, {
         type: 'albums',
-        data: albums,
+        data: listToMatrix(albums, 2),
         headerComponent: () => (
             <Text style={styles.sectionTitle}>Albums</Text>
         )
@@ -77,7 +78,7 @@ function SongsOfflineSection({
             return (
                 <AlbumItem
                     index={index}
-                    value={item as IAlbum}
+                    items={item as IAlbum[]}
                 />
             )
         case 'artists':

@@ -4,16 +4,15 @@ import React from 'react';
 
 /**
  * 
+ * @param toValue number > 0
  * @param duration miliseconds
  */
 export function useTranslatedAppName({
     toValue,
     duration,
-    callback,
 }: {
     toValue: number,
     duration: number,
-    callback?: () => void,
 }) {
     const appNameTop = useSharedValue(0);
     const animatedAppNameStyle = useAnimatedStyle(() => {

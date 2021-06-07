@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FlatList, Image, Text, View } from 'react-native';
+import { Image, Text, View, VirtualizedList } from 'react-native';
 
 import CustomMenu from '../common/components/CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -8,111 +8,120 @@ import { IAlbum } from '../interfaces/albums-screen-interfaces';
 import { IMenuSelection } from '../interfaces';
 import { MenuOption } from 'react-native-popup-menu';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { listToMatrix } from '../functions';
 import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
 
 function AlbumsScreen() {
-    const { albums, ...result } = useGetAllAlbums();
+    const { albums, } = useGetAllAlbums();
 
     return (
-        <FlatList
-            data={albums}
-            numColumns={2}
+        <VirtualizedList
+            data={listToMatrix(albums, 2)}
             style={{
                 paddingHorizontal: 10,
                 marginTop: 40,
             }}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }: { item: IAlbum[], index: number }) => (
                 <AlbumItem
                     key={index}
-                    value={item}
+                    items={item}
                     index={index}
                 />
             )}
-            keyExtractor={(item, index) => item.id + index}
+            keyExtractor={(items) => items.map(value => value.id).join('')}
+            getItemCount={(data: Array<IAlbum[]>) => data.length}
+            getItem={(data: Array<IAlbum[]>, index: number) => data[index]}
         />
     )
 }
 
 export function AlbumItem({
-    value,
+    items,
     index,
 }: {
-    value: IAlbum,
+    items: IAlbum[],
     index: number,
 }) {
     return (
-        <View
-            style={{
-                flex: 0.5,
-                height: 215,
-                alignItems: 'center',
-                justifyContent: 'center',
-                // backgroundColor: 'red',
-                marginRight: index % 2 === 0 ? 10 : 0,
-                marginBottom: 10,
-                position: 'relative',
-            }}
-        >
-            <View
-                style={{
-                    width: 160,
-                    height: 160,
-                    position: 'absolute',
-                    top: 0,
-                    zIndex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'gray',
-                    opacity: 0.2,
-                    borderRadius: 5,
-                }}
-            />
-            <View
-                style={{
-                    width: 160,
-                    height: 160,
-                    position: 'absolute',
-                    top: 0,
-                    zIndex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 5,
-                }}
-            >
-                <Image
-                    source={{
-                        uri: value.cover,
-                    }}
-                    width={150}
-                    height={150}
-                    style={{
-                        width: 150,
-                        height: 150,
-                        borderRadius: 5,
-                    }}
-                />
-            </View>
-            <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    height: 150,
-                    width: '100%',
-                    backgroundColor: 'gray',
-                    borderRadius: 5,
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    opacity: 0.5,
-                }}
-            >
-                <Text style={{ fontSize: 18, fontWeight: 'bold', }}>{value.album}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, }}>
-                    <Text style={{ flex: 0.5, textAlign: 'left', }}>{value.numberOfSongs} bài hát</Text>
-                    <View style={{ flex: 0.5, alignItems: 'flex-end', }}>
-                        <AlbumItemMenu name={value.album}/>
+        <View style={{ flexDirection: 'row', flex: 1, }}>
+            {
+                items.map((item: IAlbum) => (
+                    <View
+                        key={item.id}
+                        style={{
+                            flex: 0.5,
+                            height: 215,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            // backgroundColor: 'red',
+                            marginRight: index % 2 === 0 ? 10 : 0,
+                            marginBottom: 10,
+                            position: 'relative',
+                        }}
+                    >
+                        <View
+                            style={{
+                                width: 160,
+                                height: 160,
+                                position: 'absolute',
+                                top: 0,
+                                zIndex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: 'gray',
+                                opacity: 0.2,
+                                borderRadius: 5,
+                            }}
+                        />
+                        <View
+                            style={{
+                                width: 160,
+                                height: 160,
+                                position: 'absolute',
+                                top: 0,
+                                zIndex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: 5,
+                            }}
+                        >
+                            <Image
+                                source={{
+                                    uri: item.cover,
+                                }}
+                                width={150}
+                                height={150}
+                                style={{
+                                    width: 150,
+                                    height: 150,
+                                    borderRadius: 5,
+                                }}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                height: 150,
+                                width: '100%',
+                                backgroundColor: 'gray',
+                                borderRadius: 5,
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                                opacity: 0.5,
+                            }}
+                        >
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', }}>{item.album}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, }}>
+                                <Text style={{ flex: 0.5, textAlign: 'left', }}>{item.numberOfSongs} bài hát</Text>
+                                <View style={{ flex: 0.5, alignItems: 'flex-end', }}>
+                                    <AlbumItemMenu name={item.album}/>
+                                </View>
+                            </View>
+                        </View>
                     </View>
-                </View>
-            </View>
+                ))
+            }
         </View>
     )
 }

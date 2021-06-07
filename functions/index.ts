@@ -13,3 +13,24 @@ export function shuffleArray<T>(array: T[]) {
 export function formatTimeString(miliseconds: number) {
     return miliseconds > 0 ? new Date(miliseconds).toISOString().substr(11, 8) : '';
 }
+
+export function listToMatrix<T>(list: T[], elementsPerSubArray: number): Array<T[]> {
+    if (elementsPerSubArray <= 0) {
+        return [];
+    }
+
+    let matrix: Array<T[]> = [];
+    let i: number;
+    let k: number;
+
+    for (i = 0, k = -1; i < list.length; i++) {
+        if (i % elementsPerSubArray === 0) {
+            k++;
+            matrix[k] = [];
+        }
+
+        matrix[k].push(list[i]);
+    }
+
+    return matrix;
+}
