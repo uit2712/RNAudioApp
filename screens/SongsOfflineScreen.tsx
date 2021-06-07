@@ -4,7 +4,6 @@ import {
     SectionList,
     SectionListRenderItemInfo,
     StyleSheet,
-    Text
 } from 'react-native';
 import { SongsOfflineSectionItemType, SongsOfflineSectionType } from '../types/songs-offline-screen-types';
 
@@ -15,34 +14,10 @@ import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '../context-api';
-import { listToMatrix } from '../functions';
-import { useGetSearchedAlbumsSelector } from '../store/selectors/albums-screen-selectors';
-import { useGetSearchedArtistsSelector } from '../store/selectors/artists-screen-selectors';
-import { useGetSearchedSongsSelector } from '../store/selectors/songs-screen-selectors';
+import { useGetSectionsData } from '../hooks/songs-offline-screen-hooks';
 
 function SongsOfflineScreen() {
-    const songs = useGetSearchedSongsSelector();
-    const albums = useGetSearchedAlbumsSelector();
-    const artists = useGetSearchedArtistsSelector();
-    const data: SongsOfflineSectionType[] = [{
-        type: 'songs',
-        data: songs,
-        headerComponent: () => (
-            <Text style={styles.sectionTitle}>Bài hát</Text>
-        )
-    }, {
-        type: 'albums',
-        data: listToMatrix(albums, 2),
-        headerComponent: () => (
-            <Text style={styles.sectionTitle}>Albums</Text>
-        )
-    }, {
-        type: 'artists',
-        data: artists,
-        headerComponent: () => (
-            <Text style={styles.sectionTitle}>Nghệ sĩ</Text>
-        )
-    }];
+    const data = useGetSectionsData();
 
     return (
         <SectionList
@@ -77,7 +52,6 @@ function SongsOfflineSection({
         case 'albums':
             return (
                 <AlbumItem
-                    index={index}
                     items={item as IAlbum[]}
                 />
             )
@@ -89,14 +63,6 @@ function SongsOfflineSection({
 }
 
 const styles = StyleSheet.create({
-    sectionTitle: {
-        height: 50,
-        backgroundColor: 'black',
-        color: 'darkorange',
-        textAlignVertical: 'center',
-        paddingHorizontal: 10,
-        fontSize: 20,
-    }
 })
 
 export default SongsOfflineScreen;

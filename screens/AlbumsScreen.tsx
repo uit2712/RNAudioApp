@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Image, Text, View, VirtualizedList } from 'react-native';
+import { Image, StyleSheet, Text, View, VirtualizedList } from 'react-native';
 
 import CustomMenu from '../common/components/CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -25,7 +25,6 @@ function AlbumsScreen() {
                 <AlbumItem
                     key={index}
                     items={item}
-                    index={index}
                 />
             )}
             keyExtractor={(items) => items.map(value => value.id).join('')}
@@ -37,96 +36,56 @@ function AlbumsScreen() {
 
 export function AlbumItem({
     items,
-    index,
 }: {
     items: IAlbum[],
-    index: number,
 }) {
     return (
-        <View style={{ flexDirection: 'row', flex: 1, }}>
+        <View style={styles.albumItem}>
             {
-                items.map((item: IAlbum) => (
-                    <View
+                items.map((item: IAlbum, index: number) => (
+                    <AlbumItemColumn
                         key={item.id}
-                        style={{
-                            flex: 0.5,
-                            height: 215,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            // backgroundColor: 'red',
-                            marginRight: index % 2 === 0 ? 10 : 0,
-                            marginBottom: 10,
-                            position: 'relative',
-                        }}
-                    >
-                        <View
-                            style={{
-                                width: 160,
-                                height: 160,
-                                position: 'absolute',
-                                top: 0,
-                                zIndex: 1,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backgroundColor: 'gray',
-                                opacity: 0.2,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <View
-                            style={{
-                                width: 160,
-                                height: 160,
-                                position: 'absolute',
-                                top: 0,
-                                zIndex: 1,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: 5,
-                            }}
-                        >
-                            <Image
-                                source={{
-                                    uri: item.cover,
-                                }}
-                                width={150}
-                                height={150}
-                                style={{
-                                    width: 150,
-                                    height: 150,
-                                    borderRadius: 5,
-                                }}
-                            />
-                        </View>
-                        <View
-                            style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                height: 150,
-                                width: '100%',
-                                backgroundColor: 'gray',
-                                borderRadius: 5,
-                                justifyContent: 'flex-end',
-                                alignItems: 'center',
-                                opacity: 0.5,
-                            }}
-                        >
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', }}>{item.album}</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, }}>
-                                <Text style={{ flex: 0.5, textAlign: 'left', }}>{item.numberOfSongs} bài hát</Text>
-                                <View style={{ flex: 0.5, alignItems: 'flex-end', }}>
-                                    <AlbumItemMenu name={item.album}/>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
+                        item={item}
+                        index={index}
+                    />
                 ))
             }
         </View>
     )
 }
 
-function AlbumItemMenu({
+function AlbumItemColumn({
+    item,
+    index,
+}: {
+    item: IAlbum,
+    index: number,
+}) {
+    return (
+        <View style={[styles.albumItemColumn, { marginRight: index === 0 ? 10 : 0, }]}>
+            <View style={styles.albumItemColumnRect}/>
+            <View style={styles.albumItemColumnCoverContainer}>
+                <Image
+                    source={{
+                        uri: item.cover,
+                    }}
+                    style={styles.albumItemColumnCoverContainerSource}
+                />
+            </View>
+            <View style={styles.albumItemColumnInfo}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', }}>{item.album}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, }}>
+                    <Text style={{ flex: 0.5, textAlign: 'left', }}>{item.numberOfSongs} bài hát</Text>
+                    <View style={{ flex: 0.5, alignItems: 'flex-end', }}>
+                        <AlbumItemColumnMenu name={item.album}/>
+                    </View>
+                </View>
+            </View>
+        </View>
+    )
+}
+
+function AlbumItemColumnMenu({
     name,
 }: {
     name: string,
@@ -169,5 +128,61 @@ function AlbumItemMenu({
         />
     )
 }
+
+const styles = StyleSheet.create({
+    albumItem: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+    },
+    albumItemColumn: {
+        flex: 0.5,
+        height: 215,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        position: 'relative',
+    },
+    albumItemColumnRect: {
+        width: 160,
+        height: 160,
+        position: 'absolute',
+        top: 0,
+        zIndex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'gray',
+        opacity: 0.2,
+        borderRadius: 5,
+    },
+    albumItemColumnCoverContainer: {
+        width: 160,
+        height: 160,
+        position: 'absolute',
+        top: 0,
+        zIndex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+    },
+    albumItemColumnCoverContainerSource: {
+        width: 150,
+        height: 150,
+        borderRadius: 5,
+    },
+    albumItemColumnInfo: {
+        position: 'absolute',
+        bottom: 0,
+        height: 150,
+        width: '100%',
+        backgroundColor: 'gray',
+        borderRadius: 5,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        opacity: 0.5,
+    }
+})
 
 export default AlbumsScreen;
