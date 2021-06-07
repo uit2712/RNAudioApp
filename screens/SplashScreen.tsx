@@ -24,12 +24,8 @@ function SplashScreen() {
     const { isGetAllDataFinished } = useGetAllData();
     React.useEffect(() => {
         if (isAnimatedFinished && isGetAllDataFinished) {
-            navigation.navigate('Home', {
-                screen: 'TabSongs',
-                params: {
-                    screen: 'Songs',
-                    params: {},
-                }
+            navigation.reset({
+                routes: [{ name: 'Home' }]
             });
         }
     }, [isAnimatedFinished, isGetAllDataFinished]);
