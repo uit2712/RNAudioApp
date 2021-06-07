@@ -7,6 +7,10 @@ import { BackHandler } from 'react-native';
 import { DrawerHomeContext } from '../context-api';
 import React from 'react';
 import SoundPlayer from 'react-native-sound';
+import { useGetAllAlbums } from './albums-screen-hooks';
+import { useGetAllArtists } from './artists-screen-hooks';
+import { useGetAllMusicFiles } from './songs-screen-hooks';
+import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],
@@ -425,5 +429,14 @@ export function useHomeBottomTabHelper() {
 
     return {
         setIsShowTabBar,
+    }
+}
+
+export function useGetAllData() {
+    const songsData = useGetAllMusicFiles();
+    const artistsData = useGetAllArtists();
+    const albumsData = useGetAllAlbums();
+    return {
+        isGetAllDataFinished: songsData.isFinished && artistsData.isFinished && albumsData.isFinished,
     }
 }

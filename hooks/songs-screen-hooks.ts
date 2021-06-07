@@ -121,6 +121,7 @@ export function useGetAllMusicFiles() {
         errorMessage,
         isLoading,
         warningMessage,
+        isFinished: isLoadFirstTime === true,
         refresh: () => setIsRefresh(true),
     };
 }

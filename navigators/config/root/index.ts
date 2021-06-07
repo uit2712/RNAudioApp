@@ -4,10 +4,12 @@ import { DrawerHomeScreenParams } from './home';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerSettingsScreenParams } from './settings';
 import React from 'react';
+import { StackSplashScreenParams } from './splash-screen';
 
 export type RootParams = {
     Home: DrawerHomeScreenParams;
     Settings: DrawerSettingsScreenParams;
+    Splash: StackSplashScreenParams;
 }
 
 export type RootNavigationProp = DrawerNavigationProp<RootParams>;

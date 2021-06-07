@@ -47,6 +47,7 @@ export function useGetAllArtists() {
         artists,
         isLoading,
         errorMessage,
+        isFinished: isLoadFirstTime === true,
         refresh: () => setIsRefresh(true),
     }
 }

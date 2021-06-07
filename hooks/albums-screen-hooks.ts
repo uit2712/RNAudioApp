@@ -47,6 +47,7 @@ export function useGetAllAlbums() {
         albums,
         isLoading,
         errorMessage,
+        isFinished: isLoadFirstTime === true,
         refresh: () => setIsRefresh(true),
     }
 }
