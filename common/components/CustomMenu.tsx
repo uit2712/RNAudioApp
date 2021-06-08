@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ICustomMenuProps, IMenuSelection } from '../../interfaces';
+import { ICustomMenuProps, IMenuSelection } from '@interfaces/index';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 function CustomMenu(props: ICustomMenuProps) {

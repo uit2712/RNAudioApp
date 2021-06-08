@@ -1,5 +1,5 @@
-import { IApplicationState } from '../interfaces';
-import { IArtist } from '../../interfaces/artists-screen-interfaces';
+import { IApplicationState } from '@interfaces/index';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';
 

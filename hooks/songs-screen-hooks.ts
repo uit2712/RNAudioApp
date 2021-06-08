@@ -1,7 +1,7 @@
 import { PERMISSIONS, check } from 'react-native-permissions';
 import RN, { PermissionsAndroid } from 'react-native';
 
-import { ITrackInfo } from '../interfaces/songs-screen-interfaces';
+import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { SoundFileType } from '../types/songs-screen-types';

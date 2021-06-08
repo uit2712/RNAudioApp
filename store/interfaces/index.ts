@@ -1,6 +1,6 @@
-import { IAlbum } from '../../interfaces/albums-screen-interfaces';
-import { IArtist } from '../../interfaces/artists-screen-interfaces';
-import { IPlaylist } from '../../interfaces/playlists-screen-interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
+import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { SoundFileType } from '../../types/songs-screen-types';
 
 export interface IPlaylistsScreenState {

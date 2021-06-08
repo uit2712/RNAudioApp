@@ -1,5 +1,5 @@
-import { IAlbum } from '../interfaces/albums-screen-interfaces';
-import { IArtist } from '../interfaces/artists-screen-interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { SoundFileType } from './songs-screen-types';
 
 export type SongsOfflineSectionItemType = SoundFileType | IAlbum[] | IArtist;

@@ -1,4 +1,4 @@
-import { IAlbum } from '../interfaces/albums-screen-interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { avatarHelper } from '@helpers/songs-screen-helpers';

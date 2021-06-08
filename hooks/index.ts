@@ -1,4 +1,4 @@
-import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '../interfaces';
+import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
 import { formatTimeString, shuffleArray } from '@functions/index';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 

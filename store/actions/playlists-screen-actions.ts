@@ -1,4 +1,4 @@
-import { PlaylistType } from '../../interfaces/playlists-screen-interfaces';
+import { PlaylistType } from '.@interfaces/playlists-screen-interfaces';
 import { SoundFileType } from '../../types/songs-screen-types';
 
 type AddAudioToPlaylistPayload = {

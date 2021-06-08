@@ -1,4 +1,4 @@
-import { IArtist } from '../../interfaces/artists-screen-interfaces';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
 
 export type ArtistsScreenActions = {
     type: 'SET_LIST_ARTISTS';

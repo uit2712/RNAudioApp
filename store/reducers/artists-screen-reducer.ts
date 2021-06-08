@@ -1,5 +1,5 @@
 import { ArtistsScreenActions } from '../actions/artists-screen-actions';
-import { IArtistsScreenState, } from '../interfaces';
+import { IArtistsScreenState, } from '@interfaces/index';
 
 const initializeState: IArtistsScreenState = {
     artists: [],

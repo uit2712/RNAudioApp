@@ -4,8 +4,8 @@ import { Image, StyleSheet, Text, View, VirtualizedList } from 'react-native';
 
 import CustomMenu from '@common/components/CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { IAlbum } from '../interfaces/albums-screen-interfaces';
-import { IMenuSelection } from '../interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
+import { IMenuSelection } from '@interfaces/index';
 import { MenuOption } from 'react-native-popup-menu';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { listToMatrix } from '@functions/index';

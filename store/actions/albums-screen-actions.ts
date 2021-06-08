@@ -1,4 +1,4 @@
-import { IAlbum } from '../../interfaces/albums-screen-interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
 
 export type AlbumsScreenActions = {
     type: 'SET_LIST_ALBUMS';

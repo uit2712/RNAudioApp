@@ -1,4 +1,4 @@
-import { IApplicationState } from '../interfaces';
+import { IApplicationState } from '@interfaces/index';
 import { SoundFileType } from '../../types/songs-screen-types';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';

@@ -3,8 +3,8 @@ import * as React from 'react';
 import { TouchableOpacity, VirtualizedList } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
-import { IArtist } from '../interfaces/artists-screen-interfaces';
-import { IMenuSelection } from '../interfaces';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
+import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';

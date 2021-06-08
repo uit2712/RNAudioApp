@@ -9,8 +9,8 @@ import { SongsOfflineSectionItemType, SongsOfflineSectionType } from '../types/s
 
 import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
-import { IAlbum } from '../interfaces/albums-screen-interfaces';
-import { IArtist } from '../interfaces/artists-screen-interfaces';
+import { IAlbum } from '@interfaces/albums-screen-interfaces';
+import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';

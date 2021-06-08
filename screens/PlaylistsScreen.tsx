@@ -3,8 +3,8 @@ import * as React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
-import { IMenuSelection } from '../interfaces';
-import { IPlaylist } from '../interfaces/playlists-screen-interfaces';
+import { IMenuSelection } from '@interfaces/index';
+import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';

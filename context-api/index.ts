@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IDrawerHomeContext, IPlayer } from '../interfaces';
+import { IDrawerHomeContext, IPlayer } from '@interfaces/index';
 
 import { SoundFileType } from '../types/songs-screen-types';
 

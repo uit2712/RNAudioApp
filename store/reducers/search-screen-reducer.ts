@@ -1,4 +1,4 @@
-import { ISearchScreenState, } from '../interfaces';
+import { ISearchScreenState, } from '@interfaces/index';
 import { SearchScreenActions } from '../actions/search-screen-actions';
 
 const initializeState: ISearchScreenState = {

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { TouchableOpacity, VirtualizedList, } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
-import { IMenuSelection } from '../interfaces';
+import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { SoundFileType } from '../types/songs-screen-types';
