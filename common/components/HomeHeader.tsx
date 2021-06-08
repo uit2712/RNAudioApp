@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import CustomMenu from './CustomMenu';
+import CustomMenu from '@common/components/CustomMenu';
 import { DrawerHomeContext } from '../../context-api';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';

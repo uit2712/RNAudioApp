@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import CustomMenu from '../../../../../common/components/CustomMenu';
+import CustomMenu from '@common/components/CustomMenu';
 import { DrawerHomeContext } from '../../../../../context-api';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { IMenuSelection } from '../../../../../interfaces';

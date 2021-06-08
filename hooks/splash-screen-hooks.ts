@@ -18,7 +18,6 @@ export function useTranslatedAppName({
     const animatedAppNameStyle = useAnimatedStyle(() => {
         return {
             top: appNameTop.value,
-            
         }
     });
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Image, StyleSheet, Text, View, VirtualizedList } from 'react-native';
 
-import CustomMenu from '../common/components/CustomMenu';
+import CustomMenu from '@common/components/CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IAlbum } from '../interfaces/albums-screen-interfaces';
 import { IMenuSelection } from '../interfaces';

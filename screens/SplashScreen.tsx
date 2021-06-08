@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { DrawerActions, useNavigation } from '@react-navigation/core';
 import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 
 import Animated from 'react-native-reanimated';
@@ -8,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { RootNavigationProp } from '../navigators/config/root';
 import { StyleSheet, } from 'react-native';
 import { useGetAllData } from '../hooks';
+import { useNavigation } from '@react-navigation/core';
 import { useTranslatedAppName } from '../hooks/splash-screen-hooks';
 
 function SplashScreen() {
