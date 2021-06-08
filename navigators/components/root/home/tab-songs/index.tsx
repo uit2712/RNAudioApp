@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import HomeHeader from '@common/components/HomeHeader';
-import SongsScreen from '../../../../../screens/SongsScreen';
+import SongsScreen from '@screens/SongsScreen';
 import { TabSongsParams } from '@navigators/config/root/home/tab-songs';
 import { createStackNavigator } from '@react-navigation/stack';
 

@@ -21,7 +21,8 @@
             "@helpers/*": ["helpers/*"],
             "@hooks/*": ["hooks/*"],
             "@interfaces/*": ["interfaces/*"],
-            "@navigators/*": ["navigators/*"]
+            "@navigators/*": ["navigators/*"],
+            "@screens/*": ["screens/*"]
         }
     },
     "exclude": [

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import AlbumsScreen from '../../../../../screens/AlbumsScreen';
+import AlbumsScreen from '@screens/AlbumsScreen';
 import HomeHeader from '@common/components/HomeHeader';
 import { TabAlbumsParams } from '@navigators/config/root/home/tab-albums';
 import { createStackNavigator } from '@react-navigation/stack';

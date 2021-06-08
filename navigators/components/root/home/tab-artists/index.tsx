@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ArtistsScreen from '../../../../../screens/ArtistsScreen';
+import ArtistsScreen from '@screens/ArtistsScreen';
 import HomeHeader from '@common/components/HomeHeader';
 import { TabArtistsParams } from '@navigators/config/root/home/tab-artists';
 import { createStackNavigator } from '@react-navigation/stack';
