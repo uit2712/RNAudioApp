@@ -44,9 +44,6 @@ export interface IPlayer {
     status: AudioStatusType;
     duration: number; // seconds
     currentTime: number; // seconds
-    durationString: string;
-    currentTimeString: string;
-    currentAudioName: string;
     isDisabledButtonPlay: boolean;
     isDisabledButtonPause: boolean;
     isDisabledButtonStop: boolean;
@@ -61,16 +58,18 @@ export interface IPlayer {
     volume: number; // percents from 0-100
     currentIndex: number;
     listSounds: SoundFileType[];
-    currentAudioInfo: {
-        name: string;
-        genre: string | undefined;
-        artist: string | undefined;
-        album: string | undefined;
-        other: string;
-        durationString: string;
-        currentTimeString: string;
-        duration: number;
-        currentTime: number;
-        cover?: string;
-    } | null;
+    currentAudioInfo: ICurrentAudioInfo;
+}
+
+export interface ICurrentAudioInfo {
+    name: string;
+    genre: string | undefined;
+    artist: string | undefined;
+    album: string | undefined;
+    other: string;
+    durationString: string;
+    currentTimeString: string;
+    duration: number;
+    currentTime: number;
+    cover?: string;
 }

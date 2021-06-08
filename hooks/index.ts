@@ -1,4 +1,4 @@
-import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
+import { ICurrentAudioInfo, IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
 import { formatTimeString, shuffleArray } from '@functions/index';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
@@ -6,6 +6,7 @@ import { AudioStatusType } from '@types/index';
 import { BackHandler } from 'react-native';
 import { DrawerHomeContext } from '@context-api/index';
 import React from 'react';
+import { SoundFileType } from '@types/songs-screen-types';
 import SoundPlayer from 'react-native-sound';
 import { useGetAllAlbums } from './albums-screen-hooks';
 import { useGetAllArtists } from './artists-screen-hooks';
@@ -20,32 +21,17 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     const [timeRate, setTimeRate] = React.useState(request.timeRate ?? 15); // seconds
     const [status, setStatus] = React.useState<AudioStatusType>('loading');
     const [errorMessage, setErrorMessage] = React.useState('');
-
     const [listSounds, setListSounds] = React.useState(request.listSounds);
-    
-    const [currentTime, setCurrentTime] = React.useState(0);
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            if (player && status === 'play') {
-                player.getCurrentTime((seconds: number) => {
-                    setCurrentTime(seconds);
-                })
-            }
-        }, 100);
-
-        return () => clearInterval(interval);
-    });
-
-    const [speed, setSpeed] = React.useState(1);
-    function changeSpeed(value: number) {
-        if (player && value > 0 && value <= 2) {
-            player.setSpeed(value);
-            setSpeed(value);
-        }
-    }
-
+    const [index, setIndex] = React.useState(-1);
+    const { isShuffle, shuffle } = useShuffle();
     const [duration, setDuration] = React.useState(0);
     const [player, setPlayer] = React.useState<SoundPlayer>();
+    const { currentTime, setCurrentTime } = useCurrentTime({ player, status });
+    const { speed, changeSpeed } = useSpeed({ player });
+    const { volume, changeVolume } = useAudioHelperVolume();
+    const { isMuted, mute, unmute } = useAudioHelperMuteAction({ player, volume, changeVolume });
+    const disabledButtonStatus = useAudioHelperDisabledButtonStatus({ status, index, listSounds });
+    useIsLogStatus({ status, isLogStatus: request.isLogStatus });
 
     function initPlayer(audioIndex: number) {
         return new Promise((resolve: (value?: SoundPlayer) => void) => {
@@ -100,44 +86,6 @@ export function useAudioHelper(request: IRequestAudioHelper = {
             }
         });
     }
-
-    const [index, setIndex] = React.useState(-1);
-    const [isShuffle, setIsShuffle] = React.useState(false);
-    function shuffle() {
-        setIsShuffle(!isShuffle);
-    }
-
-    React.useEffect(() => {
-        if (request.isLogStatus === true) {
-            switch(status) {
-                default: break;
-                case 'loading':
-                    console.log('loading...');
-                    break;
-                case 'next':
-                    console.log('next...');
-                    break;
-                case 'pause':
-                    console.log('pause...');
-                    break;
-                case 'play':
-                    console.log('play...');
-                    break;
-                case 'previous':
-                    console.log('previous...');
-                    break;
-                case 'stop':
-                    console.log('stop...');
-                    break;
-                case 'error':
-                    console.log('error...');
-                    break;
-                case 'success':
-                    console.log('success...');
-                    break;
-            }
-        }
-    }, [request.isLogStatus, status])
 
     function playComplete(isEnd: boolean) {
         if (isEnd === true) {
@@ -261,8 +209,188 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         setIsLoop(!isLoop);
     }
 
+    function playAudio(audioIndex: number) {
+        if (audioIndex !== index) {
+            initPlayer(audioIndex).then((player?: SoundPlayer) => {
+                if (player) {
+                    playCurrentIndex(player);
+                }
+            }).catch(() => {});
+        }
+    }
+
+
+    function getPlayerSettings() {
+        return {
+            timeRate,
+            speed,
+            isShuffle,
+            isLoop,
+            isMuted,
+            volume,
+            currentIndex: index,
+            listSounds,
+        }
+    }
+
+    return {
+        ...disabledButtonStatus,
+        ...getPlayerSettings(),
+        play: () => play(),
+        pause,
+        stop,
+        next,
+        previous,
+        increaseTime,
+        decreaseTime,
+        seekToTime,
+        setSpeed: (speed: number) => changeSpeed(speed),
+        shuffle,
+        loop,
+        mute,
+        unmute,
+        setVolume: (volume: number) => changeVolume(player, volume),
+        playAudio,
+        status,
+        duration,
+        currentTime,
+        currentAudioInfo: getAudioHelperCurrentAudioInfo({ index, currentTime, duration, listSounds }),
+        errorMessage,
+        setListSounds,
+    }
+}
+
+function useCurrentTime({
+    player,
+    status,
+}: {
+    player?: SoundPlayer,
+    status: AudioStatusType,
+}) {
+    const [currentTime, setCurrentTime] = React.useState(0);
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            if (player && status === 'play') {
+                player.getCurrentTime((seconds: number) => {
+                    setCurrentTime(seconds);
+                })
+            }
+        }, 100);
+
+        return () => clearInterval(interval);
+    });
+
+    return {
+        currentTime,
+        setCurrentTime,
+    }
+}
+
+function useSpeed({
+    player,
+}: {
+    player?: SoundPlayer,
+}) {
+    const [speed, setSpeed] = React.useState(1);
+    function changeSpeed(value: number) {
+        if (player && value > 0 && value <= 2) {
+            player.setSpeed(value);
+            setSpeed(value);
+        }
+    }
+
+    return {
+        speed,
+        changeSpeed,
+    }
+}
+
+function useShuffle() {
+    const [isShuffle, setIsShuffle] = React.useState(false);
+    function shuffle() {
+        setIsShuffle(!isShuffle);
+    }
+
+    return {
+        isShuffle,
+        shuffle,
+    }
+}
+
+function useAudioHelperDisabledButtonStatus({
+    status,
+    index,
+    listSounds,
+}: {
+    status: AudioStatusType,
+    index: number,
+    listSounds: SoundFileType[],
+}) {
+    return {
+        isDisabledButtonPlay: status === 'loading' || status === 'play',
+        isDisabledButtonPause: status === 'loading' || status === 'pause' || status === 'stop',
+        isDisabledButtonStop: status === 'loading' || status === 'stop',
+        isDisabledButtonNext: status === 'loading' || index === listSounds.length - 1,
+        isDisabledButtonPrevious: status === 'loading' || index === 0,
+    }
+}
+
+function getAudioHelperCurrentAudioInfo({
+    index,
+    listSounds,
+    duration,
+    currentTime,
+}: {
+    index: number,
+    listSounds: SoundFileType[],
+    duration: number,
+    currentTime: number,
+}): ICurrentAudioInfo {
+    if (listSounds.length > 0 && index >= 0) {
+        const currentSound = listSounds[index];
+        return {
+            name: currentSound.name,
+            genre: currentSound.genre,
+            artist: currentSound.artist,
+            album: currentSound.album,
+            other: currentSound.other,
+            durationString: formatTimeString(duration * 1000),
+            currentTimeString: formatTimeString(currentTime * 1000),
+            duration,
+            currentTime,
+            cover: currentSound.cover,
+        }
+    }
+
+    return {
+        name: '',
+        genre: '',
+        artist: '',
+        album: '',
+        other: '<unknown>',
+        durationString: formatTimeString(0),
+        currentTimeString: formatTimeString(0),
+        duration,
+        currentTime,
+    }
+}
+
+function useIsLogStatus({
+    isLogStatus,
+    status,
+}: {
+    isLogStatus?: boolean,
+    status: AudioStatusType,
+}) {
+    React.useEffect(() => {
+        if (isLogStatus === true) {
+            console.log(`${status}...`);
+        }
+    }, [isLogStatus, status])
+}
+
+function useAudioHelperVolume() {
     const [volume, setVolume] = React.useState(100); // percent
-    const [previousVolume, setPreviousVolume] = React.useState(volume);
     function changeVolume(player: SoundPlayer | undefined, volume: number) {
         if (player && volume >= 0 && volume <= 100) {
             player.setVolume(volume / 100.0);
@@ -270,6 +398,22 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
+    return {
+        volume,
+        changeVolume,
+    }
+}
+
+function useAudioHelperMuteAction({
+    player,
+    volume,
+    changeVolume,
+}: {
+    player?: SoundPlayer,
+    volume: number,
+    changeVolume: (player: SoundPlayer | undefined, volume: number) => void,
+}) {
+    const [previousVolume, setPreviousVolume] = React.useState(volume);
 
     const [isMuted, setIsMuted] = React.useState(false);
     React.useEffect(() => {
@@ -293,106 +437,10 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
-    function playAudio(audioIndex: number) {
-        if (audioIndex !== index) {
-            initPlayer(audioIndex).then((player?: SoundPlayer) => {
-                if (player) {
-                    playCurrentIndex(player);
-                }
-            }).catch(() => {});
-        }
-    }
-
-    function getDurationString() {
-        return formatTimeString(duration * 1000);
-    }
-
-    function getCurrentTimeString() {
-        return formatTimeString(currentTime * 1000);
-    }
-
-    function getCurrentAudioName() {
-        return listSounds.length > 0 && index >= 0 && index < listSounds.length ? listSounds[index].name : '';
-    }
-
-    function getCurrentAudioInfo() {
-        if (listSounds.length > 0 && index >= 0) {
-            const currentSound = listSounds[index];
-            return {
-                name: currentSound.name,
-                genre: currentSound.genre,
-                artist: currentSound.artist,
-                album: currentSound.album,
-                other: currentSound.other,
-                durationString: getDurationString(),
-                currentTimeString: getCurrentTimeString(),
-                duration,
-                currentTime,
-                cover: currentSound.cover,
-            }
-        }
-
-        return null;
-    }
-
-    function isDisabledButtonPlay() {
-        return status === 'loading' || status === 'play';
-    }
-
-    function isDisabledButtonPause() {
-        return status === 'loading' || status === 'pause' || status === 'stop';
-    }
-
-    function isDisabledButtonStop() {
-        return status === 'loading' || status === 'stop';
-    }
-
-    function isDisabledButtonNext() {
-        return status === 'loading' || index === listSounds.length - 1;
-    }
-
-    function isDisabledButtonPrevious() {
-        return status === 'loading' || index === 0;
-    }
-
     return {
-        play: () => play(),
-        pause,
-        stop,
-        next,
-        previous,
-        increaseTime,
-        decreaseTime,
-        seekToTime,
-        setSpeed: (speed: number) => changeSpeed(speed),
-        shuffle,
-        loop,
         mute,
         unmute,
-        setVolume: (volume: number) => changeVolume(player, volume),
-        playAudio,
-        status,
-        duration,
-        currentTime,
-        durationString: getDurationString(),
-        currentTimeString: getCurrentTimeString(),
-        currentAudioName: getCurrentAudioName(),
-        currentAudioInfo: getCurrentAudioInfo(),
-        isDisabledButtonPlay: isDisabledButtonPlay(),
-        isDisabledButtonPause: isDisabledButtonPause(),
-        isDisabledButtonStop: isDisabledButtonStop(),
-        isDisabledButtonNext: isDisabledButtonNext(),
-        isDisabledButtonPrevious: isDisabledButtonPrevious(),
-        timeRate,
-        speed,
-        isShuffle,
-        errorMessage,
-        isLoop,
         isMuted,
-        volume,
-        currentIndex: index,
-        setListSounds,
-        listSounds,
     }
 }
 
@@ -431,11 +479,36 @@ export function useHomeBottomTabHelper() {
     }
 }
 
+/**
+ * Get all data includes: songs, artists, albums
+ */
 export function useGetAllData() {
     const songsData = useGetAllMusicFiles();
     const artistsData = useGetAllArtists();
     const albumsData = useGetAllAlbums();
     return {
         isGetAllDataFinished: songsData.isFinished && artistsData.isFinished && albumsData.isFinished,
+    }
+}
+
+/**
+ * 
+ * @param callback The function callback should call when isRefresh=true
+ */
+export function useRefresh(callback: () => Promise<any>) {
+    const [isRefresh, setIsRefresh] = React.useState(false);
+    React.useEffect(() => {
+        if (isRefresh === true) {
+            callback().then(() => {
+                setIsRefresh(false);
+            }).catch(() => {
+                setIsRefresh(false);
+            });
+        }
+    }, [isRefresh]);
+
+    return {
+        isRefresh,
+        setIsRefresh,
     }
 }
