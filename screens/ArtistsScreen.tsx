@@ -7,7 +7,7 @@ import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { IMenuSelection } from '../interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { useGetAllArtists } from '../hooks/artists-screen-hooks';
+import { useGetAllArtists } from '@hooks/artists-screen-hooks';
 
 function ArtistsScreen() {
     const { artists } = useGetAllArtists();

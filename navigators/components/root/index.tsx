@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SoundPlayerContext } from '@context-api/index';
 import StackSplashNavigator from './splash-screen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useAudioHelper } from '../../../hooks';
+import { useAudioHelper } from '@hooks/index';
 
 const Root = createDrawerNavigator<RootParams>();
 

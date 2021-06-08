@@ -14,7 +14,7 @@ import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';
-import { useGetSectionsData } from '../hooks/songs-offline-screen-hooks';
+import { useGetSectionsData } from '@hooks/songs-offline-screen-hooks';
 
 function SongsOfflineScreen() {
     const data = useGetSectionsData();

@@ -10,9 +10,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { setSearchText } from '../../../../../store/actions/search-screen-actions';
-import { useDebounce } from '../../../../../hooks/search-screen-hooks';
+import { useDebounce } from '@hooks/search-screen-hooks';
 import { useDispatch } from 'react-redux';
-import { useGetSearchTextSelector } from '../../../../../store/selectors/search-screen-selectors';
 import { useNavigation } from '@react-navigation/native';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSearchParams>();

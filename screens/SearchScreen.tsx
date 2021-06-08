@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Text, View, } from 'react-native';
 
-import { useHomeBottomTabHelper } from '../hooks';
+import { useHomeBottomTabHelper } from '@hooks/index';
 
 function SearchScreen() {
     useHomeBottomTabHelper();

@@ -9,7 +9,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Slider from '@react-native-community/slider';
 import { SoundPlayerContext } from '@context-api/index';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useHomeBottomTabHelper } from '../hooks';
+import { useHomeBottomTabHelper } from '@hooks/index';
 
 const themeSettings = {
     iconDefaultColor: 'white',

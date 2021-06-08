@@ -9,7 +9,7 @@ import { IMenuSelection } from '../interfaces';
 import { MenuOption } from 'react-native-popup-menu';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { listToMatrix } from '@functions/index';
-import { useGetAllAlbums } from '../hooks/albums-screen-hooks';
+import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 
 function AlbumsScreen() {
     const { albums, } = useGetAllAlbums();

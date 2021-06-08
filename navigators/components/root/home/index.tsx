@@ -17,10 +17,10 @@ import TabSearchNavigator from './tab-search';
 import TabSongsNavigators from './tab-songs';
 import TabSoundPlayerDetailNavigator from './tab-detail';
 import { navigate } from '../../../config/root';
-import { useDrawHomeSettings } from '../../../../hooks';
-import { useGetAllAlbums } from '../../../../hooks/albums-screen-hooks';
-import { useGetAllArtists } from '../../../../hooks/artists-screen-hooks';
-import { useGetAllMusicFiles } from '../../../../hooks/songs-screen-hooks';
+import { useDrawHomeSettings } from '@hooks/index';
+import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
+import { useGetAllArtists } from '@hooks/artists-screen-hooks';
+import { useGetAllMusicFiles } from '@hooks/songs-screen-hooks';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 

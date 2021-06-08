@@ -18,7 +18,8 @@
             "@constants/*": ["constants/*"],
             "@context-api/*": ["context-api/*"],
             "@functions/*": ["functions/*"],
-            "@helpers/*": ["helpers/*"]
+            "@helpers/*": ["helpers/*"],
+            "@hooks/*": ["hooks/*"]
         }
     },
     "exclude": [

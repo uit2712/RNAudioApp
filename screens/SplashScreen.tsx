@@ -6,9 +6,9 @@ import Animated from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import { RootNavigationProp } from '../navigators/config/root';
 import { StyleSheet, } from 'react-native';
-import { useGetAllData } from '../hooks';
+import { useGetAllData } from '@hooks/index';
 import { useNavigation } from '@react-navigation/core';
-import { useTranslatedAppName } from '../hooks/splash-screen-hooks';
+import { useTranslatedAppName } from '@hooks/splash-screen-hooks';
 
 function SplashScreen() {
     const appNameSize = {
