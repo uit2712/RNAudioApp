@@ -1,4 +1,4 @@
-import { IMAGE_RESOURCE_URL, LIST_IMAGE_NAMES } from '../constants';
+import { IMAGE_RESOURCE_URL, LIST_IMAGE_NAMES } from '@constants/index';
 
 class AvatarHelper {
     private listImageNames = LIST_IMAGE_NAMES;

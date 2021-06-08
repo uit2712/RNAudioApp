@@ -1,5 +1,5 @@
 import FastImage from 'react-native-fast-image';
-import { IMAGE_RESOURCE_URL } from '../../constants';
+import { IMAGE_RESOURCE_URL } from '@constants/index';
 import { IPlaylistsScreenState } from '../interfaces';
 import { PlaylistsScreenActions } from '../actions/playlists-screen-actions';
 
