@@ -6,7 +6,7 @@ import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { SoundFileType } from '../types/songs-screen-types';
 import { avatarHelper } from '../helpers/songs-screen-helpers';
-import { formatTimeString } from '../functions';
+import { formatTimeString } from '@functions/index';
 import { setListSongs } from '../store/actions/songs-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selectors';

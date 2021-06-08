@@ -16,7 +16,8 @@
         "paths": {
             "@common/*": ["common/*"],
             "@constants/*": ["constants/*"],
-            "@context-api/*": ["context-api/*"]
+            "@context-api/*": ["context-api/*"],
+            "@functions/*": ["functions/*"]
         }
     },
     "exclude": [

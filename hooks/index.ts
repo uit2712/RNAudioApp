@@ -1,5 +1,5 @@
 import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '../interfaces';
-import { formatTimeString, shuffleArray } from '../functions';
+import { formatTimeString, shuffleArray } from '@functions/index';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from '../types/index';
