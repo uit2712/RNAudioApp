@@ -1,5 +1,5 @@
-import { AlbumsScreenActions } from '../actions/albums-screen-actions';
-import { IAlbumsScreenState, } from '@interfaces/index';
+import { AlbumsScreenActions } from '@store/actions/albums-screen-actions';
+import { IAlbumsScreenState } from '@store/interfaces';
 
 const initializeState: IAlbumsScreenState = {
     albums: [],

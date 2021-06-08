@@ -1,5 +1,5 @@
-import { ISongsScreenState, } from '@interfaces/index';
-import { SongsScreenActions } from '../actions/Songs-screen-actions';
+import { ISongsScreenState } from '@store/interfaces';
+import { SongsScreenActions } from '@store/actions/songs-screen-actions';
 
 const initializeState: ISongsScreenState = {
     songs: [],
