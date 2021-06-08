@@ -1,10 +1,9 @@
-import { IAlbum } from '@interfaces/albums-screen-interfaces';
-import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
-import { avatarHelper } from '@helpers/songs-screen-helpers';
+import { getAllAlbums } from '@functions/albums-screen-functions';
 import { setListAlbums } from '@store/actions/albums-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
+import { useRefresh } from '@hooks/index';
 
 export function useGetAllAlbums() {
     const { albums, isLoadFirstTime } = useGetAllAlbumsSelector();
@@ -18,30 +17,16 @@ export function useGetAllAlbums() {
     const [errorMessage, setErrorMessage] = React.useState('');
     const dispatch = useDispatch();
     function getAlbums() {
-        setIsLoading(true);
-        MusicFiles.getAlbums()
-            .then((result: IAlbum[]) => {
-                setIsLoading(false);
-                setIsRefresh(false);
-                const albums = result.map(item => ({
-                    ...item,
-                    numberOfSongs: Number(item.numberOfSongs),
-                    cover: avatarHelper.getAvatar(),
-                }));
-                dispatch(setListAlbums(albums));
-            }).catch((error: Error) => {
-                setIsLoading(false);
-                setIsRefresh(false);
-                setErrorMessage(error.message)
-            });
+        return getAllAlbums().then((albums) => {
+            dispatch(setListAlbums(albums));
+            setIsLoading(false);
+        }).catch((error: Error) => {
+            setIsLoading(false);
+            setErrorMessage(error.message);
+        });
     }
 
-    const [isRefresh, setIsRefresh] = React.useState(false);
-    React.useEffect(() => {
-        if (isRefresh === true) {
-            getAlbums();
-        }
-    }, [isRefresh]);
+    const { setIsRefresh } = useRefresh(getAlbums);
 
     return {
         albums,
