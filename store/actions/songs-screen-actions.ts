@@ -1,4 +1,4 @@
-import { SoundFileType } from '@types/songs-screen-types';
+import { SoundFileType } from 'types/songs-screen-types';
 
 export type SongsScreenActions = {
     type: 'SET_LIST_SONGS';

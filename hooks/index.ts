@@ -1,6 +1,7 @@
 import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
 import {
     getAudioHelperCurrentAudioInfo,
+    initPlayer,
     useAudioHelperDisabledButtonStatus,
     useAudioHelperMuteAction,
     useAudioHelperVolume,
@@ -12,15 +13,15 @@ import {
 } from '@helpers/audio-helper';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-import { AudioStatusType } from '@types/index';
+import { AudioStatusType } from 'types/index';
 import { BackHandler } from 'react-native';
 import { DrawerHomeContext } from '@context-api/index';
 import React from 'react';
 import SoundPlayer from 'react-native-sound';
 import { shuffleArray } from '@functions/index';
-import { useGetAllAlbums } from './albums-screen-hooks';
-import { useGetAllArtists } from './artists-screen-hooks';
-import { useGetAllMusicFiles } from './songs-screen-hooks';
+import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
+import { useGetAllArtists } from '@hooks/artists-screen-hooks';
+import { useGetAllMusicFiles } from '@hooks/songs-screen-hooks';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],

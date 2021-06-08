@@ -1,8 +1,8 @@
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
-import { AudioStatusType } from '@types/index';
+import { AudioStatusType } from 'types/index';
 import { ICurrentAudioInfo } from '@interfaces/index';
 import React from 'react';
-import { SoundFileType } from '@types/songs-screen-types';
+import { SoundFileType } from 'types/songs-screen-types';
 import SoundPlayer from 'react-native-sound';
 import { formatTimeString } from '@functions/index';
 
