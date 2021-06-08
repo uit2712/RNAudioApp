@@ -33,58 +33,33 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     const disabledButtonStatus = useAudioHelperDisabledButtonStatus({ status, index, listSounds });
     useIsLogStatus({ status, isLogStatus: request.isLogStatus });
 
-    function initPlayer(audioIndex: number) {
-        return new Promise((resolve: (value?: SoundPlayer) => void) => {
-            if (audioIndex >= 0 && audioIndex < listSounds.length) {
-                if (player) {
-                    player.release();
-                }
-    
-                const callback = (error: Error, player?: SoundPlayer) => {
-                    if (!player) {
-                        resolve(undefined);
-                        return;
-                    }
-        
-                    if (error) {
-                        setStatus('error');
-                        setErrorMessage(error.message);
-                    } else {
-                        setStatus('success');
-                        setErrorMessage('');
-                    }
-                    player.setSpeed(speed);
-                    player.setCurrentTime(0);
-                    setDuration(player.getDuration());
-                    changeVolume(player, volume);
-                    resolve(player);
-                    return;
-                }
-                
-                const currentAudio = listSounds[audioIndex];
-                // If the audio is a 'require' then the second parameter must be the callback.
-                let newPlayer: SoundPlayer | undefined;
-                switch(currentAudio.type) {
-                    default: break;
-                    case 'app-bundle':
-                        newPlayer = new SoundPlayer(currentAudio.path, currentAudio.basePath, (error: Error) => callback(error, newPlayer));
-                        break;
-                    case 'other':
-                        newPlayer = new SoundPlayer(currentAudio.path, undefined, (error) => callback(error, newPlayer));
-                        break;
-                    case 'directory':
-                        newPlayer = new SoundPlayer(currentAudio.path, (error) => callback(error, newPlayer));
-                        break;
-                }
+    function initialized(audioIndex: number) {
+        return initPlayer({
+            audioIndex,
+            listSounds,
+            oldPlayer: player,
+            onInitSettings: (newPlayer?: SoundPlayer) => {
                 if (newPlayer) {
                     setIndex(audioIndex);
                     seekToTime(0);
                     setPlayer(newPlayer);
                 }
-            } else {
-                resolve(undefined);
+            },
+            onError: (error: Error) => {
+                setStatus('error');
+                setErrorMessage(error.message);
+            },
+            onSuccess: (player?: SoundPlayer) => {
+                if (player) {
+                    setStatus('success');
+                    setErrorMessage('');
+                    player.setSpeed(speed);
+                    player.setCurrentTime(0);
+                    setDuration(player.getDuration());
+                    changeVolume(player, volume);
+                }
             }
-        });
+        })
     }
 
     function playComplete(isEnd: boolean) {
@@ -114,7 +89,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
 
     function play() {
         if (!player) {
-            initPlayer(index).then((result?: SoundPlayer) => {
+            initialized(index).then((result?: SoundPlayer) => {
                 playCurrentIndex(result);
             }).catch(() => {});
         } else {
@@ -211,7 +186,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
 
     function playAudio(audioIndex: number) {
         if (audioIndex !== index) {
-            initPlayer(audioIndex).then((player?: SoundPlayer) => {
+            initialized(audioIndex).then((player?: SoundPlayer) => {
                 if (player) {
                     playCurrentIndex(player);
                 }
@@ -257,6 +232,86 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         currentAudioInfo: getAudioHelperCurrentAudioInfo({ index, currentTime, duration, listSounds }),
         errorMessage,
         setListSounds,
+    }
+}
+
+function initPlayer({
+    audioIndex,
+    oldPlayer,
+    listSounds,
+    onError,
+    onSuccess,
+    onInitSettings,
+}: {
+    audioIndex: number,
+    oldPlayer?: SoundPlayer,
+    listSounds: SoundFileType[],
+    onError: (error: Error) => void,
+    onSuccess: (player?: SoundPlayer) => void,
+    onInitSettings: (player?: SoundPlayer) => void,
+}) {
+    return new Promise((resolve: (value?: SoundPlayer) => void) => {
+        if (audioIndex >= 0 && audioIndex < listSounds.length) {
+            if (oldPlayer) {
+                oldPlayer.release();
+            }
+
+            const currentAudio = listSounds[audioIndex];
+            // If the audio is a 'require' then the second parameter must be the callback.
+            let newPlayer: SoundPlayer | undefined;
+            switch(currentAudio.type) {
+                default: break;
+                case 'app-bundle':
+                    newPlayer = new SoundPlayer(currentAudio.path, currentAudio.basePath, (error: Error) => initPlayerCallback({
+                        error,
+                        onError: () => onError(error),
+                        onSuccess: () => {
+                            onSuccess(newPlayer);
+                            resolve(newPlayer);
+                        }
+                    }));
+                    break;
+                case 'other':
+                    newPlayer = new SoundPlayer(currentAudio.path, undefined, (error) => initPlayerCallback({
+                        error,
+                        onError: () => onError(error),
+                        onSuccess: () => {
+                            onSuccess(newPlayer);
+                            resolve(newPlayer);
+                        }
+                    }));
+                    break;
+                case 'directory':
+                    newPlayer = new SoundPlayer(currentAudio.path, (error) => initPlayerCallback({
+                        error,
+                        onError: () => onError(error),
+                        onSuccess: () => {
+                            onSuccess(newPlayer);
+                            resolve(newPlayer);
+                        }
+                    }));
+                    break;
+            }
+            onInitSettings && onInitSettings(newPlayer);
+        } else {
+            resolve(undefined);
+        }
+    });
+}
+
+function initPlayerCallback({
+    error,
+    onSuccess,
+    onError,
+}: {
+    error: Error,
+    onSuccess?: () => void,
+    onError?: () => void,
+}) {
+    if (error) {
+        onError && onError();
+    } else {
+        onSuccess && onSuccess();
     }
 }
 
@@ -414,7 +469,6 @@ function useAudioHelperMuteAction({
     changeVolume: (player: SoundPlayer | undefined, volume: number) => void,
 }) {
     const [previousVolume, setPreviousVolume] = React.useState(volume);
-
     const [isMuted, setIsMuted] = React.useState(false);
     React.useEffect(() => {
         if (volume > 0 && isMuted === true) {
