@@ -5,7 +5,7 @@ import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { DrawerHomeParams } from '../../../config/root/home';
+import { DrawerHomeParams } from '@navigators/config/root/home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
@@ -16,7 +16,7 @@ import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
 import TabSongsNavigators from './tab-songs';
 import TabSoundPlayerDetailNavigator from './tab-detail';
-import { navigate } from '../../../config/root';
+import { navigate } from '@navigators/config/root';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';

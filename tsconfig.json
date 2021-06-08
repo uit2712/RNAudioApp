@@ -20,7 +20,8 @@
             "@functions/*": ["functions/*"],
             "@helpers/*": ["helpers/*"],
             "@hooks/*": ["hooks/*"],
-            "@interfaces/*": ["interfaces/*"]
+            "@interfaces/*": ["interfaces/*"],
+            "@navigators/*": ["navigators/*"]
         }
     },
     "exclude": [

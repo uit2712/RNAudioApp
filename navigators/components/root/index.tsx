@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RootParams, navigationRef } from '../../config/root';
+import { RootParams, navigationRef } from '@navigators/config/root';
 
 import DrawerHomeNavigator from './home';
 import DrawerSettingsNavigator from './settings';

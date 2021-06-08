@@ -4,7 +4,7 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 
 import Animated from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
-import { RootNavigationProp } from '../navigators/config/root';
+import { RootNavigationProp } from '@navigators/config/root';
 import { StyleSheet, } from 'react-native';
 import { useGetAllData } from '@hooks/index';
 import { useNavigation } from '@react-navigation/core';

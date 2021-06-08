@@ -7,7 +7,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { IMenuSelection } from '@interfaces/index';
 import { SoundPlayerDetailThemeContext } from '../../../../themes';
 import SoundPlayerScreen from '../../../../../screens/SoundPlayerScreen';
-import { TabSoundPlayerDetailParams } from '../../../../config/root/home/tab-detail';
+import { TabSoundPlayerDetailParams } from '@navigators/config/root/home/tab-detail';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';

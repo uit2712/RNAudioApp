@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import SplashScreen from '../../../../screens/SplashScreen';
-import { StackSplashParams } from '../../../config/root/splash-screen';
+import { StackSplashParams } from '@navigators/config/root/splash-screen';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const StackSplash = createStackNavigator<StackSplashParams>()
