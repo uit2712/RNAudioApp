@@ -13,7 +13,6 @@ import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selector
 
 function SoundsScreen() {
     const { player } = useGetPlayerInfo();
-    console.log(player.listSounds)
 
     return (
         <VirtualizedList
