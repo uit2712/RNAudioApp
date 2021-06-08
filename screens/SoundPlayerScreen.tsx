@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
-import { SoundPlayerContext } from '../context-api';
+import { SoundPlayerContext } from '@context-api/index';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useHomeBottomTabHelper } from '../hooks';
 

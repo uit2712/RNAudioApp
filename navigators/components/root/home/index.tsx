@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DrawerHomeContext, SoundPlayerContext, } from '../../../../context-api';
+import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';

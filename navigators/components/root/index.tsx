@@ -5,7 +5,7 @@ import { RootParams, navigationRef } from '../../config/root';
 import DrawerHomeNavigator from './home';
 import DrawerSettingsNavigator from './settings';
 import { NavigationContainer } from '@react-navigation/native';
-import { SoundPlayerContext } from '../../../context-api';
+import { SoundPlayerContext } from '@context-api/index';
 import StackSplashNavigator from './splash-screen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useAudioHelper } from '../../../hooks';

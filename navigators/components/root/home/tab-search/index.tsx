@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { DrawerHomeContext } from '../../../../../context-api';
+import { DrawerHomeContext } from '@context-api/index';
 import { Input } from 'react-native-elements';
 import { RootNavigationProp } from '../../../../config/root';
 import { TabSearchParams } from '../../../../config/root/home/tab-search';

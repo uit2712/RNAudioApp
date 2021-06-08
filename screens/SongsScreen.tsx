@@ -7,7 +7,7 @@ import { IMenuSelection } from '../interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { SoundFileType } from '../types/songs-screen-types';
-import { SoundPlayerContext } from '../context-api';
+import { SoundPlayerContext } from '@context-api/index';
 import { navigate } from '../navigators/config/root';
 import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selectors';
 

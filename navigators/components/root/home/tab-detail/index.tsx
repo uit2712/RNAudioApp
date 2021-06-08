@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import CustomMenu from '@common/components/CustomMenu';
-import { DrawerHomeContext } from '../../../../../context-api';
+import { DrawerHomeContext } from '@context-api/index';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { IMenuSelection } from '../../../../../interfaces';
 import { SoundPlayerDetailThemeContext } from '../../../../themes';

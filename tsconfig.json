@@ -15,7 +15,8 @@
         "baseUrl": ".",
         "paths": {
             "@common/*": ["common/*"],
-            "@constants/*": ["constants/*"]
+            "@constants/*": ["constants/*"],
+            "@context-api/*": ["context-api/*"]
         }
     },
     "exclude": [

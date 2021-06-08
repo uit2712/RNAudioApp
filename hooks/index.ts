@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from '../types/index';
 import { BackHandler } from 'react-native';
-import { DrawerHomeContext } from '../context-api';
+import { DrawerHomeContext } from '@context-api/index';
 import React from 'react';
 import SoundPlayer from 'react-native-sound';
 import { useGetAllAlbums } from './albums-screen-hooks';
