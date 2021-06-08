@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
 import { IPlaylist } from '../interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
-import SettingsMenu from '../common/components/SettingsMenu';
+import SettingsMenu from '@common/components/SettingsMenu';
 import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
 
 function PlaylistsScreen() {

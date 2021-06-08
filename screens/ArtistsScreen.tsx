@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { IArtist } from '../interfaces/artists-screen-interfaces';
 import { IMenuSelection } from '../interfaces';
 import { ListItem } from 'react-native-elements';
-import SettingsMenu from '../common/components/SettingsMenu';
+import SettingsMenu from '@common/components/SettingsMenu';
 import { useGetAllArtists } from '../hooks/artists-screen-hooks';
 
 function ArtistsScreen() {

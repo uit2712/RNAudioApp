@@ -5,7 +5,7 @@ import { TouchableOpacity, VirtualizedList, } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '../interfaces';
 import { ListItem } from 'react-native-elements';
-import SettingsMenu from '../common/components/SettingsMenu';
+import SettingsMenu from '@common/components/SettingsMenu';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '../context-api';
 import { navigate } from '../navigators/config/root';
