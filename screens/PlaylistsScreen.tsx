@@ -7,7 +7,7 @@ import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
+import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
 
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();

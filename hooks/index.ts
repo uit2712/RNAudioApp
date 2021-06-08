@@ -10,7 +10,6 @@ import SoundPlayer from 'react-native-sound';
 import { useGetAllAlbums } from './albums-screen-hooks';
 import { useGetAllArtists } from './artists-screen-hooks';
 import { useGetAllMusicFiles } from './songs-screen-hooks';
-import { useGetPlaylists } from '../store/selectors/playlists-screen-selectors';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],

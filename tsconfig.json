@@ -22,7 +22,8 @@
             "@hooks/*": ["hooks/*"],
             "@interfaces/*": ["interfaces/*"],
             "@navigators/*": ["navigators/*"],
-            "@screens/*": ["screens/*"]
+            "@screens/*": ["screens/*"],
+            "@store/*": ["store/*"]
         }
     },
     "exclude": [

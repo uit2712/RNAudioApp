@@ -9,7 +9,7 @@ import SettingsMenu from '@common/components/SettingsMenu';
 import { SoundFileType } from '../types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';
 import { navigate } from '@navigators/config/root';
-import { useGetAllSongsSelector } from '../store/selectors/songs-screen-selectors';
+import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 
 function SoundsScreen() {
     const { player } = useGetPlayerInfo();
