@@ -9,8 +9,13 @@
     "test": "jest",
     "lint": "eslint .",
     "build-pro": "cd android & gradlew assembleRelease",
+    "build-pro-aab": "cd android & gradlew bundleRelease",
     "gradle-clean": "cd android & gradlew clean",
     "gradle-rebuild": "cd android & gradlew build"
+  },
+  "engines": {
+    "node": "14.15.4",
+    "npm": "7.14.0"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
