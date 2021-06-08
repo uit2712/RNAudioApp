@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 
 import React from 'react';
-import { SongsOfflineSectionType } from '../types/songs-offline-screen-types';
+import { SongsOfflineSectionType } from '@types/songs-offline-screen-types';
 import { listToMatrix } from '@functions/index';
 import { useGetSearchedAlbumsSelector } from '@store/selectors/albums-screen-selectors';
 import { useGetSearchedArtistsSelector } from '@store/selectors/artists-screen-selectors';

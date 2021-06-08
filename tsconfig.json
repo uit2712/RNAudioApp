@@ -23,7 +23,8 @@
             "@interfaces/*": ["interfaces/*"],
             "@navigators/*": ["navigators/*"],
             "@screens/*": ["screens/*"],
-            "@store/*": ["store/*"]
+            "@store/*": ["store/*"],
+            "@types/*": ["types/*"]
         }
     },
     "exclude": [

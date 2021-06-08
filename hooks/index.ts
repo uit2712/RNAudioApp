@@ -2,7 +2,7 @@ import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/in
 import { formatTimeString, shuffleArray } from '@functions/index';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-import { AudioStatusType } from '../types/index';
+import { AudioStatusType } from '@types/index';
 import { BackHandler } from 'react-native';
 import { DrawerHomeContext } from '@context-api/index';
 import React from 'react';

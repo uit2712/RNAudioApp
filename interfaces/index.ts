@@ -1,5 +1,5 @@
-import { AudioStatusType } from '../types/index';
-import { SoundFileType } from '../types/songs-screen-types';
+import { AudioStatusType } from '@types/index';
+import { SoundFileType } from '@types/songs-screen-types';
 
 export interface IMenuSelection {
     text: string;

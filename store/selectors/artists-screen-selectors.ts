@@ -1,4 +1,4 @@
-import { IApplicationState } from '@interfaces/index';
+import { IApplicationState } from '@store/interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';

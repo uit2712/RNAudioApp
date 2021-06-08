@@ -1,4 +1,4 @@
-import { IApplicationState } from '@interfaces/index';
+import { IApplicationState } from '@store/interfaces';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { useSelector } from 'react-redux';
 

@@ -1,4 +1,4 @@
-import { SoundFileType } from '../types/songs-screen-types';
+import { SoundFileType } from '@types/songs-screen-types';
 import { Source } from 'react-native-fast-image';
 
 export type PlaylistType = 'last-played' | 'most-played' | 'favorite';

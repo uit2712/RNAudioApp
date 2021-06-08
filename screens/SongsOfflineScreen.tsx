@@ -5,14 +5,14 @@ import {
     SectionListRenderItemInfo,
     StyleSheet,
 } from 'react-native';
-import { SongsOfflineSectionItemType, SongsOfflineSectionType } from '../types/songs-offline-screen-types';
+import { SongsOfflineSectionItemType, SongsOfflineSectionType } from '@types/songs-offline-screen-types';
 
 import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { Sound } from './SongsScreen';
-import { SoundFileType } from '../types/songs-screen-types';
+import { SoundFileType } from '@types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';
 import { useGetSectionsData } from '@hooks/songs-offline-screen-hooks';
 

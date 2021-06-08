@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { SoundFileType } from '../types/songs-screen-types';
+import { SoundFileType } from '@types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';
 import { navigate } from '@navigators/config/root';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
