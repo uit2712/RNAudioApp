@@ -2,14 +2,12 @@ import * as React from 'react';
 
 import { IDrawerHomeContext, IPlayer } from '@interfaces/index';
 
+import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { SoundFileType } from '@types/songs-screen-types';
 
 export const SoundPlayerContext = React.createContext<IPlayer>({
-    currentAudioName: '',
     currentTime: 0,
-    currentTimeString: '',
     duration: 0,
-    durationString: '',
     errorMessage: '',
     isDisabledButtonNext: false,
     isDisabledButtonPause: false,
@@ -25,7 +23,7 @@ export const SoundPlayerContext = React.createContext<IPlayer>({
     volume: 100, // percent
     currentIndex: -1,
     listSounds: [],
-    currentAudioInfo: null,
+    currentAudioInfo: AUDIO_HELPER_CURRENT_AUDIO_INFO,
     decreaseTime: () => {},
     increaseTime: () => {},
     loop: () => {},
