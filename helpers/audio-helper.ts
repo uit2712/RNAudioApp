@@ -258,3 +258,52 @@ export function useAudioHelperMuteAction({
         isMuted,
     }
 }
+
+export function useChangeTime({
+    player,
+    timeRate,
+    duration,
+    setCurrentTime,
+}: {
+    player?: SoundPlayer,
+    timeRate: number,
+    duration: number,
+    setCurrentTime: (seconds: number) => void,
+}) {
+    function increaseTime() {
+        if (player) {
+            player.getCurrentTime((seconds) => {
+                if (seconds + timeRate < duration) {
+                    seekToTime(seconds + timeRate)
+                } else {
+                    seekToTime(duration);
+                }
+            });
+        }
+    }
+
+    function decreaseTime() {
+        if (player) {
+            player.getCurrentTime((seconds) => {
+                if (seconds - timeRate > 0) {
+                    seekToTime(seconds - timeRate);
+                } else {
+                    seekToTime(0);
+                }
+            });
+        }
+    }
+
+    function seekToTime(seconds: number) {
+        if (player) {
+            player.setCurrentTime(seconds);
+            setCurrentTime(seconds);
+        }
+    }
+
+    return {
+        increaseTime,
+        decreaseTime,
+        seekToTime,
+    }
+}

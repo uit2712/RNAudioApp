@@ -1,8 +1,10 @@
 import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
 import {
+    getAudioHelperCurrentAudioInfo,
     useAudioHelperDisabledButtonStatus,
     useAudioHelperMuteAction,
     useAudioHelperVolume,
+    useChangeTime,
     useCurrentTime,
     useIsLogStatus,
     useShuffle,
@@ -39,6 +41,12 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     const { volume, changeVolume } = useAudioHelperVolume();
     const { isMuted, mute, unmute } = useAudioHelperMuteAction({ player, volume, changeVolume });
     const disabledButtonStatus = useAudioHelperDisabledButtonStatus({ status, index, listSounds });
+    const { decreaseTime, increaseTime, seekToTime } = useChangeTime({
+        player,
+        duration,
+        timeRate,
+        setCurrentTime,
+    });
     useIsLogStatus({ status, isLogStatus: request.isLogStatus });
 
     function initialized(audioIndex: number) {
@@ -156,36 +164,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
-    function increaseTime() {
-        if (player) {
-            player.getCurrentTime((seconds) => {
-                if (seconds + timeRate < duration) {
-                    seekToTime(seconds + timeRate)
-                } else {
-                    seekToTime(duration);
-                }
-            });
-        }
-    }
-
-    function decreaseTime() {
-        if (player) {
-            player.getCurrentTime((seconds) => {
-                if (seconds - timeRate > 0) {
-                    seekToTime(seconds - timeRate);
-                } else {
-                    seekToTime(0);
-                }
-            });
-        }
-    }
-
-    function seekToTime(seconds: number) {
-        if (player) {
-            player.setCurrentTime(seconds);
-            setCurrentTime(seconds);
-        }
-    }
+    
 
     const [isLoop, setIsLoop] = React.useState(false);
     function loop() {
