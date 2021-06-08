@@ -5,7 +5,7 @@ import { ITrackInfo } from '../interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { SoundFileType } from '../types/songs-screen-types';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
+import { avatarHelper } from '@helpers/songs-screen-helpers';
 import { formatTimeString } from '@functions/index';
 import { setListSongs } from '../store/actions/songs-screen-actions';
 import { useDispatch } from 'react-redux';

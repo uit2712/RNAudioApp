@@ -17,7 +17,8 @@
             "@common/*": ["common/*"],
             "@constants/*": ["constants/*"],
             "@context-api/*": ["context-api/*"],
-            "@functions/*": ["functions/*"]
+            "@functions/*": ["functions/*"],
+            "@helpers/*": ["helpers/*"]
         }
     },
     "exclude": [

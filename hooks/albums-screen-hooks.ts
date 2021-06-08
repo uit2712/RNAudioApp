@@ -1,7 +1,7 @@
 import { IAlbum } from '../interfaces/albums-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
-import { avatarHelper } from '../helpers/songs-screen-helpers';
+import { avatarHelper } from '@helpers/songs-screen-helpers';
 import { setListAlbums } from '../store/actions/albums-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbumsSelector } from '../store/selectors/albums-screen-selectors';
