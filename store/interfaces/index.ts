@@ -26,10 +26,15 @@ export interface ISearchScreenState {
     searchText: string;
 }
 
+export interface ICommonState {
+    isShowSortByBottomSheet: boolean;
+}
+
 export interface IApplicationState {
     playlists: IPlaylistsScreenState;
     artists: IArtistsScreenState;
     albums: IAlbumsScreenState;
     songs: ISongsScreenState;
     search: ISearchScreenState;
+    common: ICommonState;
 }

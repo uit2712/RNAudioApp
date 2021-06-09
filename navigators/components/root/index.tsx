@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
-import { DrawerDescriptorMap, DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import { DrawerNavigationState, NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
+import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerNavigationState, NavigationContainer, ParamListBase, } from '@react-navigation/native';
 import { Image, Text, } from 'react-native';
 import { RootParams, navigationRef } from '@navigators/config/root';
 
 import DrawerHomeNavigator from './home';
+import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import DrawerSettingsNavigator from './settings';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -163,10 +163,6 @@ function CustomDrawerContentItem({
                         label={screen.title}
                         onPress={() => navigation.navigate(screen.name)}
                         icon={() => <screen.icon color={isFocused ? screen.activeTintColor : screen.inactiveTintColor} size={iconSize}/>}
-                        activeBackgroundColor={screen.activeBackgroundColor}
-                        activeTintColor={screen.activeTintColor}
-                        inactiveBackgroundColor={screen.inactiveBackgroundColor}
-                        inactiveTintColor={screen.inactiveTintColor}
                         style={{
                             backgroundColor: isFocused === true ? screen.activeBackgroundColor : screen.inactiveBackgroundColor,
                         }}

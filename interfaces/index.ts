@@ -93,3 +93,24 @@ export interface IDrawerNavigatorScreen<ScreenParams> extends INavigatorScreen<S
     inactiveBackgroundColor?: string;
     inactiveTintColor?: string;
 }
+
+export interface IBottomSheetSection {
+    title: string;
+    defaultSelectedIndex?: number;
+    selectedIndex: number;
+    items: IBottomSheetSectionItem[];
+}
+
+export interface IBottomSheetSectionItem {
+    title: string;
+    icon?: React.ComponentType<any>;
+    onPress?: () => void;
+}
+
+export interface ISortByBottomSheetContext {
+    isShowSortByBottomSheet: boolean;
+    setIsShowSortByBottomSheet: (isVisible: boolean) => void;
+    setSelectedIndex: (sectionIndex: number, selectedItemIndex: number) => void;
+    getSelectedIndex: (sectionIndex: number) => number;
+    data: IBottomSheetSection[],
+}

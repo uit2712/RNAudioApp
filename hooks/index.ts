@@ -1,4 +1,4 @@
-import { IDrawerHomeContext, IPlayer, IRequestAudioHelper } from '@interfaces/index';
+import { IBottomSheetSection, IDrawerHomeContext, IPlayer, IRequestAudioHelper, ISortByBottomSheetContext } from '@interfaces/index';
 import {
     getAudioHelperCurrentAudioInfo,
     initPlayer,
@@ -289,5 +289,34 @@ export function useRefresh(callback: () => Promise<any>) {
     return {
         isRefresh,
         setIsRefresh,
+    }
+}
+
+export function useSortByBottomSheetSettings(request: IBottomSheetSection[]): ISortByBottomSheetContext {
+    const [isShowSortByBottomSheet, setIsShowSortByBottomSheet] = React.useState(false);
+    const [data, setData] = React.useState(request);
+    React.useEffect(() => {
+        request.forEach((section) => section.selectedIndex = section.defaultSelectedIndex ? section.defaultSelectedIndex : 0);
+    }, []);
+
+    function setSelectedIndex(sectionIndex: number, selectedItemIndex: number) {
+        if (sectionIndex >= 0 && sectionIndex < data.length && selectedItemIndex >= 0 && selectedItemIndex < data[sectionIndex].items.length) {
+            const newData = [...data];
+            newData[sectionIndex].selectedIndex = selectedItemIndex;
+            setData(newData);
+            setIsShowSortByBottomSheet(false);
+        }
+    }
+
+    function getSelectedIndex(sectionIndex: number) {
+        return sectionIndex >= 0 && sectionIndex < data.length ? data[sectionIndex].selectedIndex : -1;
+    }
+
+    return {
+        isShowSortByBottomSheet,
+        setIsShowSortByBottomSheet,
+        setSelectedIndex,
+        data,
+        getSelectedIndex,
     }
 }
