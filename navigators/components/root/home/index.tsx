@@ -9,7 +9,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DrawerHomeParams } from '@navigators/config/root/home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { INavigatorScreen } from '@interfaces/index';
+import { IStackNavigatorScreen } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,7 +24,7 @@ import { useDrawHomeSettings } from '@hooks/index';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
-const screens: INavigatorScreen<DrawerHomeParams>[] = [
+const screens: IStackNavigatorScreen<DrawerHomeParams>[] = [
     {
         name: 'TabPlaylists',
         component: TabPlaylistsNavigator,
@@ -96,7 +96,7 @@ function DrawerHomeNavigator() {
                 }}
             >
                 {
-                    screens.map((screen: INavigatorScreen<DrawerHomeParams>, index: number) => (
+                    screens.map((screen: IStackNavigatorScreen<DrawerHomeParams>, index: number) => (
                         <DrawerHome.Screen
                             key={index}
                             name={screen.name}
@@ -156,17 +156,17 @@ function ListTabs({ state, descriptors, navigation }: BottomTabBarProps<BottomTa
 }
 
 function ListTabItem({
-    navigation,
-    route,
     screen,
     index,
+    navigation,
+    route,
     descriptors,
     state,
 }: {
+    screen: IStackNavigatorScreen<DrawerHomeParams>,
+    index: number,
     navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>,
     route: RouteProp<ParamListBase, string>,
-    screen: INavigatorScreen<DrawerHomeParams>,
-    index: number,
     descriptors: BottomTabDescriptorMap,
     state: TabNavigationState<ParamListBase>,
 }) {

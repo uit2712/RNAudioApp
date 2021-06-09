@@ -78,8 +78,18 @@ export interface INavigatorScreen<ScreenParams> {
     name: keyof ScreenParams;
     component: React.ComponentType<any>;
     title: string;
-    label: ({ title, color }: { title: string, color: string }) => JSX.Element;
-    getColor: (isFocused: boolean) => string;
-    icon: ({ color, size }: { color: string, size?: number }) => JSX.Element;
+    label: ({ title, color }: { title: string, color?: string }) => JSX.Element;
+    icon: ({ color, size }: { color?: string, size?: number }) => JSX.Element;
     isVisible: boolean;
+}
+
+export interface IStackNavigatorScreen<ScreenParams> extends INavigatorScreen<ScreenParams> {
+    getColor: (isFocused: boolean) => string;
+}
+
+export interface IDrawerNavigatorScreen<ScreenParams> extends INavigatorScreen<ScreenParams> {
+    activeBackgroundColor?: string;
+    activeTintColor?: string;
+    inactiveBackgroundColor?: string;
+    inactiveTintColor?: string;
 }
