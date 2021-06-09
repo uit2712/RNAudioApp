@@ -96,9 +96,13 @@ export interface IDrawerNavigatorScreen<ScreenParams> extends INavigatorScreen<S
 
 export interface IBottomSheetSection {
     title: string;
-    defaultSelectedIndex?: number;
-    selectedIndex: number;
     items: IBottomSheetSectionItem[];
+}
+
+export interface IBottomSheetSectionWithType<T> extends IBottomSheetSection {
+    items: IBottomSheetSectionItemWithType<T>[];
+    defaultSelectedType: T;
+    selectedType: T;
 }
 
 export interface IBottomSheetSectionItem {
@@ -107,10 +111,19 @@ export interface IBottomSheetSectionItem {
     onPress?: () => void;
 }
 
+export interface IBottomSheetSectionItemWithType<T> extends IBottomSheetSectionItem {
+    type: T;
+}
+
 export interface ISortByBottomSheetContext {
     isShowSortByBottomSheet: boolean;
     setIsShowSortByBottomSheet: (isVisible: boolean) => void;
-    setSelectedIndex: (sectionIndex: number, selectedItemIndex: number) => void;
-    getSelectedIndex: (sectionIndex: number) => number;
     data: IBottomSheetSection[],
+}
+
+export interface ISortByBottomSheetContextWithType<T> extends ISortByBottomSheetContext {
+    isShowSortByBottomSheet: boolean;
+    setIsShowSortByBottomSheet: (isVisible: boolean) => void;
+    setSelectedType: (sectionIndex: number, selectedItemIndex: T) => void;
+    getSelectedType: (sectionIndex: number) => T;
 }

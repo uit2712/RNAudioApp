@@ -1,7 +1,9 @@
+import { SortSongByPropertyType, SoundFileType } from 'types/songs-screen-types';
+
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
-import { SoundFileType } from 'types/songs-screen-types';
+import { SortOrderType } from 'types/index';
 
 export interface IPlaylistsScreenState {
     playlists: IPlaylist[];
@@ -20,6 +22,8 @@ export interface IAlbumsScreenState {
 export interface ISongsScreenState {
     songs: SoundFileType[];
     isLoadListSongsFirstTime: boolean;
+    orderType: SortOrderType;
+    sortByProperyType: SortSongByPropertyType;
 }
 
 export interface ISearchScreenState {

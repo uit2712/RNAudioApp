@@ -1,4 +1,4 @@
-import { IBottomSheetSection, IDrawerHomeContext, IPlayer, IRequestAudioHelper, ISortByBottomSheetContext } from '@interfaces/index';
+import { IBottomSheetSection, IBottomSheetSectionWithType, IDrawerHomeContext, IPlayer, IRequestAudioHelper, ISortByBottomSheetContext, ISortByBottomSheetContextWithType } from '@interfaces/index';
 import {
     getAudioHelperCurrentAudioInfo,
     initPlayer,
@@ -292,31 +292,31 @@ export function useRefresh(callback: () => Promise<any>) {
     }
 }
 
-export function useSortByBottomSheetSettings(request: IBottomSheetSection[]): ISortByBottomSheetContext {
+export function useSortByBottomSheetSettings<T>(request: IBottomSheetSectionWithType<T>[]): ISortByBottomSheetContextWithType<T> {
     const [isShowSortByBottomSheet, setIsShowSortByBottomSheet] = React.useState(false);
     const [data, setData] = React.useState(request);
     React.useEffect(() => {
-        request.forEach((section) => section.selectedIndex = section.defaultSelectedIndex ? section.defaultSelectedIndex : 0);
+        request.forEach((section) => section.selectedType = section.defaultSelectedType);
     }, []);
 
-    function setSelectedIndex(sectionIndex: number, selectedItemIndex: number) {
-        if (sectionIndex >= 0 && sectionIndex < data.length && selectedItemIndex >= 0 && selectedItemIndex < data[sectionIndex].items.length) {
+    function setSelectedType(sectionIndex: number, selectedType: T) {
+        if (sectionIndex >= 0 && sectionIndex < data.length) {
             const newData = [...data];
-            newData[sectionIndex].selectedIndex = selectedItemIndex;
+            newData[sectionIndex].selectedType = selectedType;
             setData(newData);
             setIsShowSortByBottomSheet(false);
         }
     }
 
-    function getSelectedIndex(sectionIndex: number) {
-        return sectionIndex >= 0 && sectionIndex < data.length ? data[sectionIndex].selectedIndex : -1;
+    function getSelectedType(sectionIndex: number) {
+        return data[sectionIndex].selectedType;
     }
 
     return {
         isShowSortByBottomSheet,
         setIsShowSortByBottomSheet,
-        setSelectedIndex,
+        setSelectedType,
         data,
-        getSelectedIndex,
+        getSelectedType,
     }
 }

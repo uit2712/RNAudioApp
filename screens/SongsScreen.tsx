@@ -13,10 +13,11 @@ import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors'
 
 function SoundsScreen() {
     const { player } = useGetPlayerInfo();
+    const { songs } = useGetAllSongsSelector();
 
     return (
         <VirtualizedList
-            data={player.listSounds}
+            data={songs}
             renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
                 <Sound
                     key={item.id}

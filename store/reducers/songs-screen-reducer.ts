@@ -4,6 +4,8 @@ import { SongsScreenActions } from '@store/actions/songs-screen-actions';
 const initializeState: ISongsScreenState = {
     songs: [],
     isLoadListSongsFirstTime: false,
+    orderType: 'asc',
+    sortByProperyType: 'name',
 }
 
 export default function SongsScreenReducer(state = initializeState, action: SongsScreenActions): ISongsScreenState {
@@ -14,6 +16,16 @@ export default function SongsScreenReducer(state = initializeState, action: Song
                 ...state,
                 songs: action.payload,
                 isLoadListSongsFirstTime: true,
+            }
+        case 'SET_ORDER_TYPE':
+            return {
+                ...state,
+                orderType: action.payload,
+            }
+        case 'SET_SORT_BY_PROPERTY_TYPE':
+            return {
+                ...state,
+                sortByProperyType: action.payload,
             }
     }
 }

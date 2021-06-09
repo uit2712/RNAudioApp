@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { BottomSheet, ListItem, Text } from 'react-native-elements';
-import { IBottomSheetSection, IBottomSheetSectionItem } from '@interfaces/index';
+import { IBottomSheetSection, IBottomSheetSectionItem, IBottomSheetSectionItemWithType, IBottomSheetSectionWithType } from '@interfaces/index';
 import { TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -25,7 +25,7 @@ function SortByBottomSheet() {
                         <View style={{ height: 30, backgroundColor: 'white', justifyContent: 'center' }}>
                             <Text style={{ fontSize: 15, marginLeft: 20, color: 'gray' }}>{item.title}</Text>
                         </View>
-                        <SortByBottomSheetSection sectionIndex={index} items={item.items}/>
+                        <SortByBottomSheetSection sectionIndex={index} items={item.items as IBottomSheetSectionItemWithType<string>[]}/>
                     </View>
                 ))
             }
@@ -50,16 +50,15 @@ function SortByBottomSheetSection({
     items,
     sectionIndex,
 }: {
-    items: IBottomSheetSectionItem[],
+    items: IBottomSheetSectionItemWithType<string>[],
     sectionIndex: number,
 }) {
     return (
         <>
             {
-                items.map((item: IBottomSheetSectionItem, index: number) => (
+                items.map((item: IBottomSheetSectionItemWithType<string>, index: number) => (
                     <SortByBottomSheetSectionItem
                         key={index}
-                        index={index}
                         item={item}
                         sectionIndex={sectionIndex}
                     />
@@ -71,19 +70,17 @@ function SortByBottomSheetSection({
 
 function SortByBottomSheetSectionItem({
     item,
-    index,
     sectionIndex,
 }: {
-    item: IBottomSheetSectionItem,
-    index: number,
+    item: IBottomSheetSectionItemWithType<string>,
     sectionIndex: number,
 }) {
     const bottomSheetSettings = React.useContext(SortByBottomSheetContext);
 
     function onPress() {
-        if (index !== bottomSheetSettings.getSelectedIndex(sectionIndex)) {
+        if (item.type !== bottomSheetSettings.getSelectedType(sectionIndex)) {
             item.onPress && item.onPress();
-            bottomSheetSettings.setSelectedIndex(sectionIndex, index);
+            bottomSheetSettings.setSelectedType(sectionIndex, item.type);
         }
     }
 
@@ -94,7 +91,7 @@ function SortByBottomSheetSectionItem({
                 <ListItem.Title>{item.title}</ListItem.Title>
             </ListItem.Content>
             {
-                index === bottomSheetSettings.getSelectedIndex(sectionIndex) && (
+                item.type === bottomSheetSettings.getSelectedType(sectionIndex) && (
                     <Ionicons
                         name='checkmark-circle'
                         size={25}

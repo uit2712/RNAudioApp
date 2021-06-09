@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContext } from '@interfaces/index';
+import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContext, ISortByBottomSheetContextWithType } from '@interfaces/index';
 
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { SoundFileType } from 'types/songs-screen-types';
@@ -47,10 +47,10 @@ export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({
     setIsShowTabBar: (isShowTabBar: boolean) => {},
 });
 
-export const SortByBottomSheetContext = React.createContext<ISortByBottomSheetContext>({
+export const SortByBottomSheetContext = React.createContext<ISortByBottomSheetContextWithType<string>>({
     isShowSortByBottomSheet: false,
     setIsShowSortByBottomSheet: (isVisible: boolean) => {},
-    setSelectedIndex: (sectionIndex: number, selectedItemIndex: number) => {},
-    getSelectedIndex: (sectionIndex: number) => -1,
+    setSelectedType: (sectionIndex: number, selectedType: string) => {},
+    getSelectedType: (sectionIndex: number) => '',
     data: [],
 });
