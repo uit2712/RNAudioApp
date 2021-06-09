@@ -9,6 +9,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DrawerHomeParams } from '@navigators/config/root/home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { INavigatorScreen } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,16 +24,7 @@ import { useDrawHomeSettings } from '@hooks/index';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
-interface IDrawerHomeNavigatorScreen {
-    name: keyof DrawerHomeParams;
-    component: React.ComponentType<any>;
-    title: string;
-    label: ({ title, color }: { title: string, color: string }) => JSX.Element;
-    getColor: (isFocused: boolean) => string;
-    icon: ({ color, size }: { color: string, size?: number }) => JSX.Element;
-    isVisible: boolean;
-}
-const screens: IDrawerHomeNavigatorScreen[] = [
+const screens: INavigatorScreen<DrawerHomeParams>[] = [
     {
         name: 'TabPlaylists',
         component: TabPlaylistsNavigator,
@@ -104,7 +96,7 @@ function DrawerHomeNavigator() {
                 }}
             >
                 {
-                    screens.map((screen: IDrawerHomeNavigatorScreen, index: number) => (
+                    screens.map((screen: INavigatorScreen<DrawerHomeParams>, index: number) => (
                         <DrawerHome.Screen
                             key={index}
                             name={screen.name}
@@ -173,7 +165,7 @@ function ListTabItem({
 }: {
     navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>,
     route: RouteProp<ParamListBase, string>,
-    screen: IDrawerHomeNavigatorScreen,
+    screen: INavigatorScreen<DrawerHomeParams>,
     index: number,
     descriptors: BottomTabDescriptorMap,
     state: TabNavigationState<ParamListBase>,

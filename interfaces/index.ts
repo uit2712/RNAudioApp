@@ -73,3 +73,13 @@ export interface ICurrentAudioInfo {
     currentTime: number;
     cover?: string;
 }
+
+export interface INavigatorScreen<ScreenParams> {
+    name: keyof ScreenParams;
+    component: React.ComponentType<any>;
+    title: string;
+    label: ({ title, color }: { title: string, color: string }) => JSX.Element;
+    getColor: (isFocused: boolean) => string;
+    icon: ({ color, size }: { color: string, size?: number }) => JSX.Element;
+    isVisible: boolean;
+}
