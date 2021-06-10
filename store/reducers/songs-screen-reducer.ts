@@ -22,7 +22,7 @@ export default function SongsScreenReducer(state = initializeState, action: Song
                 ...state,
                 orderType: action.payload,
             }
-        case 'SET_SORT_BY_PROPERTY_TYPE':
+        case 'SET_SONG_SORT_BY_PROPERTY_TYPE':
             return {
                 ...state,
                 sortByProperyType: action.payload,

@@ -21,6 +21,38 @@ import { useSortByBottomSheetSettings } from '@hooks/index';
 const TabArtists = createStackNavigator<TabArtistsParams>();
 
 function TabArtistsNavigators() {
+    const listDataInBottomSheet = useGetListDataInBottomSheet();
+    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
+
+    return (
+        <SortByBottomSheetContext.Provider value={settings}>
+            <SortByBottomSheet/>
+            <TabArtists.Navigator
+                screenOptions={{
+                    header: () => (
+                        <HomeHeader
+                            listMenuSelections={[
+                                { text: 'Hiển thị nghệ sĩ ẩn' },
+                                { text: 'Cân bằng' },
+                                { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
+                            ]}
+                        />
+                    )
+                }}
+            >
+                <TabArtists.Screen
+                    name='Artists'
+                    component={ArtistsScreen}
+                    options={{
+                        title: 'Nghệ sĩ'
+                    }}
+                />
+            </TabArtists.Navigator>
+        </SortByBottomSheetContext.Provider>
+    )
+}
+
+function useGetListDataInBottomSheet() {
     const dispatch = useDispatch();
     const defaultSortByPropertyType = useGetArtistSortByPropertyType();
     const defaultSortOrderType = useGetArtistOrderType();
@@ -70,34 +102,8 @@ function TabArtistsNavigators() {
             ]
         }
     ];
-    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
 
-    return (
-        <SortByBottomSheetContext.Provider value={settings}>
-            <SortByBottomSheet/>
-            <TabArtists.Navigator
-                screenOptions={{
-                    header: () => (
-                        <HomeHeader
-                            listMenuSelections={[
-                                { text: 'Hiển thị nghệ sĩ ẩn' },
-                                { text: 'Cân bằng' },
-                                { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
-                            ]}
-                        />
-                    )
-                }}
-            >
-                <TabArtists.Screen
-                    name='Artists'
-                    component={ArtistsScreen}
-                    options={{
-                        title: 'Nghệ sĩ'
-                    }}
-                />
-            </TabArtists.Navigator>
-        </SortByBottomSheetContext.Provider>
-    )
+    return listDataInBottomSheet;
 }
 
 export default TabArtistsNavigators;

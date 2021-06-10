@@ -9,7 +9,7 @@ export type SongsScreenActions = {
     type: 'SET_SONG_ORDER_TYPE';
     payload: SortOrderType;
 } | {
-    type: 'SET_SORT_BY_PROPERTY_TYPE';
+    type: 'SET_SONG_SORT_BY_PROPERTY_TYPE';
     payload: SortSongByPropertyType;
 }
 
@@ -24,6 +24,6 @@ export const setSongOrderType = (request: SortOrderType): SongsScreenActions => 
 });
 
 export const setSortSongByPropertyType = (request: SortSongByPropertyType): SongsScreenActions => ({
-    type: 'SET_SORT_BY_PROPERTY_TYPE',
+    type: 'SET_SONG_SORT_BY_PROPERTY_TYPE',
     payload: request,
 });

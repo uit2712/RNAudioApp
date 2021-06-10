@@ -22,7 +22,7 @@ export default function ArtistsScreenReducer(state = initializeState, action: Ar
                 ...state,
                 orderType: action.payload,
             }
-        case 'SET_SORT_BY_PROPERTY_TYPE':
+        case 'SET_ARTIST_SORT_BY_PROPERTY_TYPE':
             return {
                 ...state,
                 sortByProperyType: action.payload,

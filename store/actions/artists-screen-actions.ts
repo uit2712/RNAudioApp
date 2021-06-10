@@ -9,7 +9,7 @@ export type ArtistsScreenActions = {
     type: 'SET_ARTIST_ORDER_TYPE';
     payload: SortOrderType;
 } | {
-    type: 'SET_SORT_BY_PROPERTY_TYPE';
+    type: 'SET_ARTIST_SORT_BY_PROPERTY_TYPE';
     payload: SortArtistByPropertyType;
 }
 
@@ -24,6 +24,6 @@ export const setArtistOrderType = (request: SortOrderType): ArtistsScreenActions
 });
 
 export const setArtistByPropertyType = (request: SortArtistByPropertyType): ArtistsScreenActions => ({
-    type: 'SET_SORT_BY_PROPERTY_TYPE',
+    type: 'SET_ARTIST_SORT_BY_PROPERTY_TYPE',
     payload: request,
 });
