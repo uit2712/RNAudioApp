@@ -5,10 +5,12 @@ import { ImageBackground, StyleSheet, Text, View, } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { IPlayer } from '@interfaces/index';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
-import { SoundPlayerContext } from '@context-api/index';
+import { SoundPlayerContext, } from '@context-api/index';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { formatTimeString } from '@functions/index';
 import { useHomeBottomTabHelper } from '@hooks/index';
 
 const themeSettings = {
@@ -41,9 +43,9 @@ function SoundPlayerScreen() {
                     style={styles.cover}
                     resizeMode={FastImage.resizeMode.cover}
                 />
-                <Common/>
-                <Progress/>
-                <OtherActions/>
+                <Common />
+                <Progress />
+                <OtherActions />
             </View>
         </ImageBackground>
     )
@@ -89,36 +91,61 @@ function Common() {
     )
 }
 
-function Progress() {
-    const player = React.useContext(SoundPlayerContext);
-    if (!player.currentAudioInfo) {
-        return null;
+class Progress extends React.Component {
+    static contextType = SoundPlayerContext;
+    state = {
+        currentTime: 0,
+        currentTimeString: formatTimeString(0),
     }
 
-    return (
-        <View style={styles.progress}>
-            <Text style={[styles.processText, {
-                color: themeSettings.textSecondaryColor
-            }]}>{player.currentAudioInfo.currentTimeString}</Text>
-            <Slider
-                style={{ flex: 4 }}
-                value={player.currentAudioInfo.currentTime}
-                minimumValue={0}
-                maximumValue={player.currentAudioInfo.duration}
-                onValueChange={(seconds: number) => player.seekToTime(seconds)}
-            />
-            <Text style={[styles.processText, {
-                color: themeSettings.textSecondaryColor
-            }]}>{player.currentAudioInfo.durationString}</Text>
-        </View>
-    )
+    static interval: NodeJS.Timeout;
+    componentDidMount() {
+        if (!Progress.interval) {
+            Progress.interval = setInterval(() => {
+                const context = this.context as IPlayer;
+                context.getCurrentTime((currentTime: number, isPlaying: boolean) => {
+                    if (isPlaying) {
+                        this.setState(prevState => ({
+                            currentTime,
+                            currentTimeString: formatTimeString(currentTime * 1000),
+                        }))
+                    }
+                })
+            }, 100);
+        }
+    }
+    
+    componentWillUnmount() {
+        clearInterval(Progress.interval);
+    }
+
+    render() {
+        const context = this.context as IPlayer;
+
+        return (
+            <View style={styles.progress}>
+                <Text style={[styles.processText, {
+                    color: themeSettings.textSecondaryColor
+                }]}>{this.state.currentTimeString}</Text>
+                <Slider
+                    style={{ flex: 4 }}
+                    value={this.state.currentTime}
+                    minimumValue={0}
+                    maximumValue={this.context.currentAudioInfo.duration}
+                    onTouchStart={context.pause}
+                    onTouchEnd={context.play}
+                    onSlidingComplete={(seconds: number) => context.seekToTime(seconds)}
+                />
+                <Text style={[styles.processText, {
+                    color: themeSettings.textSecondaryColor
+                }]}>{this.context.currentAudioInfo.durationString}</Text>
+            </View>
+        )
+    }
 }
 
-function OtherActions() {
+function OtherActions () {
     const player = React.useContext(SoundPlayerContext);
-    if (!player.currentAudioInfo) {
-        return null;
-    }
 
     return (
         <View style={styles.otherActions}>
@@ -150,7 +177,7 @@ function OtherActions() {
                                 color={themeSettings.iconDefaultColor}
                             />
                         </TouchableOpacity>
-                    ): (
+                    ) : (
                         <TouchableOpacity onPress={player.play}>
                             <AntDesignIcon
                                 name='play'

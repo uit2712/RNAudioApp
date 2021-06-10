@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { BottomSheet, ListItem, Text } from 'react-native-elements';
-import { IBottomSheetSection, IBottomSheetSectionItem, IBottomSheetSectionItemWithType, IBottomSheetSectionWithType } from '@interfaces/index';
+import { IBottomSheetSection, IBottomSheetSectionItemWithType, } from '@interfaces/index';
 import { TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';

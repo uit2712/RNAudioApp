@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContext, ISortByBottomSheetContextWithType } from '@interfaces/index';
+import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContextWithType, } from '@interfaces/index';
 
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { SoundFileType } from 'types/songs-screen-types';
@@ -40,6 +40,7 @@ export const SoundPlayerContext = React.createContext<IPlayer>({
     unmute: () => {},
     playAudio: (audioIndex: number) => {},
     setListSounds: (listSounds: SoundFileType[]) => {},
+    getCurrentTime: (cb?: ((seconds: number, isPlaying: boolean) => void) | undefined) => {},
 });
 
 export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({

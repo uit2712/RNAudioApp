@@ -7,14 +7,14 @@ import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { SoundFileType } from 'types/songs-screen-types';
-import { SoundPlayerContext } from '@context-api/index';
+import { SoundPlayerContext, } from '@context-api/index';
 import { navigate } from '@navigators/config/root';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 
 function SoundsScreen() {
     const { player } = useGetPlayerInfo();
     const { songs } = useGetAllSongsSelector();
-
+    
     return (
         <VirtualizedList
             data={songs}
@@ -58,8 +58,7 @@ export function Sound({
     const player = React.useContext(SoundPlayerContext);
 
     function goToSoundPlayerDetail() {
-        // setIsShowTabBar(false);
-        // player.playAudio(index);
+        player.playAudio(index);
         navigate('Home', {
             screen: 'TabSoundPlayerDetail',
             params: {

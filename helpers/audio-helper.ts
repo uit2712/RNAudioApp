@@ -94,21 +94,15 @@ export function useCurrentTime({
     status: AudioStatusType,
 }) {
     const [currentTime, setCurrentTime] = React.useState(0);
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            if (player && status === 'play') {
-                player.getCurrentTime((seconds: number) => {
-                    setCurrentTime(seconds);
-                })
-            }
-        }, 100);
 
-        return () => clearInterval(interval);
-    });
+    function getCurrentTime(cb?: ((seconds: number, isPlaying: boolean) => void) | undefined) {
+        player?.getCurrentTime(cb);
+    }
 
     return {
         currentTime,
         setCurrentTime,
+        getCurrentTime,
     }
 }
 

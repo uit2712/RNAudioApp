@@ -14,9 +14,9 @@ import { IDrawerNavigatorScreen, } from '@interfaces/index';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
-import { SoundPlayerContext } from '@context-api/index';
+import { SoundPlayerContext, } from '@context-api/index';
 import StackSplashNavigator from './splash-screen';
-import { useAudioHelper } from '@hooks/index';
+import { useAudioHelper, } from '@hooks/index';
 
 const Root = createDrawerNavigator<RootParams>();
 
