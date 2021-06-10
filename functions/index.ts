@@ -45,15 +45,27 @@ export function dynamicSort(property: string) {
         /* next line works with strings and numbers, 
          * and you may want to customize it to your needs
          */
-        if (!a[property]) {
-            return sortOrder * 1;
-        }
-
-        if (!b[property]) {
-            return sortOrder * -1;
-        }
 
         let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
+    }
+}
+
+export function dynamicSortMultiple(...args: string[]) {
+    /*
+     * save the arguments object as it will be overwritten
+     * note that arguments object is an array-like object
+     * consisting of the names of the properties to sort by
+     */
+    return function (obj1: any, obj2: any) {
+        var i = 0, result = 0, numberOfProperties = args.length;
+        /* try getting a different result from 0 (equal)
+         * as long as we have extra properties to compare
+         */
+        while(result === 0 && i < numberOfProperties) {
+            result = dynamicSort(args[i])(obj1, obj2);
+            i++;
+        }
+        return result;
     }
 }

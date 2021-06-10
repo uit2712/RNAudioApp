@@ -1,14 +1,14 @@
 import { IApplicationState } from '@store/interfaces';
 import { SoundFileType } from 'types/songs-screen-types';
-import { dynamicSort } from '@functions/index';
+import { dynamicSortMultiple } from '@functions/index';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';
 
 export function useGetAllSongsSelector() {
     return useSelector<IApplicationState, { songs: SoundFileType[], isLoadFirstTime: boolean }>(state => {
         const orderStr = state.songs.orderType === 'asc' ? '' : '-';
-        const songs = state.songs.songs.sort(dynamicSort(orderStr + state.songs.sortByProperyType));
-        console.log(songs.map(item => item.album));
+        const songs = state.songs.songs.sort(dynamicSortMultiple(orderStr + state.songs.sortByProperyType, orderStr + 'name'));
+        
         return {
             songs,
             isLoadFirstTime: state.songs.isLoadListSongsFirstTime,
