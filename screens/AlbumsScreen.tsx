@@ -9,10 +9,10 @@ import { IMenuSelection } from '@interfaces/index';
 import { MenuOption } from 'react-native-popup-menu';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { listToMatrix } from '@functions/index';
-import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
+import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
 
 function AlbumsScreen() {
-    const { albums, } = useGetAllAlbums();
+    const { albums } = useGetAllAlbumsSelector();
 
     return (
         <VirtualizedList

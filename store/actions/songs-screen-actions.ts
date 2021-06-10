@@ -13,17 +13,17 @@ export type SongsScreenActions = {
     payload: SortSongByPropertyType;
 }
 
-export const setListSongs = (request: SoundFileType[]): SongsScreenActions => ({
+export const setListSongsAction = (request: SoundFileType[]): SongsScreenActions => ({
     type: 'SET_LIST_SONGS',
     payload: request,
 });
 
-export const setSongOrderType = (request: SortOrderType): SongsScreenActions => ({
+export const setSongOrderTypeAction = (request: SortOrderType): SongsScreenActions => ({
     type: 'SET_SONG_ORDER_TYPE',
     payload: request,
 });
 
-export const setSortSongByPropertyType = (request: SortSongByPropertyType): SongsScreenActions => ({
+export const setSortSongByPropertyTypeAction = (request: SortSongByPropertyType): SongsScreenActions => ({
     type: 'SET_SONG_SORT_BY_PROPERTY_TYPE',
     payload: request,
 });

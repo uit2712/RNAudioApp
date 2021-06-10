@@ -2,7 +2,7 @@ import { IArtist } from '@interfaces/artists-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
-import { setListArtists } from '@store/actions/artists-screen-actions';
+import { setListArtistsAction } from '@store/actions/artists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllArtistsSelector } from '@store/selectors/artists-screen-selectors';
 
@@ -28,7 +28,7 @@ export function useGetAllArtists() {
                     numberOfSongs: Number(item.numberOfSongs),
                     cover: avatarHelper.getAvatar(),
                 }));
-                dispatch(setListArtists(artists));
+                dispatch(setListArtistsAction(artists));
             }).catch((error: Error) => {
                 setIsLoading(false);
                 setIsRefresh(false);

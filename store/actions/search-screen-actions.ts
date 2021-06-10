@@ -3,7 +3,7 @@ export type SearchScreenActions = {
     payload: string;
 }
 
-export const setSearchText = (request: string): SearchScreenActions => ({
+export const setSearchTextAction = (request: string): SearchScreenActions => ({
     type: 'SET_SEARCH_TEXT',
     payload: request,
 });

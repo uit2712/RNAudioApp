@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { setArtistByPropertyType, setArtistOrderType, } from '@store/actions/artists-screen-actions';
+import { setArtistByPropertyTypeAction, setArtistOrderTypeAction, } from '@store/actions/artists-screen-actions';
 import { useGetArtistOrderType, useGetArtistSortByPropertyType } from '@store/selectors/artists-screen-selectors';
 
 import ArtistsScreen from '@screens/ArtistsScreen';
@@ -66,19 +66,19 @@ function useGetListDataInBottomSheet() {
                     title: 'Album',
                     icon: () => <MaterialCommunityIcons name='album' size={30} />,
                     type: 'album',
-                    onPress: () => dispatch(setArtistByPropertyType('album')),
+                    onPress: () => dispatch(setArtistByPropertyTypeAction('album')),
                 },
                 {
                     title: 'Số lượng bài hát',
                     icon: () => <Foundation name='page-multiple' size={30}/>,
                     type: 'numberOfSongs',
-                    onPress: () => dispatch(setArtistByPropertyType('numberOfSongs')),
+                    onPress: () => dispatch(setArtistByPropertyTypeAction('numberOfSongs')),
                 },
                 {
                     title: 'Nghệ sĩ',
                     icon: () => <MaterialIcons name='audiotrack' size={30} />,
                     type: 'artist',
-                    onPress: () => dispatch(setArtistByPropertyType('artist')),
+                    onPress: () => dispatch(setArtistByPropertyTypeAction('artist')),
                 },
             ]
         },
@@ -91,13 +91,13 @@ function useGetListDataInBottomSheet() {
                     title: 'Thứ tự tăng dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-ascending' size={30} />,
                     type: 'asc',
-                    onPress: () => dispatch(setArtistOrderType('asc')),
+                    onPress: () => dispatch(setArtistOrderTypeAction('asc')),
                 },
                 {
                     title: 'Thứ tự giảm dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-descending' size={30} />,
                     type: 'desc',
-                    onPress: () => dispatch(setArtistOrderType('desc')),
+                    onPress: () => dispatch(setArtistOrderTypeAction('desc')),
                 },
             ]
         }

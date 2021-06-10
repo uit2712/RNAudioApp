@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { setSongOrderType, setSortSongByPropertyType } from '@store/actions/songs-screen-actions';
+import { setSongOrderTypeAction, setSortSongByPropertyTypeAction } from '@store/actions/songs-screen-actions';
 import { useGetSongOrderType, useGetSongSortByPropertyType } from '@store/selectors/songs-screen-selectors';
 
 import HomeHeader from '@common/components/HomeHeader';
@@ -63,37 +63,37 @@ function useGetListDataInBottomSheet() {
                     title: 'Đã thêm ngày',
                     icon: () => <MaterialIcons name='date-range' size={30} />,
                     type: 'date',
-                    onPress: () => dispatch(setSortSongByPropertyType('date')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('date')),
                 },
                 {
                     title: 'Tên',
                     icon: () => <Ionicons name='person-circle' size={30}/>,
                     type: 'name',
-                    onPress: () => dispatch(setSortSongByPropertyType('name')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('name')),
                 },
                 {
                     title: 'Album',
                     icon: () => <MaterialCommunityIcons name='album' size={30} />,
                     type: 'album',
-                    onPress: () => dispatch(setSortSongByPropertyType('album')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('album')),
                 },
                 {
                     title: 'Nghệ sĩ',
                     icon: () => <MaterialCommunityIcons name='music-note' size={30} />,
                     type: 'artist',
-                    onPress: () => dispatch(setSortSongByPropertyType('artist')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('artist')),
                 },
                 {
                     title: 'Thời lượng',
                     icon: () => <MaterialIcons name='timer' size={30} />,
                     type: 'duration',
-                    onPress: () => dispatch(setSortSongByPropertyType('duration')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('duration')),
                 },
                 {
                     title: 'Dung lượng',
                     icon: () => <MaterialIcons name='sd-storage' size={30} />,
                     type: 'size',
-                    onPress: () => dispatch(setSortSongByPropertyType('size')),
+                    onPress: () => dispatch(setSortSongByPropertyTypeAction('size')),
                 },
             ]
         },
@@ -106,13 +106,13 @@ function useGetListDataInBottomSheet() {
                     title: 'Thứ tự tăng dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-ascending' size={30} />,
                     type: 'asc',
-                    onPress: () => dispatch(setSongOrderType('asc')),
+                    onPress: () => dispatch(setSongOrderTypeAction('asc')),
                 },
                 {
                     title: 'Thứ tự giảm dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-descending' size={30} />,
                     type: 'desc',
-                    onPress: () => dispatch(setSongOrderType('desc')),
+                    onPress: () => dispatch(setSongOrderTypeAction('desc')),
                 },
             ]
         }

@@ -17,12 +17,12 @@ export type PlaylistsScreenActions = {
     payload: RemoveAudioFromPlaylistPayload;
 }
 
-export const addAudioToPlaylist = (request: AddAudioToPlaylistPayload): PlaylistsScreenActions => ({
+export const addAudioToPlaylistAction = (request: AddAudioToPlaylistPayload): PlaylistsScreenActions => ({
     type: 'ADD_AUDIO_TO_PLAYLIST',
     payload: request,
 });
 
-export const removeAudioFromPlaylist = (request: RemoveAudioFromPlaylistPayload): PlaylistsScreenActions => ({
+export const removeAudioFromPlaylistAction = (request: RemoveAudioFromPlaylistPayload): PlaylistsScreenActions => ({
     type: 'REMOVE_AUDIO_FROM_PLAYLIST',
     payload: request,
 });

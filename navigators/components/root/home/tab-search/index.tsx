@@ -9,7 +9,7 @@ import TabSourceNavigator from './tab-source';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { setSearchText } from '@store/actions/search-screen-actions';
+import { setSearchTextAction } from '@store/actions/search-screen-actions';
 import { useDebounce } from '@hooks/search-screen-hooks';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -66,7 +66,7 @@ function SearchScreenHeaderInput() {
     const [value, setValue] = React.useState('');
     const debouncedValue = useDebounce(value, 100);
     React.useEffect(() => {
-        dispatch(setSearchText(debouncedValue));
+        dispatch(setSearchTextAction(debouncedValue));
     }, [debouncedValue])
     
     return (

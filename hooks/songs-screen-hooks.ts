@@ -2,7 +2,7 @@ import { checkPermission, getAllMusicFiles, showPopupRequestPermission } from '@
 
 import { PERMISSIONS } from 'react-native-permissions';
 import React from 'react';
-import { setListSongs } from '@store/actions/songs-screen-actions';
+import { setListSongsAction } from '@store/actions/songs-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 import { useRefresh } from '.';
@@ -13,7 +13,7 @@ export function useGetAllMusicFiles() {
     const dispatch = useDispatch();
     function initialize() {
         getAllMusicFiles({
-            onSuccess: (result) => dispatch(setListSongs(result)),
+            onSuccess: (result) => dispatch(setListSongsAction(result)),
             onError: (error) => setErrorMessage(error.message),
         });
     }

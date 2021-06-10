@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAllAlbums } from '@functions/albums-screen-functions';
-import { setListAlbums } from '@store/actions/albums-screen-actions';
+import { setListAlbumsAction } from '@store/actions/albums-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
 import { useRefresh } from '@hooks/index';
@@ -18,7 +18,7 @@ export function useGetAllAlbums() {
     const dispatch = useDispatch();
     function getAlbums() {
         return getAllAlbums().then((albums) => {
-            dispatch(setListAlbums(albums));
+            dispatch(setListAlbumsAction(albums));
             setIsLoading(false);
         }).catch((error: Error) => {
             setIsLoading(false);

@@ -1,0 +1,1 @@
+export type SortAlbumByPropertyType = 'album' | 'artist' | 'numberOfSongs';
