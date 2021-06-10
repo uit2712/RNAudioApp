@@ -7,10 +7,10 @@ import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { useGetAllArtists } from '@hooks/artists-screen-hooks';
+import { useGetAllArtistsSelector } from '@store/selectors/artists-screen-selectors';
 
 function ArtistsScreen() {
-    const { artists } = useGetAllArtists();
+    const { artists } = useGetAllArtistsSelector();
 
     return (
         <VirtualizedList

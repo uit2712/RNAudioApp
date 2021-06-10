@@ -17,7 +17,7 @@ export default function SongsScreenReducer(state = initializeState, action: Song
                 songs: action.payload,
                 isLoadListSongsFirstTime: true,
             }
-        case 'SET_ORDER_TYPE':
+        case 'SET_SONG_ORDER_TYPE':
             return {
                 ...state,
                 orderType: action.payload,

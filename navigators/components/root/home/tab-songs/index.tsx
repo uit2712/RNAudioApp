@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { IBottomSheetSection, IBottomSheetSectionWithType, } from '@interfaces/index';
-import { setOrderType, setSortSongByPropertyType } from '@store/actions/songs-screen-actions';
+import { setSongOrderType, setSortSongByPropertyType } from '@store/actions/songs-screen-actions';
 
 import HomeHeader from '@common/components/HomeHeader';
+import { IBottomSheetSectionWithType, } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -74,13 +74,13 @@ function TabSongsNavigators() {
                     title: 'Thứ tự tăng dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-ascending' size={30} />,
                     type: 'asc',
-                    onPress: () => dispatch(setOrderType('asc')),
+                    onPress: () => dispatch(setSongOrderType('asc')),
                 },
                 {
                     title: 'Thứ tự giảm dần',
                     icon: () => <MaterialCommunityIcons name='sort-alphabetical-descending' size={30} />,
                     type: 'desc',
-                    onPress: () => dispatch(setOrderType('desc')),
+                    onPress: () => dispatch(setSongOrderType('desc')),
                 },
             ]
         }
