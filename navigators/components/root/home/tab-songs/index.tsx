@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { setSongOrderType, setSortSongByPropertyType } from '@store/actions/songs-screen-actions';
+import { useGetSongOrderType, useGetSongSortByPropertyType } from '@store/selectors/songs-screen-selectors';
 
 import HomeHeader from '@common/components/HomeHeader';
 import { IBottomSheetSectionWithType, } from '@interfaces/index';
@@ -21,10 +22,12 @@ const TabSongs = createStackNavigator<TabSongsParams>();
 
 function TabSongsNavigators() {
     const dispatch = useDispatch();
+    const defaultSortByPropertyType = useGetSongSortByPropertyType();
+    const defaultSortOrderType = useGetSongOrderType();
     const listDataInBottomSheet: IBottomSheetSectionWithType<SortSongByPropertyType | SortOrderType>[] = [
         {
             title: 'Sắp xếp bài hát bởi',
-            defaultSelectedType: 'name',
+            defaultSelectedType: defaultSortByPropertyType,
             selectedType: 'name',
             items: [
                 {
@@ -67,7 +70,7 @@ function TabSongsNavigators() {
         },
         {
             title: 'Hiển thị bài hát theo',
-            defaultSelectedType: 'asc',
+            defaultSelectedType: defaultSortOrderType,
             selectedType: 'asc',
             items: [
                 {

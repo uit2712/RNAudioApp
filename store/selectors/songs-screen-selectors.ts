@@ -1,5 +1,7 @@
+import { SortSongByPropertyType, SoundFileType } from 'types/songs-screen-types';
+
 import { IApplicationState } from '@store/interfaces';
-import { SoundFileType } from 'types/songs-screen-types';
+import { SortOrderType } from 'types/index';
 import { dynamicSortMultiple } from '@functions/index';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';
@@ -13,6 +15,18 @@ export function useGetAllSongsSelector() {
             songs,
             isLoadFirstTime: state.songs.isLoadListSongsFirstTime,
         }
+    });
+}
+
+export function useGetSongOrderType() {
+    return useSelector<IApplicationState, SortOrderType>(state => {
+        return state.artists.orderType;
+    });
+}
+
+export function useGetSongSortByPropertyType() {
+    return useSelector<IApplicationState, SortSongByPropertyType>(state => {
+        return state.songs.sortByProperyType;
     });
 }
 

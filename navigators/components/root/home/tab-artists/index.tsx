@@ -26,7 +26,7 @@ function TabArtistsNavigators() {
     const defaultSortOrderType = useGetArtistOrderType();
     const listDataInBottomSheet: IBottomSheetSectionWithType<SortArtistByPropertyType | SortOrderType>[] = [
         {
-            title: 'Sắp xếp bài hát bởi',
+            title: 'Sắp xếp nghệ sĩ bởi',
             defaultSelectedType: defaultSortByPropertyType,
             selectedType: 'album',
             items: [
