@@ -14,7 +14,7 @@ const wait = (timeout: number) => {
 
 function PlaylistsDetailScreen() {
     const route = useRoute<PlaylistsDetailScreenRouteProp>();
-    const [songs, setSongs] = React.useState(route.params.info.listSongs);
+    const [songs, setSongs] = React.useState([...route.params.info.listSongs].reverse());
     const player = React.useContext(SoundPlayerContext);
 
     const [refreshing, setRefreshing] = React.useState(false);

@@ -1,14 +1,23 @@
-import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
-import { IBottomSheetSectionWithType, IDrawerHomeContext, IPlayer, IRequestAudioHelper, ISortByBottomSheetContextWithType, } from '@interfaces/index';
+import {
+    IBottomSheetSectionWithType,
+    IDrawerHomeContext,
+    IPlayer,
+    IRequestAudioHelper,
+    ISortByBottomSheetContextWithType,
+} from '@interfaces/index';
 import {
     getAudioHelperCurrentAudioInfo,
     initPlayer,
+    next,
+    previous,
     useAudioHelperDisabledButtonStatus,
     useAudioHelperMuteAction,
     useAudioHelperVolume,
     useChangeTime,
     useCurrentTime,
     useIsLogStatus,
+    useLoop,
+    useRemainingIndices,
     useShuffle,
     useSpeed
 } from '@helpers/audio-helper';
@@ -16,6 +25,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from 'types/index';
 import { BackHandler } from 'react-native';
+import { DrawerHomeContext, } from '@context-api/index';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
@@ -49,6 +59,8 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         timeRate,
         setCurrentTime,
     });
+    const { remainingIndices, setRemainingIndices } = useRemainingIndices({ listSounds, index });
+    const { isLoop, loop } = useLoop();
     useIsLogStatus({ status, isLogStatus: request.isLogStatus });
 
     function initialized(audioIndex: number) {
@@ -83,7 +95,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     function playComplete(isEnd: boolean) {
         if (isEnd === true) {
             if (isLoop === false) {
-                next();
+                _next();
             } else {
                 repeat();
             }
@@ -129,52 +141,20 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
-    const [remainingIndices, setRemainingIndices] = React.useState([...Array(listSounds.length).keys()].filter(value => value !== index));
-    React.useEffect(() => {
-        setRemainingIndices(remainingIndices.filter(value => value !== index));
-    }, [index]);
-    
-    function next() {
-        if (listSounds.length > 0) {
-            setStatus('next');
-            
-            let newIndex = -1;
-            if (isShuffle === true) {
-                let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);
-                setRemainingIndices(newRemainingIndices);
-                newIndex = newRemainingIndices[0] as number;
-            } else {
-                newIndex = (index + 1) % listSounds.length;
-            }
-            playAudio(newIndex);
-        }
-    }
-
-    function previous() {
-        if (listSounds.length > 0 && index >= 0) {
-            setStatus('previous');
-
-            let newIndex = -1;
-            if (isShuffle === true) {
-                let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);
-                setRemainingIndices(newRemainingIndices);
-                newIndex = newRemainingIndices[0] as number;
-            } else {
-                newIndex = index - 1 >= 0 ? index - 1 : listSounds.length - 1;
-            }
-            playAudio(newIndex);
-        }
-    }
-
-    
-
-    const [isLoop, setIsLoop] = React.useState(false);
-    function loop() {
-        setIsLoop(!isLoop);
-    }
-
     function playAudio(audioIndex: number) {
         setIndex(audioIndex);
+    }
+
+    function _next() {
+        next({
+            index,
+            isShuffle,
+            listSounds,
+            remainingIndices,
+            setIndex,
+            setRemainingIndices,
+            setStatus,
+        })
     }
 
 
@@ -209,8 +189,16 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         play,
         pause,
         stop,
-        next,
-        previous,
+        next: _next,
+        previous: () => previous({
+            index,
+            isShuffle,
+            listSounds,
+            remainingIndices,
+            setIndex,
+            setRemainingIndices,
+            setStatus,
+        }),
         increaseTime,
         decreaseTime,
         seekToTime,
@@ -328,18 +316,5 @@ export function useSortByBottomSheetSettings<T>(request: IBottomSheetSectionWith
         setSelectedType,
         data,
         getSelectedType,
-    }
-}
-
-export function useAddListSoundsToPlayer(listSounds: SoundFileType[]) {
-    const [isUpdateListSounds, setIsUpdateListSounds] = React.useState(false);
-    const player = React.useContext(SoundPlayerContext);
-    React.useEffect(() => {
-        player.setListSounds(listSounds);
-        setIsUpdateListSounds(true);
-    }, []);
-
-    return {
-        isUpdateListSounds,
     }
 }

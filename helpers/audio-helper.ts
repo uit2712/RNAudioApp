@@ -1,10 +1,11 @@
+import { formatTimeString, shuffleArray } from '@functions/index';
+
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { AudioStatusType } from 'types/index';
 import { ICurrentAudioInfo } from '@interfaces/index';
 import React from 'react';
 import { SoundFileType } from 'types/songs-screen-types';
 import SoundPlayer from 'react-native-sound';
-import { formatTimeString } from '@functions/index';
 
 export function initPlayer({
     audioIndex,
@@ -300,5 +301,99 @@ export function useChangeTime({
         increaseTime,
         decreaseTime,
         seekToTime,
+    }
+}
+
+export function useRemainingIndices({
+    listSounds,
+    index,
+}: {
+    listSounds: SoundFileType[],
+    index: number,
+}) {
+    const [remainingIndices, setRemainingIndices] = React.useState([...Array(listSounds.length).keys()].filter(value => value !== index));
+    React.useEffect(() => {
+        setRemainingIndices(remainingIndices.filter(value => value !== index));
+    }, [index]);
+
+    return {
+        remainingIndices,
+        setRemainingIndices,
+    }
+}
+
+export function next({
+    listSounds,
+    index,
+    setStatus,
+    isShuffle,
+    remainingIndices,
+    setRemainingIndices,
+    setIndex,
+}: {
+    listSounds: SoundFileType[],
+    index: number,
+    setStatus: (status: AudioStatusType) => void,
+    isShuffle: boolean,
+    remainingIndices: number[],
+    setRemainingIndices: (indices: number[]) => void,
+    setIndex: (index: number) => void,
+}) {
+    if (listSounds.length > 0) {
+        setStatus('next');
+        
+        let newIndex = -1;
+        if (isShuffle === true) {
+            let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);
+            setRemainingIndices(newRemainingIndices);
+            newIndex = newRemainingIndices[0] as number;
+        } else {
+            newIndex = (index + 1) % listSounds.length;
+        }
+        setIndex(newIndex);
+    }
+}
+
+export function previous({
+    listSounds,
+    index,
+    setStatus,
+    isShuffle,
+    remainingIndices,
+    setRemainingIndices,
+    setIndex,
+}: {
+    listSounds: SoundFileType[],
+    index: number,
+    setStatus: (status: AudioStatusType) => void,
+    isShuffle: boolean,
+    remainingIndices: number[],
+    setRemainingIndices: (indices: number[]) => void,
+    setIndex: (index: number) => void,
+}) {
+    if (listSounds.length > 0 && index >= 0) {
+        setStatus('previous');
+
+        let newIndex = -1;
+        if (isShuffle === true) {
+            let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);
+            setRemainingIndices(newRemainingIndices);
+            newIndex = newRemainingIndices[0] as number;
+        } else {
+            newIndex = index - 1 >= 0 ? index - 1 : listSounds.length - 1;
+        }
+        setIndex(newIndex);
+    }
+}
+
+export function useLoop() {
+    const [isLoop, setIsLoop] = React.useState(false);
+    function loop() {
+        setIsLoop(!isLoop);
+    }
+
+    return {
+        isLoop,
+        loop,
     }
 }
