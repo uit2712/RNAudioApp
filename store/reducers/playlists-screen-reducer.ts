@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
 import { IMAGE_RESOURCE_URL } from '@constants/index';
 import { IPlaylistsScreenState } from '@store/interfaces';
@@ -35,7 +36,13 @@ const initializeState: IPlaylistsScreenState = {
     ]
 }
 
-export default function PlaylistsScreenReducer(state = initializeState, action: PlaylistsScreenActions): IPlaylistsScreenState {
+export const PlaylistsScreenReducerPersistConfig = {
+    key: 'root',
+    storage: AsyncStorage,
+    whitelist: ['playlists']
+};
+
+export function PlaylistsScreenReducer(state = initializeState, action: PlaylistsScreenActions): IPlaylistsScreenState {
     switch(action.type) {
         case 'REMOVE_AUDIO_FROM_PLAYLIST':
             return {
@@ -43,6 +50,21 @@ export default function PlaylistsScreenReducer(state = initializeState, action: 
                 playlists: state.playlists.map(item => {
                     if (item.type === action.payload.type) {
                         item.listSongs = item.listSongs.filter(song => song.id !== action.payload.audioId);
+                    }
+
+                    return item;
+                })
+            }
+        case 'ADD_AUDIO_TO_PLAYLIST':
+            return {
+                ...state,
+                playlists: state.playlists.map(item => {
+                    if (item.type === action.payload.type) {
+                        const foundAudio = item.listSongs.find(audio => audio.id === action.payload.audio.id);
+                        if (foundAudio) {
+                            item.listSongs = item.listSongs.filter(audio => audio.id !== action.payload.audio.id);
+                        }
+                        item.listSongs.push(action.payload.audio);
                     }
 
                     return item;

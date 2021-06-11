@@ -89,7 +89,7 @@ function DrawerHomeNavigator() {
     return (
         <DrawerHomeContext.Provider value={settings}>
             <DrawerHome.Navigator
-                initialRouteName='TabSongs'
+                initialRouteName='TabPlaylists'
                 tabBar={(props) => <CustomTabBar {...props}/>}
                 tabBarOptions={{
                     keyboardHidesTabBar: true,

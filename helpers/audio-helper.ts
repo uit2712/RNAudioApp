@@ -179,6 +179,7 @@ export function getAudioHelperCurrentAudioInfo({
             duration,
             currentTime,
             cover: currentSound.cover,
+            originalInfo: currentSound,
         }
     }
 

@@ -74,6 +74,7 @@ export interface ICurrentAudioInfo {
     duration: number;
     currentTime: number;
     cover?: string;
+    originalInfo: SoundFileType;
 }
 
 export interface INavigatorScreen<ScreenParams> {

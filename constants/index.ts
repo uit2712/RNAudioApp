@@ -13,4 +13,10 @@ export const AUDIO_HELPER_CURRENT_AUDIO_INFO: ICurrentAudioInfo = {
     currentTimeString: formatTimeString(0),
     duration: 0,
     currentTime: 0,
+    originalInfo: {
+        type: 'other',
+        name: '',
+        other: '',
+        path: '',
+    }
 }

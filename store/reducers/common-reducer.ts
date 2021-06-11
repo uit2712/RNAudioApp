@@ -5,7 +5,7 @@ const initializeState: ICommonState = {
     isShowSortByBottomSheet: false,
 }
 
-export default function AlbumsScreenReducer(state = initializeState, action: CommonActions): ICommonState {
+export default function CommonReducer(state = initializeState, action: CommonActions): ICommonState {
     switch(action.type) {
         default: return state;
         case 'SET_IS_SHOW_SORT_BY_BOTTOM_SHEET':

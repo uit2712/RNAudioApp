@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
+import { persistStore } from 'redux-persist';
 import reducer from './reducers';
 
-const store = createStore(reducer);
-export default store;
+export const store = createStore(reducer);
+export const persistor = persistStore(store);

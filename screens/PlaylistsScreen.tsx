@@ -7,10 +7,13 @@ import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
+import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
 import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
 
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();
+    useAddLastPlayedAudioToPlaylists();
+
     return (
         <FlatList
             data={playlists}
