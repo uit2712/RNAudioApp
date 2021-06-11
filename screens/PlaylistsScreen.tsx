@@ -7,8 +7,10 @@ import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
+import { TabPlaylistsNavigationProp } from '@navigators/config/root/home/tab-playlists';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
 import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
+import { useNavigation } from '@react-navigation/core';
 
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();
@@ -36,10 +38,15 @@ function PlaylistsItem({
 }: {
     value: IPlaylist,
 }) {
+    const navigation = useNavigation<TabPlaylistsNavigationProp>();
+
     return (
         <ListItem
             Component={TouchableOpacity}
-            onPress={() => {}}
+            onPress={() => navigation.navigate('Detail', {
+                title: value.name,
+                info: value,
+            })}
             style={{
                 width: '100%',
             }}

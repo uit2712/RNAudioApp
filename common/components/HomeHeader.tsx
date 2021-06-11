@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomMenu from '@common/components/CustomMenu';
 import { DrawerHomeContext } from '@context-api/index';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -14,9 +15,13 @@ import { useNavigation } from '@react-navigation/core';
 
 function HomeHeader({
     listMenuSelections,
+    HeaderTitle,
 }: {
     listMenuSelections?: IMenuSelection[],
+    HeaderTitle?: React.ComponentType<any>;
 }) {
+    const navigation = useNavigation();
+
     return (
         <View
             style={{
@@ -26,9 +31,31 @@ function HomeHeader({
                 paddingHorizontal: 10,
             }}
         >
-            <View style={{ flex: 4, }}>
-                <HomeHeaderLeftMenu/>
+            <View style={{ flex: HeaderTitle ? 1 : 4, }}>
+                {
+                    HeaderTitle ? (
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.goBack();
+                            }}
+                        >
+                            <AntDesign
+                                name='left'
+                                size={30}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <HomeHeaderLeftMenu/>
+                    )
+                }
             </View>
+            {
+                HeaderTitle && (
+                    <View style={{ flex: 3, }}>
+                        <HeaderTitle/>
+                    </View>
+                )
+            }
             <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <HomeHeaderSearch/>
                 <TouchableOpacity>
