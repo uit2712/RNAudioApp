@@ -45,9 +45,16 @@ function SongsOfflineSection({
         case 'songs':
             return (
                 <Sound
-                    index={index}
                     isActive={index === player.currentIndex}
                     value={item as SoundFileType}
+                    listMenuSelections={[
+                        { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },
+                        { text: 'Thêm vào hàng đợi' },
+                        { text: 'Thêm vào danh sách phát' },
+                        { text: 'Thêm vào Mục ưa thích' },
+                        { text: 'Đặt làm nhạc chuông' },
+                        { text: 'Xóa' },
+                    ]}
                 />
             )
         case 'albums':

@@ -2,6 +2,7 @@ import { PlaylistsScreenReducer, PlaylistsScreenReducerPersistConfig } from './p
 
 import AlbumsScreenReducer from './albums-screen-reducer';
 import ArtistsScreenReducer from './artists-screen-reducer';
+import CommonReducer from './common-reducer';
 import SearchScreenReducer from './search-screen-reducer';
 import SongsScreenReducer from './songs-screen-reducer';
 import { combineReducers } from 'redux';
@@ -13,6 +14,7 @@ const reducer = combineReducers({
     albums: AlbumsScreenReducer,
     songs: SongsScreenReducer,
     search: SearchScreenReducer,
+    common: CommonReducer,
 });
 
 export default reducer;

@@ -1,3 +1,4 @@
+import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { IBottomSheetSectionWithType, IDrawerHomeContext, IPlayer, IRequestAudioHelper, ISortByBottomSheetContextWithType, } from '@interfaces/index';
 import {
     getAudioHelperCurrentAudioInfo,
@@ -15,9 +16,9 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from 'types/index';
 import { BackHandler } from 'react-native';
-import { DrawerHomeContext } from '@context-api/index';
 import React from 'react';
 import Sound from 'react-native-sound';
+import { SoundFileType } from 'types/songs-screen-types';
 import { shuffleArray } from '@functions/index';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';
@@ -173,13 +174,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
     }
 
     function playAudio(audioIndex: number) {
-        if (audioIndex !== index) {
-            initialized(audioIndex).then((player?: Sound) => {
-                if (player) {
-                    playCurrentIndex(player);
-                }
-            }).catch(() => {});
-        }
+        setIndex(audioIndex);
     }
 
 
@@ -196,10 +191,22 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }
     }
 
+    function setListSoundsAndPlay(listSounds: SoundFileType[], audioIndex: number) {
+        setListSounds(listSounds);
+        setIndex(audioIndex);
+    }
+    React.useEffect(() => {
+        initialized(index).then((player?: Sound) => {
+            if (player) {
+                playCurrentIndex(player);
+            }
+        }).catch(() => {});
+    }, [index]);
+
     return {
         ...disabledButtonStatus,
         ...getPlayerSettings(),
-        play: () => play(),
+        play,
         pause,
         stop,
         next,
@@ -222,6 +229,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         setListSounds,
         getCurrentTime,
         setCurrentTime,
+        setListSoundsAndPlay,
     }
 }
 
@@ -323,193 +331,15 @@ export function useSortByBottomSheetSettings<T>(request: IBottomSheetSectionWith
     }
 }
 
+export function useAddListSoundsToPlayer(listSounds: SoundFileType[]) {
+    const [isUpdateListSounds, setIsUpdateListSounds] = React.useState(false);
+    const player = React.useContext(SoundPlayerContext);
+    React.useEffect(() => {
+        player.setListSounds(listSounds);
+        setIsUpdateListSounds(true);
+    }, []);
 
-// export function useSoundPlayer(request: IRequestAudioHelper = {
-//     listSounds: [],
-//     isLogStatus: false,
-//     timeRate: 15,
-// }): ISoundPlayer {
-//     const [listSounds, setListSounds] = React.useState(request.listSounds);
-//     const [status, setStatus] = React.useState<AudioStatusType>('loading');
-
-//     const [index, setIndex] = React.useState(-1);
-
-//     function playAudioId(soundIndex: number) {
-//         if (soundIndex !== index && soundIndex >= 0 && soundIndex < listSounds.length) {
-//             setIndex(soundIndex);
-//             setStatus('loading');
-//             const { path, name, album, artist, cover, genre, duration  } = listSounds[soundIndex];
-//             setInfo({
-//                 ...info,
-//                 name,
-//                 album,
-//                 artist,
-//                 cover,
-//                 genre,
-//                 durationString: duration ?? formatTimeString(0),
-//                 currentTime: 0,
-//                 currentTimeString: formatTimeString(0),
-//             })
-//             SoundPlayer.loadUrl(path);
-//         }
-//     }
-
-//     React.useEffect(() => {
-//         const onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
-//             if (success) {
-//                 if (isLoop() === false) {
-//                     next();
-//                 } else {
-//                     repeat();
-//                 }
-//             }
-//         });
-
-//         return () => onFinishedPlayingSubscription.remove();
-//     });
-
-//     function repeat() {
-//         seek(0);
-//         resume();
-//     }
-
-//     // React.useEffect(() => {
-//     //     const onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', async ({ success }) => {
-//     //         if (success) {
-//     //             await getInfo();
-//     //             setStatus('play');
-//     //         }
-//     //     });
-
-//     //     return () => onFinishedLoadingSubscription.remove();
-//     // });
-
-//     React.useEffect(() => {
-//         const onFinishedLoadingURLSubscription = SoundPlayer.addEventListener('FinishedLoadingURL', async ({ success }) => {
-//             if (success) {
-//                 SoundPlayer.play();
-//                 await getInfo();
-//                 setStatus('play');
-//             }
-//         });
-
-//         return () => onFinishedLoadingURLSubscription.remove();
-//     });
-
-//     function pause() {
-//         setStatus('pause');
-//         SoundPlayer.pause();
-//     }
-
-//     function resume() {
-//         setStatus('play');
-//         SoundPlayer.resume();
-//     }
-
-//     function stop() {
-//         setStatus('stop');
-//         SoundPlayer.stop();
-//     }
-
-//     function next() {
-//         if (hasSong()) {
-//             setStatus('next');
-//             const newIndex = (index + 1) % listSounds.length;
-//             playAudioId(newIndex);
-//         }
-//     }
-
-//     function previous() {
-//         if (hasSong()) {
-//             setStatus('previous');
-//             const newIndex = index === 0 ? listSounds.length - 1 : index - 1;
-//             playAudioId(newIndex);
-//         }
-//     }
-
-//     function hasSong() {
-//         return listSounds.length > 0;
-//     }
-
-//     function seek(seconds: number) {
-//         SoundPlayer.seek(seconds);
-//         resume();
-//     }
-
-//     const [loopTimes, setLoopTimes] = React.useState(0);
-//     React.useEffect(() => {
-//         // SoundPlayer.setNumberOfLoops(loopTimes);
-//     }, [loopTimes]);
-//     function loop() {
-//         const newLoopTimes = getNextLoopsTime();
-//         setLoopTimes(newLoopTimes);
-//     }
-//     function isLoop() {
-//         return loopTimes !== 0;
-//     }
-//     function getNextLoopsTime() {
-//         switch(loopTimes) {
-//             default: return 0;
-//             case 1: return -1;
-//             case -1: return 0;
-//             case 0: return 1;
-//         }
-//     }
-
-//     const [info, setInfo] = React.useState<ICurrentAudioInfo>(AUDIO_HELPER_CURRENT_AUDIO_INFO);
-//     async function getInfo() {
-//         const { currentTime, duration } = await SoundPlayer.getInfo();
-//         setInfo({
-//             ...info,
-//             currentTime,
-//             duration,
-//             currentTimeString: formatTimeString(currentTime * 1000),
-//             durationString: formatTimeString(duration * 1000),
-//         });
-//     }
-
-//     const [currentTime, setCurrentTime] = React.useState(0);
-//     React.useEffect(() => {
-//         console.log(currentTime);
-//     }, [currentTime]);
-//     React.useEffect(() => {
-//         const interval = setInterval(() => {
-//             if (status === 'play') {
-//                 SoundPlayer.getInfo()
-//                     .then(({ currentTime }) => {
-//                         // setInfo({
-//                         //     ...info,
-//                         //     currentTime,
-//                         //     currentTimeString: formatTimeString(currentTime * 1000),
-//                         // })
-                        
-//                         // setCurrentTime(currentTime);
-//                     }).catch(() => {});
-//             }
-//         }, 100);
-
-//         return () => clearInterval(interval);
-//     });
-
-//     const [isShuffle, setIsShuffle] = React.useState(false);
-//     function shuffle() {
-//         setIsShuffle(!isShuffle);
-//     }
-    
-//     return {
-//         setListSounds,
-//         playAudioId,
-//         pause,
-//         resume,
-//         stop,
-//         next,
-//         previous,
-//         seek,
-//         loop,
-//         currentAudioInfo: info,
-//         status,
-//         isLoop: isLoop(),
-//         shuffle,
-//         isShuffle,
-//     }
-// }
+    return {
+        isUpdateListSounds,
+    }
+}

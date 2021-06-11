@@ -1,9 +1,11 @@
+import { SoundFileType } from 'types/songs-screen-types';
+
 export type CommonActions = {
-    type: 'SET_IS_SHOW_SORT_BY_BOTTOM_SHEET';
-    payload: boolean;
+    type: 'SET_CURRENT_LIST_SONGS';
+    payload: SoundFileType[];
 }
 
-export const setIsShowSortByBottomSheet = (request: boolean): CommonActions => ({
-    type: 'SET_IS_SHOW_SORT_BY_BOTTOM_SHEET',
+export const setCurrentListSoundsAction = (request: SoundFileType[]): CommonActions => ({
+    type: 'SET_CURRENT_LIST_SONGS',
     payload: request,
 });

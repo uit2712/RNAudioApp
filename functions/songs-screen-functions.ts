@@ -7,7 +7,7 @@ import MusicFiles from 'react-native-get-music-files';
 import { PermissionsAndroid } from 'react-native';
 import { SoundFileType } from 'types/songs-screen-types';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
-import { formatTimeString } from '.';
+import { formatTimeString } from '@functions/index';
 
 export function checkPermission({
     permission,

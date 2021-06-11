@@ -12,7 +12,7 @@ import { navigate } from '@navigators/config/root';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 
 function SoundsScreen() {
-    const { player } = useGetPlayerInfo();
+    const player = React.useContext(SoundPlayerContext);
     const { songs } = useGetAllSongsSelector();
     
     return (
@@ -22,8 +22,16 @@ function SoundsScreen() {
                 <Sound
                     key={item.id}
                     value={item}
-                    index={index}
                     isActive={index === player.currentIndex}
+                    listMenuSelections={[
+                        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(songs, index) },
+                        { text: 'Thêm vào hàng đợi' },
+                        { text: 'Thêm vào danh sách phát' },
+                        { text: 'Thêm vào Mục ưa thích' },
+                        { text: 'Đặt làm nhạc chuông' },
+                        { text: 'Xóa' },
+                    ]}
+                    onPress={() => player.setListSoundsAndPlay(songs, index)}
                 />
             )}
             keyExtractor={item => item.path.toString()}
@@ -34,31 +42,21 @@ function SoundsScreen() {
     )
 }
 
-function useGetPlayerInfo() {
-    const { songs } = useGetAllSongsSelector();
-    const player = React.useContext(SoundPlayerContext);
-    React.useEffect(() => {
-        player.setListSounds(songs);
-    }, [songs]);
-
-    return {
-        player,
-    }
-}
-
 export function Sound({
     value,
-    index,
     isActive,
+    listMenuSelections,
+    onPress,
 }: {
     value: SoundFileType,
-    index: number,
     isActive: boolean,
+    listMenuSelections: IMenuSelection[],
+    onPress?: () => void,
 }) {
     const player = React.useContext(SoundPlayerContext);
 
     function goToSoundPlayerDetail() {
-        player.playAudio(index);
+        onPress && onPress();
         navigate('Home', {
             screen: 'TabSoundPlayerDetail',
             params: {
@@ -82,7 +80,7 @@ export function Sound({
         >
             <SoundCover value={value}/>
             <SoundInfo value={value} isActive={isActive}/>
-            <SoundMenu value={value} index={index}/>
+            <SoundMenu value={value} listMenuSelections={listMenuSelections}/>
         </ListItem>
     )
 }
@@ -134,21 +132,11 @@ function SoundInfo({
 
 function SoundMenu({
     value,
-    index,
+    listMenuSelections,
 }: {
     value: SoundFileType,
-    index: number,
+    listMenuSelections: IMenuSelection[],
 }) {
-    const player = React.useContext(SoundPlayerContext);
-    const listMenuSelections: IMenuSelection[] = [
-        { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },
-        { text: 'Thêm vào hàng đợi' },
-        { text: 'Thêm vào danh sách phát' },
-        { text: 'Thêm vào Mục ưa thích' },
-        { text: 'Đặt làm nhạc chuông' },
-        { text: 'Xóa' },
-    ]
-
     return (
         <SettingsMenu
             listMenuSelections={listMenuSelections}

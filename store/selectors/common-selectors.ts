@@ -1,6 +1,7 @@
 import { IApplicationState } from '@store/interfaces';
+import { SoundFileType } from 'types/songs-screen-types';
 import { useSelector } from 'react-redux';
 
-export function useIsShowSortByBottomSheetSelector() {
-    return useSelector<IApplicationState, boolean>(state => state.common.isShowSortByBottomSheet);
+export function useGetCurrentListSoundsSelector() {
+    return useSelector<IApplicationState, SoundFileType[]>(state => state.common.currentListSongs);
 }

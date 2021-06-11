@@ -37,7 +37,7 @@ export interface ISearchScreenState {
 }
 
 export interface ICommonState {
-    isShowSortByBottomSheet: boolean;
+    currentListSongs: SoundFileType[];
 }
 
 export interface IApplicationState {
