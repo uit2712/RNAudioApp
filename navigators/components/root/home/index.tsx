@@ -3,13 +3,13 @@ import * as React from 'react';
 import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabDescriptorMap, BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
+import { IPlayer, IStackNavigatorScreen } from '@interfaces/index';
 import { NavigationHelpers, ParamListBase, RouteProp, TabNavigationState } from '@react-navigation/native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DrawerHomeParams } from '@navigators/config/root/home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { IStackNavigatorScreen } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -321,22 +321,53 @@ function MiniPlayerActions() {
     )
 }
 
-function MiniPlayerDuration() {
-    const player = React.useContext(SoundPlayerContext);
-    return (
-        <>
-            {
-                player.duration > 0 && (
-                    <LinearProgress
-                        value={player.currentTime / player.duration}
-                        variant='determinate'
-                        trackColor='gray'
-                        color='blue'
-                    />
-                )
-            }
-        </>
-    )
+class MiniPlayerDuration extends React.Component {
+    static contextType = SoundPlayerContext;
+    isComponentUnmounted: boolean = false;
+
+    state = {
+        currentTime: 0,
+    }
+
+    interval: any;
+    componentDidMount() {
+        if (!this.interval) {
+            this.interval = setInterval(() => {
+                const context = this.context as IPlayer;
+                context.getCurrentTime((currentTime: number, isPlaying: boolean) => {
+                    if (isPlaying && this.isComponentUnmounted === false) {
+                        this.setState(prevState => ({
+                            currentTime,
+                        }))
+                    }
+                })
+            }, 100);
+        }
+    }
+    
+    componentWillUnmount() {
+        this.isComponentUnmounted = true;
+        clearInterval(this.interval);
+        this.interval = null;
+    }
+
+    render() {
+        const context = this.context as IPlayer;
+        return (
+            <>
+                {
+                    context.currentAudioInfo.duration > 0 && (
+                        <LinearProgress
+                            value={this.state.currentTime / context.currentAudioInfo.duration}
+                            variant='determinate'
+                            trackColor='gray'
+                            color='blue'
+                        />
+                    )
+                }
+            </>
+        )
+    }
 }
 
 export default DrawerHomeNavigator;

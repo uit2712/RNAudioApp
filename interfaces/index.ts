@@ -42,6 +42,7 @@ export interface IPlayer {
     playAudio: (audioIndex: number) => void;
     setListSounds: (listSounds: SoundFileType[]) => void;
     getCurrentTime: (cb?: ((seconds: number, isPlaying: boolean) => void) | undefined) => void;
+    setCurrentTime: (seconds: number) => void;
     status: AudioStatusType;
     duration: number; // seconds
     currentTime: number; // seconds

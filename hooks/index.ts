@@ -221,6 +221,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         errorMessage,
         setListSounds,
         getCurrentTime,
+        setCurrentTime,
     }
 }
 

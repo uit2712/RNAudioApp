@@ -41,6 +41,7 @@ export const SoundPlayerContext = React.createContext<IPlayer>({
     playAudio: (audioIndex: number) => {},
     setListSounds: (listSounds: SoundFileType[]) => {},
     getCurrentTime: (cb?: ((seconds: number, isPlaying: boolean) => void) | undefined) => {},
+    setCurrentTime: (seconds: number) => {},
 });
 
 export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({

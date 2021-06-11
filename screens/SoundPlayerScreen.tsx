@@ -93,22 +93,23 @@ function Common() {
 
 class Progress extends React.Component {
     static contextType = SoundPlayerContext;
+    isComponentUnmounted: boolean = false;
     state = {
         currentTime: 0,
         currentTimeString: formatTimeString(0),
     }
 
-    static interval: NodeJS.Timeout;
+    interval: any;
     componentDidMount() {
-        if (!Progress.interval) {
-            Progress.interval = setInterval(() => {
+        if (!this.interval) {
+            this.interval = setInterval(() => {
                 const context = this.context as IPlayer;
                 context.getCurrentTime((currentTime: number, isPlaying: boolean) => {
-                    if (isPlaying) {
+                    if (isPlaying && this.isComponentUnmounted === false) {
                         this.setState(prevState => ({
                             currentTime,
                             currentTimeString: formatTimeString(currentTime * 1000),
-                        }))
+                        }));
                     }
                 })
             }, 100);
@@ -116,7 +117,9 @@ class Progress extends React.Component {
     }
     
     componentWillUnmount() {
-        clearInterval(Progress.interval);
+        this.isComponentUnmounted = true;
+        clearInterval(this.interval);
+        this.interval = null;
     }
 
     render() {
