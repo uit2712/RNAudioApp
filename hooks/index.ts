@@ -180,7 +180,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
                 playCurrentIndex(player);
             }
         }).catch(() => {});
-    }, [index]);
+    }, [index, listSounds]);
 
     return {
         ...disabledButtonStatus,

@@ -340,7 +340,6 @@ export function next({
     setIndex: (index: number) => void,
 }) {
     if (listSounds.length > 0) {
-        setStatus('next');
         
         let newIndex = -1;
         if (isShuffle === true) {
@@ -350,7 +349,10 @@ export function next({
         } else {
             newIndex = (index + 1) % listSounds.length;
         }
-        setIndex(newIndex);
+        if (newIndex !== index) {
+            setStatus('next');
+            setIndex(newIndex);
+        }
     }
 }
 
@@ -372,8 +374,7 @@ export function previous({
     setIndex: (index: number) => void,
 }) {
     if (listSounds.length > 0 && index >= 0) {
-        setStatus('previous');
-
+        
         let newIndex = -1;
         if (isShuffle === true) {
             let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);
@@ -382,7 +383,10 @@ export function previous({
         } else {
             newIndex = index - 1 >= 0 ? index - 1 : listSounds.length - 1;
         }
-        setIndex(newIndex);
+        if (newIndex !== index) {
+            setStatus('previous');
+            setIndex(newIndex);
+        }
     }
 }
 

@@ -15,7 +15,6 @@ const wait = (timeout: number) => {
 
 function ListSongsDetailScreen() {
     const route = useRoute<ListSongsDetailScreenRouteProp>();
-    const [songs, setSongs] = React.useState(route.params.isReverseListSongs === true ? [...route.params.info.listSongs].reverse() : route.params.info.listSongs);
     const player = React.useContext(SoundPlayerContext);
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -40,13 +39,13 @@ function ListSongsDetailScreen() {
                     value={item}
                     isActive={index === player.currentIndex}
                     listMenuSelections={[
-                        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(songs, index) },
+                        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(route.params.info.listSongs, index) },
                         { text: 'Thêm vào hàng đợi' },
                         { text: 'Thêm vào danh sách phát' },
                         { text: 'Thêm vào Mục ưa thích' },
                         { text: 'Đặt làm nhạc chuông' },
                     ]}
-                    onPress={() => player.setListSoundsAndPlay(songs, index)}
+                    onPress={() => player.setListSoundsAndPlay(route.params.info.listSongs, index)}
                 />
             )}
             keyExtractor={item => item.path.toString()}
