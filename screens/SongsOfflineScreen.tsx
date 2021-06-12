@@ -39,7 +39,6 @@ function SongsOfflineSection({
     section
 }: SectionListRenderItemInfo<SongsOfflineSectionItemType, SongsOfflineSectionType>) {
     const player = React.useContext(SoundPlayerContext);
-    
     switch(section.type) {
         default: return null;
         case 'songs':
@@ -48,13 +47,14 @@ function SongsOfflineSection({
                     isActive={(item as SoundFileType).id === player.currentAudioInfo.originalInfo.id}
                     value={item as SoundFileType}
                     listMenuSelections={[
-                        { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },
+                        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(section.data as SoundFileType[], index) },
                         { text: 'Thêm vào hàng đợi' },
                         { text: 'Thêm vào danh sách phát' },
                         { text: 'Thêm vào Mục ưa thích' },
                         { text: 'Đặt làm nhạc chuông' },
                         { text: 'Xóa' },
                     ]}
+                    onPress={() => player.setListSoundsAndPlay(section.data as SoundFileType[], index)}
                 />
             )
         case 'albums':
