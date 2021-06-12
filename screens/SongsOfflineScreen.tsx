@@ -11,8 +11,8 @@ import { AlbumItem } from './AlbumsScreen';
 import { ArtistItem } from './ArtistsScreen';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
-import { Sound } from './SongsScreen';
 import { SoundFileType } from 'types/songs-screen-types';
+import SoundItem from '@common/components/SoundItem';
 import { SoundPlayerContext } from '@context-api/index';
 import { useGetSectionsData } from '@hooks/songs-offline-screen-hooks';
 
@@ -44,7 +44,7 @@ function SongsOfflineSection({
         default: return null;
         case 'songs':
             return (
-                <Sound
+                <SoundItem
                     isActive={index === player.currentIndex}
                     value={item as SoundFileType}
                     listMenuSelections={[

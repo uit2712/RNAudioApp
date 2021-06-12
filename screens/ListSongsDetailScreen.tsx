@@ -4,8 +4,8 @@ import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, VirtualizedList } from 'react-native';
 
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
-import { Sound } from './SongsScreen';
 import { SoundFileType } from 'types/songs-screen-types';
+import SoundItem from '@common/components/SoundItem';
 import { useHomeBottomTabHelper } from '@hooks/index';
 import { useRoute } from '@react-navigation/core';
 
@@ -35,7 +35,7 @@ function ListSongsDetailScreen() {
         <VirtualizedList
             data={route.params.info.listSongs}
             renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
-                <Sound
+                <SoundItem
                     key={item.id}
                     value={item}
                     isActive={index === player.currentIndex}

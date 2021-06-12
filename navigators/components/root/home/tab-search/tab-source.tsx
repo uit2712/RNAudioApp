@@ -1,14 +1,22 @@
 import * as React from 'react';
 
+import { DrawerHomeContext } from '@context-api/index';
 import SongsOfflineScreen from '@screens/SongsOfflineScreen';
 import SongsOnlineScreen from '@screens/SongsOnlineScreen';
 import { TabSourceParams } from '@navigators/config/root/home/tab-search/tab-source';
 import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useHomeBottomTabHelper } from '@hooks/index';
 
 const TabSource = createMaterialTopTabNavigator<TabSourceParams>();
 
 function TabSourceNavigator() {
+    const { setIsShowTabBar, } = React.useContext(DrawerHomeContext);
+    useHomeBottomTabHelper({
+        onBack: () => setIsShowTabBar(true),
+        onFocus: () => setIsShowTabBar(false)
+    });
+
     return (
         <TabSource.Navigator>
             <TabSource.Screen
