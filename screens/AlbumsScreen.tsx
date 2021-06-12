@@ -80,6 +80,7 @@ function AlbumItemColumn({
         navigation.navigate('TabListSongs', {
             screen: 'ListSongs',
             params: {
+                type: 'album',
                 info,
             }
         });

@@ -4,8 +4,10 @@ import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, VirtualizedList } from 'react-native';
 
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
+import { ListSongsDetailType } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@common/components/SoundItem';
+import { useGetListMenuSelections, } from '@hooks/list-songs-detail-screen-hooks';
 import { useHomeBottomTabHelper } from '@hooks/index';
 import { useRoute } from '@react-navigation/core';
 
@@ -15,7 +17,6 @@ const wait = (timeout: number) => {
 
 function ListSongsDetailScreen() {
     const route = useRoute<ListSongsDetailScreenRouteProp>();
-    const player = React.useContext(SoundPlayerContext);
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -34,18 +35,12 @@ function ListSongsDetailScreen() {
         <VirtualizedList
             data={route.params.info.listSongs}
             renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
-                <SoundItem
+                <ListSongsDetailScreenCustomSoundItem
                     key={item.id}
-                    value={item}
-                    isActive={item.id === player.currentAudioInfo.originalInfo.id}
-                    listMenuSelections={[
-                        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(route.params.info.listSongs, index) },
-                        { text: 'Thêm vào hàng đợi' },
-                        { text: 'Thêm vào danh sách phát' },
-                        { text: 'Thêm vào Mục ưa thích' },
-                        { text: 'Đặt làm nhạc chuông' },
-                    ]}
-                    onPress={() => player.setListSoundsAndPlay(route.params.info.listSongs, index)}
+                    index={index}
+                    item={item}
+                    songs={route.params.info.listSongs}
+                    type={route.params.type}
                 />
             )}
             keyExtractor={item => item.path.toString()}
@@ -59,6 +54,31 @@ function ListSongsDetailScreen() {
                     onRefresh={onRefresh}
                 />
             }
+        />
+    )
+}
+
+function ListSongsDetailScreenCustomSoundItem({
+    item,
+    index,
+    songs,
+    type,
+}: {
+    item: SoundFileType,
+    index: number,
+    songs: SoundFileType[],
+    type: ListSongsDetailType,
+}) {
+    const player = React.useContext(SoundPlayerContext);
+    const listMenuSelections = useGetListMenuSelections({ item, index, songs, type });
+
+    return (
+        <SoundItem
+            key={item.id}
+            value={item}
+            isActive={item.id === player.currentAudioInfo.originalInfo.id}
+            listMenuSelections={listMenuSelections}
+            onPress={() => player.setListSoundsAndPlay(songs, index)}
         />
     )
 }

@@ -1,4 +1,4 @@
-import { AudioStatusType } from 'types/index';
+import { AudioStatusType, } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
 import { Source } from 'react-native-fast-image';
 

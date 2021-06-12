@@ -352,5 +352,6 @@ export function useFavorite(audio: SoundFileType) {
     return {
         isFavorite,
         onFavoritePress,
+        removeFromPlayList: () => dispatch(removeAudioFromPlaylistAction({ type: 'favorite', audioId: audio.id ?? '' }))
     }
 }

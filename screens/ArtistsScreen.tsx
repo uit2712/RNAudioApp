@@ -49,6 +49,7 @@ export function ArtistItem({
         navigation.navigate('TabListSongs', {
             screen: 'ListSongs',
             params: {
+                type: 'artist',
                 info,
             }
         });

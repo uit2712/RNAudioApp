@@ -50,6 +50,7 @@ function PlaylistsItem({
                 navigation.navigate('TabListSongs', {
                     screen: 'ListSongs',
                     params: {
+                        type: value.type,
                         info: {
                             name: value.name,
                             cover: value.cover,

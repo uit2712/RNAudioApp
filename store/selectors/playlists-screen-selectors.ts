@@ -1,7 +1,6 @@
-import { IPlaylist, PlaylistType } from '@interfaces/playlists-screen-interfaces';
-
 import { IApplicationState } from '@store/interfaces';
-import { SoundFileType } from 'types/songs-screen-types';
+import { IPlaylist, } from '@interfaces/playlists-screen-interfaces';
+import { PlaylistType } from 'types/playlists-screen-types';
 import { useSelector } from 'react-redux';
 
 export function useGetPlaylists() {
@@ -17,5 +16,12 @@ export function useIsAudioFromFavoritePlaylistSelector(audioId: string) {
         }
 
         return false;
+    });
+}
+
+export function useGetPlaylistByTypeSelector(type: PlaylistType) {
+    return useSelector<IApplicationState, IPlaylist | undefined>(state => {
+        const favoritePlaylist = state.playlists.playlists.find(item => item.type === type);
+        return favoritePlaylist;
     });
 }
