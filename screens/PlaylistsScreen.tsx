@@ -50,8 +50,11 @@ function PlaylistsItem({
                 navigation.navigate('TabListSongs', {
                     screen: 'ListSongs',
                     params: {
-                        title: value.name,
-                        info: value,
+                        info: {
+                            name: value.name,
+                            cover: value.cover,
+                            listSongs: value.listSongs,
+                        },
                         isReverseListSongs: true,
                     }
                 })

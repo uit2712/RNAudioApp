@@ -56,7 +56,6 @@ export function getAllMusicFiles({
         album: true,
         blured: true,
     }).then((tracks: ITrackInfo[]) => {
-        console.log(tracks);
         const songs: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
             type: 'other',
             id: item.id,

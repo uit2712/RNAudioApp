@@ -323,3 +323,13 @@ export function useSortByBottomSheetSettings<T>(request: IBottomSheetSectionWith
         getSelectedType,
     }
 }
+
+export function useDisabledButton() {
+    const [isDisabled, setIsDisabled] = React.useState(false);
+
+    return {
+        isDisabled,
+        disable: () => setIsDisabled(true),
+        enable: () => setIsDisabled(false),
+    }
+}

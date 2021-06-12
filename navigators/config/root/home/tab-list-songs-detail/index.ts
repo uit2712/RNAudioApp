@@ -1,11 +1,11 @@
 import { NavigatorScreenParams, RouteProp, } from '@react-navigation/native';
 
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { IPlaylist, } from '@interfaces/playlists-screen-interfaces';
+import { IListSongsDetail } from '@interfaces/index';
 import { IScreenParams } from '@navigators/route-params';
 
 export interface IListSongsDetailScreenParams extends IScreenParams {
-    info: IPlaylist;
+    info: IListSongsDetail;
     isReverseListSongs?: boolean;
 }
 

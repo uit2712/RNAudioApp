@@ -1,5 +1,6 @@
 import { AudioStatusType } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
+import { Source } from 'react-native-fast-image';
 
 export interface IMenuSelection {
     text: string;
@@ -132,4 +133,10 @@ export interface ISortByBottomSheetContextWithType<T> extends ISortByBottomSheet
     setIsShowSortByBottomSheet: (isVisible: boolean) => void;
     setSelectedType: (sectionIndex: number, selectedItemIndex: T) => void;
     getSelectedType: (sectionIndex: number) => T;
+}
+
+export interface IListSongsDetail {
+    listSongs: SoundFileType[];
+    name: string;
+    cover?: Source | number | string;
 }

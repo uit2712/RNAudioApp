@@ -1,15 +1,25 @@
 import * as React from 'react';
 
-import { Image, StyleSheet, Text, View, VirtualizedList } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    VirtualizedList,
+} from 'react-native';
 
 import CustomMenu from '@common/components/CustomMenu';
+import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IMenuSelection } from '@interfaces/index';
 import { MenuOption } from 'react-native-popup-menu';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
 import { listToMatrix } from '@functions/index';
+import { useDisabledButton } from '@hooks/index';
 import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
+import { useNavigation } from '@react-navigation/native';
 
 function AlbumsScreen() {
     const { albums } = useGetAllAlbumsSelector();
@@ -61,8 +71,26 @@ function AlbumItemColumn({
     item: IAlbum,
     index: number,
 }) {
+    const navigation = useNavigation<DrawerHomeNavigationProp>();
+    const { disable, enable, isDisabled } = useDisabledButton();
+    async function onPress() {
+        disable();
+        const info = await getListSongsByAlbumId(item);
+        enable();
+        navigation.navigate('TabListSongs', {
+            screen: 'ListSongs',
+            params: {
+                info,
+            }
+        });
+    }
+
     return (
-        <View style={[styles.albumItemColumn, { marginRight: index === 0 ? 10 : 0, }]}>
+        <TouchableOpacity
+            style={[styles.albumItemColumn, { marginRight: index === 0 ? 10 : 0, }]}
+            onPress={onPress}
+            disabled={isDisabled}
+        >
             <View style={styles.albumItemColumnRect}/>
             <View style={styles.albumItemColumnCoverContainer}>
                 <Image
@@ -81,7 +109,7 @@ function AlbumItemColumn({
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
