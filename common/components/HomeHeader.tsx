@@ -16,9 +16,11 @@ import { useNavigation } from '@react-navigation/core';
 function HomeHeader({
     listMenuSelections,
     HeaderTitle,
+    onGoBack,
 }: {
     listMenuSelections?: IMenuSelection[],
-    HeaderTitle?: React.ComponentType<any>;
+    HeaderTitle?: React.ComponentType<any>,
+    onGoBack?: () => void,
 }) {
     const navigation = useNavigation();
 
@@ -36,6 +38,7 @@ function HomeHeader({
                     HeaderTitle ? (
                         <TouchableOpacity
                             onPress={() => {
+                                onGoBack && onGoBack();
                                 navigation.goBack();
                             }}
                         >
@@ -85,12 +88,13 @@ function HomeHeaderLeftMenu() {
 
 function HomeHeaderSearch() {
     const navigation = useNavigation<RootNavigationProp>();
-    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
 
     return (
         <TouchableOpacity
             onPress={() => {
                 setIsShowTabBar(false);
+                setIsShowMiniPlayer(false);
                 navigation.navigate('Home', {
                     screen: 'TabSearch',
                     params: {

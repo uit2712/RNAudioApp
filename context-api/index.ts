@@ -48,6 +48,8 @@ export const SoundPlayerContext = React.createContext<IPlayer>({
 export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({
     isShowTabBar: true,
     setIsShowTabBar: (isShowTabBar: boolean) => {},
+    isShowMiniPlayer: true,
+    setIsShowMiniPlayer: (isShowMiniPlayer: boolean) => {},
 });
 
 export const SortByBottomSheetContext = React.createContext<ISortByBottomSheetContextWithType<string>>({

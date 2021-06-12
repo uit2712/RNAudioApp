@@ -35,10 +35,11 @@ function TabSearchNavigator() {
 
 function SearchScreenHeader() {
     const navigation = useNavigation<RootNavigationProp>();
-    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
 
     function goBack() {
         setIsShowTabBar(true);
+        setIsShowMiniPlayer(true);
         navigation.goBack();
     }
 

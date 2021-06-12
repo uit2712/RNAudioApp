@@ -29,7 +29,6 @@ import { DrawerHomeContext, } from '@context-api/index';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
-import { shuffleArray } from '@functions/index';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';
 import { useGetAllMusicFiles } from '@hooks/songs-screen-hooks';
@@ -223,18 +222,28 @@ export function useAudioHelper(request: IRequestAudioHelper = {
 
 export function useDrawHomeSettings(): IDrawerHomeContext {
     const [isShowTabBar, setIsShowTabBar] = React.useState(true);
+    const [isShowMiniPlayer, setIsShowMiniPlayer] = React.useState(true);
 
     return {
         isShowTabBar,
+        isShowMiniPlayer,
         setIsShowTabBar,
+        setIsShowMiniPlayer,
     }
 }
 
-export function useHomeBottomTabHelper() {
-    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
+export function useHomeBottomTabHelper({
+    onFocus,
+    onBack,
+}: {
+    onFocus?: () => void,
+    onBack?: () => void,
+}) {
     const navigation = useNavigation();
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => setIsShowTabBar(false));
+        const unsubscribe = navigation.addListener('focus', () => {
+            onFocus && onFocus();
+        });
         // Return the function to unsubscribe from the event so it gets removed on unmount
         return unsubscribe;
     }, [navigation]);
@@ -242,7 +251,7 @@ export function useHomeBottomTabHelper() {
     useFocusEffect(
         React.useCallback(() => {
             const onBackPress = () => {
-                setIsShowTabBar(true);
+                onBack && onBack();
                 return false;
             };
 
@@ -250,10 +259,6 @@ export function useHomeBottomTabHelper() {
             return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
         }, [])
     );
-
-    return {
-        setIsShowTabBar,
-    }
 }
 
 /**

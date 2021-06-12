@@ -2,13 +2,14 @@ import * as React from 'react';
 
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
+import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { TabPlaylistsNavigationProp } from '@navigators/config/root/home/tab-playlists';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
+import { useDrawHomeSettings } from '@hooks/index';
 import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/core';
 
@@ -38,15 +39,23 @@ function PlaylistsItem({
 }: {
     value: IPlaylist,
 }) {
-    const navigation = useNavigation<TabPlaylistsNavigationProp>();
+    const navigation = useNavigation<DrawerHomeNavigationProp>();
+    const { setIsShowTabBar } = useDrawHomeSettings();
 
     return (
         <ListItem
             Component={TouchableOpacity}
-            onPress={() => navigation.navigate('Detail', {
-                title: value.name,
-                info: value,
-            })}
+            onPress={() => {
+                setIsShowTabBar(false);
+                navigation.navigate('TabListSongs', {
+                    screen: 'ListSongs',
+                    params: {
+                        title: value.name,
+                        info: value,
+                        isReverseListSongs: true,
+                    }
+                })
+            }}
             style={{
                 width: '100%',
             }}

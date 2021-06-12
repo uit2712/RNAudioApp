@@ -56,6 +56,7 @@ export function getAllMusicFiles({
         album: true,
         blured: true,
     }).then((tracks: ITrackInfo[]) => {
+        console.log(tracks);
         const songs: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
             type: 'other',
             id: item.id,
@@ -63,6 +64,7 @@ export function getAllMusicFiles({
             path: item.path ?? '',
             author: item.artist ?? '<unknown>',
             album: item.album ?? '<unknown>',
+            albumId: item.albumId,
             genre: item.genre ?? '<unknown>',
             cover: item.cover ?? avatarHelper.getAvatar(),
             duration: formatTimeString(item.duration ? Number(item.duration) : 0),

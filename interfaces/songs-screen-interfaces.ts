@@ -13,6 +13,8 @@ export interface ITrackInfo {
     albumArtist?: string;
     author?: string;
     coverTemp?: string;
+    albumId?: string;
+    artistId?: string;
 }
 
 export interface ISoundFile {
@@ -26,6 +28,8 @@ export interface ISoundFile {
     other: string; // author => artist => album => albumArtist
     bluredImage?: string;
     coverTemp?: string;
+    albumId?: string;
+    artistId?: string;
 }
 
 export interface IAppBundleSoundFile extends ISoundFile {

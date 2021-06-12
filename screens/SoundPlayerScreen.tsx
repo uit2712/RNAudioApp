@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
 import { ImageBackground, StyleSheet, Text, View, } from 'react-native';
 
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
@@ -8,7 +9,6 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { IPlayer } from '@interfaces/index';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
-import { SoundPlayerContext, } from '@context-api/index';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatTimeString } from '@functions/index';
 import { useHomeBottomTabHelper } from '@hooks/index';
@@ -21,7 +21,17 @@ const themeSettings = {
 }
 
 function SoundPlayerScreen() {
-    useHomeBottomTabHelper();
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
+    useHomeBottomTabHelper({
+        onBack: () => {
+            setIsShowTabBar(true);
+            setIsShowMiniPlayer(true);
+        },
+        onFocus: () => {
+            setIsShowTabBar(false);
+            setIsShowMiniPlayer(false);
+        }
+    });
 
     const player = React.useContext(SoundPlayerContext);
     if (!player.currentAudioInfo) {

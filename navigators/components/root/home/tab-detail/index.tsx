@@ -33,12 +33,13 @@ function TabSoundPlayerDetailNavigator() {
 
 function SoundPlayerDetailScreenHeaderLeft({ navigation }: { navigation: any }) {
     const theme = React.useContext(SoundPlayerDetailThemeContext);
-    const { setIsShowTabBar } = React.useContext(DrawerHomeContext);
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
 
     return (
         <TouchableOpacity
             onPress={() => {
                 setIsShowTabBar(true);
+                setIsShowMiniPlayer(true);
                 navigation.goBack();
             }}
         >

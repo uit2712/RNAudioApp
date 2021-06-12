@@ -15,6 +15,7 @@ import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProg
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabAlbumsNavigator from './tab-albums';
 import TabArtistsNavigators from './tab-artists';
+import TabListSongsNavigator from './tab-list-songs-detail';
 import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
 import TabSongsNavigators from './tab-songs';
@@ -74,6 +75,15 @@ const screens: IStackNavigatorScreen<DrawerHomeParams>[] = [
         name: 'TabSearch',
         title: 'Tìm kiếm',
         component: TabSearchNavigator,
+        getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
+        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
+        icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: false,
+    },
+    {
+        name: 'TabListSongs',
+        title: 'Danh sách bài hát',
+        component: TabListSongsNavigator,
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
@@ -219,10 +229,11 @@ function ListTabItem({
 
 function MiniPlayer() {
     const player = React.useContext(SoundPlayerContext);
-    const { isShowTabBar, setIsShowTabBar } = React.useContext(DrawerHomeContext);
+    const { isShowMiniPlayer, setIsShowMiniPlayer, setIsShowTabBar } = React.useContext(DrawerHomeContext);
 
     function goToSoundPlayerDetail() {
         setIsShowTabBar(false);
+        setIsShowMiniPlayer(false);
         navigate('Home', {
             screen: 'TabSoundPlayerDetail',
             params: {
@@ -233,7 +244,7 @@ function MiniPlayer() {
         })
     }
 
-    if (isShowTabBar === false || !player.currentAudioInfo || !player.currentAudioInfo.name) {
+    if (isShowMiniPlayer === false || !player.currentAudioInfo || !player.currentAudioInfo.name) {
         return null;
     }
 

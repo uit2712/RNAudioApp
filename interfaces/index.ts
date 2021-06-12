@@ -9,6 +9,8 @@ export interface IMenuSelection {
 export interface IDrawerHomeContext {
     isShowTabBar: boolean;
     setIsShowTabBar: (isShowTabBar: boolean) => void;
+    isShowMiniPlayer: boolean;
+    setIsShowMiniPlayer: (isShowMiniPlayer: boolean) => void;
 }
 
 export interface ICustomMenuProps {

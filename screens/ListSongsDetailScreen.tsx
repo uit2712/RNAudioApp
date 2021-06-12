@@ -1,20 +1,21 @@
 import * as React from 'react';
 
+import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, VirtualizedList } from 'react-native';
 
-import { PlaylistsDetailScreenRouteProp } from '@navigators/config/root/home/tab-playlists';
+import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
 import { Sound } from './SongsScreen';
 import { SoundFileType } from 'types/songs-screen-types';
-import { SoundPlayerContext } from '@context-api/index';
+import { useHomeBottomTabHelper } from '@hooks/index';
 import { useRoute } from '@react-navigation/core';
 
 const wait = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-function PlaylistsDetailScreen() {
-    const route = useRoute<PlaylistsDetailScreenRouteProp>();
-    const [songs, setSongs] = React.useState([...route.params.info.listSongs].reverse());
+function ListSongsDetailScreen() {
+    const route = useRoute<ListSongsDetailScreenRouteProp>();
+    const [songs, setSongs] = React.useState(route.params.isReverseListSongs === true ? [...route.params.info.listSongs].reverse() : route.params.info.listSongs);
     const player = React.useContext(SoundPlayerContext);
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -24,9 +25,15 @@ function PlaylistsDetailScreen() {
         wait(1000).then(() => setRefreshing(false));
     }, []);
 
+    const { setIsShowTabBar, } = React.useContext(DrawerHomeContext);
+    useHomeBottomTabHelper({
+        onBack: () => setIsShowTabBar(true),
+        onFocus: () => setIsShowTabBar(false)
+    });
+
     return (
         <VirtualizedList
-            data={songs}
+            data={route.params.info.listSongs}
             renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
                 <Sound
                     key={item.id}
@@ -57,4 +64,4 @@ function PlaylistsDetailScreen() {
     )
 }
 
-export default PlaylistsDetailScreen;
+export default ListSongsDetailScreen;
