@@ -45,7 +45,7 @@ function SongsOfflineSection({
         case 'songs':
             return (
                 <SoundItem
-                    isActive={index === player.currentIndex}
+                    isActive={(item as SoundFileType).id === player.currentAudioInfo.originalInfo.id}
                     value={item as SoundFileType}
                     listMenuSelections={[
                         { text: 'Phát tiếp theo', onSelect: () => player.playAudio(index) },

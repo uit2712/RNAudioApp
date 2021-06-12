@@ -17,7 +17,7 @@ function SoundsScreen() {
                 <SoundItem
                     key={item.id}
                     value={item}
-                    isActive={index === player.currentIndex}
+                    isActive={item.id === player.currentAudioInfo.originalInfo.id}
                     listMenuSelections={[
                         { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(songs, index) },
                         { text: 'Thêm vào hàng đợi' },

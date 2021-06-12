@@ -36,7 +36,6 @@ function SoundItem({
             Component={TouchableOpacity}
             onPress={goToSoundPlayerDetail}
             style={{
-                backgroundColor: isActive === true ? '#0099ff' : 'white',
                 width: '100%',
             }}
             bottomDivider
@@ -81,11 +80,11 @@ function SoundItemInfo({
     return (
         <ListItem.Content>
             <ListItem.Title style={{
-                color: isActive === true ? 'white': 'black',
+                color: isActive === true ? '#3498DB': 'black',
             }}>{value.name}</ListItem.Title>
             {
                 (value.other || value.duration) && <ListItem.Subtitle style={{
-                    color: isActive === true ? 'white': 'gray',
+                    color: isActive === true ? '#3498DB': 'gray',
                     fontSize: 12,
                 }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
             }
