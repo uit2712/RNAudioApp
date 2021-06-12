@@ -37,7 +37,7 @@ export function listToMatrix<T>(list: T[], elementsPerSubArray: number): Array<T
 
 export function dynamicSort(property: string) {
     let sortOrder = 1;
-    if(property[0] === "-") {
+    if (property[0] === "-") {
         sortOrder = -1;
         property = property.substr(1);
     }
@@ -62,10 +62,21 @@ export function dynamicSortMultiple(...args: string[]) {
         /* try getting a different result from 0 (equal)
          * as long as we have extra properties to compare
          */
-        while(result === 0 && i < numberOfProperties) {
+        while (result === 0 && i < numberOfProperties) {
             result = dynamicSort(args[i])(obj1, obj2);
             i++;
         }
         return result;
     }
+}
+
+export function makeId(length: number = 20) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
 }

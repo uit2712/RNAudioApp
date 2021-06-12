@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
+import PlaylistItemCreation from '@common/components/PlaylistItemCreationModal';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
 import { useDrawHomeSettings } from '@hooks/index';
@@ -18,19 +19,22 @@ function PlaylistsScreen() {
     useAddLastPlayedAudioToPlaylists();
 
     return (
-        <FlatList
-            data={playlists}
-            style={{
-                paddingHorizontal: 10,
-            }}
-            renderItem={({ item }) => (
-                <PlaylistsItem
-                    key={item.type}
-                    value={item}
-                />
-            )}
-            keyExtractor={item => item.type}
-        />
+        <>
+            <FlatList
+                data={playlists}
+                style={{
+                    paddingHorizontal: 10,
+                }}
+                renderItem={({ item }) => (
+                    <PlaylistsItem
+                        key={item.id}
+                        value={item}
+                    />
+                )}
+                keyExtractor={item=> item.id}
+            />
+            <PlaylistItemCreation/>
+        </>
     )
 }
 

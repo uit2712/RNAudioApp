@@ -3,10 +3,13 @@ import FastImage from 'react-native-fast-image';
 import { IMAGE_RESOURCE_URL } from '@constants/index';
 import { IPlaylistsScreenState } from '@store/interfaces';
 import { PlaylistsScreenActions } from '@store/actions/playlists-screen-actions';
+import { avatarHelper } from '@helpers/songs-screen-helpers';
+import { makeId } from '@functions/index';
 
 const initializeState: IPlaylistsScreenState = {
     playlists: [
         {
+            id: makeId(),
             type: 'last-played',
             name: 'Phát lần cuối',
             listSongs: [],
@@ -17,6 +20,7 @@ const initializeState: IPlaylistsScreenState = {
             shadowColor: 'green',
         },
         {
+            id: makeId(),
             type: 'most-played',
             name: 'Phát nhiều nhất',
             listSongs: [],
@@ -27,6 +31,7 @@ const initializeState: IPlaylistsScreenState = {
             shadowColor: 'orange',
         },
         {
+            id: makeId(),
             type: 'favorite',
             name: 'Mục yêu thích',
             listSongs: [],
@@ -69,6 +74,23 @@ export function PlaylistsScreenReducer(state = initializeState, action: Playlist
 
                     return item;
                 })
+            }
+        case 'ADD_NEW_PLAYLIST':
+            return {
+                ...state,
+                playlists: [
+                    ...state.playlists,
+                    {
+                        id: makeId(),
+                        type: 'custom-playlist',
+                        cover: {
+                            uri: action.payload.cover ?? avatarHelper.getAvatar()
+                        },
+                        listSongs: [],
+                        name: action.payload.name,
+                        shadowColor: 'orange',
+                    }
+                ]
             }
         default: return state;
     }
