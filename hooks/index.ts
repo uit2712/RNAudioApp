@@ -5,6 +5,7 @@ import {
     IRequestAudioHelper,
     ISortByBottomSheetContextWithType,
 } from '@interfaces/index';
+import { addAudioToPlaylistAction, removeAudioFromPlaylistAction } from '@store/actions/playlists-screen-actions';
 import {
     getAudioHelperCurrentAudioInfo,
     initPlayer,
@@ -29,9 +30,11 @@ import { DrawerHomeContext, } from '@context-api/index';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
+import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';
 import { useGetAllMusicFiles } from '@hooks/songs-screen-hooks';
+import { useIsAudioFromFavoritePlaylistSelector } from '@store/selectors/playlists-screen-selectors';
 
 export function useAudioHelper(request: IRequestAudioHelper = {
     listSounds: [],
@@ -331,5 +334,23 @@ export function useDisabledButton() {
         isDisabled,
         disable: () => setIsDisabled(true),
         enable: () => setIsDisabled(false),
+    }
+}
+
+export function useFavorite(audio: SoundFileType) {
+    const dispatch = useDispatch();
+    const isFavorite = useIsAudioFromFavoritePlaylistSelector(audio.id ?? '');
+
+    function onFavoritePress() {
+        if (isFavorite) {
+            dispatch(removeAudioFromPlaylistAction({ type: 'favorite', audioId: audio.id ?? '' }))
+        } else {
+            dispatch(addAudioToPlaylistAction({ type: 'favorite', audio }));
+        }
+    }
+
+    return {
+        isFavorite,
+        onFavoritePress,
     }
 }

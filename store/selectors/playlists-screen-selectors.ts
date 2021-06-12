@@ -8,6 +8,14 @@ export function useGetPlaylists() {
     return useSelector<IApplicationState, IPlaylist[]>(state => state.playlists.playlists);
 }
 
-export function useGetPlaylistByTypeSelector(type: PlaylistType) {
-    return useSelector<IApplicationState, IPlaylist | undefined>(state => state.playlists.playlists.find(playlist => playlist.type === 'last-played'));
+export function useIsAudioFromFavoritePlaylistSelector(audioId: string) {
+    return useSelector<IApplicationState, boolean>(state => {
+        const favoritePlaylist = state.playlists.playlists.find(item => item.type === 'favorite');
+        if (favoritePlaylist) {
+            const isExists = favoritePlaylist.listSongs.find(item => item.id === audioId) !== undefined;
+            return isExists;
+        }
+
+        return false;
+    });
 }

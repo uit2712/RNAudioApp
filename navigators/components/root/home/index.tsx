@@ -9,6 +9,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DrawerHomeParams } from '@navigators/config/root/home';
+import Favorite from '@common/components/Favorite';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProgress';
@@ -321,13 +322,11 @@ function MiniPlayerActions() {
                     color='white'
                 />
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginLeft: 10, }}>
-                <AntDesign
-                    name='heart'
-                    size={30}
-                    color='white'
-                />
-            </TouchableOpacity>
+            <Favorite
+                activeColor='red'
+                inactiveColor='white'
+                customStyle={{ marginLeft: 10, }}
+            />
         </View>
     )
 }
