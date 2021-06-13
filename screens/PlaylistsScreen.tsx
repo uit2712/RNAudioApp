@@ -61,6 +61,7 @@ function PlaylistsItem({
                             listSongs: value.listSongs,
                         },
                         isReverseListSongs: true,
+                        playlist: value,
                     }
                 })
             }}

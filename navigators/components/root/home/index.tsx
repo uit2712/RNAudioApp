@@ -19,6 +19,7 @@ import TabArtistsNavigators from './tab-artists';
 import TabListSongsNavigator from './tab-list-songs-detail';
 import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
+import TabSongsAdditionNavigator from './tab-songs-addition';
 import TabSongsNavigators from './tab-songs';
 import TabSoundPlayerDetailNavigator from './tab-detail';
 import { navigate } from '@navigators/config/root';
@@ -85,6 +86,15 @@ const screens: IStackNavigatorScreen<DrawerHomeParams>[] = [
         name: 'TabListSongs',
         title: 'Danh sách bài hát',
         component: TabListSongsNavigator,
+        getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
+        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
+        icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: false,
+    },
+    {
+        name: 'TabSongsAddition',
+        title: 'Thêm bài hát',
+        component: TabSongsAdditionNavigator,
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,

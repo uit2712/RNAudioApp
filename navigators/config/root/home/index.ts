@@ -5,6 +5,7 @@ import { TabArtistsNavigatorScreenParams } from './tab-artists';
 import { TabListSongsDetailNavigatorScreenParams } from './tab-list-songs-detail';
 import { TabPlaylistsNavigatorScreenParams } from './tab-playlists';
 import { TabSearchNavigatorScreenParams } from './tab-search';
+import { TabSongsAdditionScreenParams } from './tab-songs-addition';
 import { TabSongsNavigatorScreenParams } from './tab-songs';
 import { TabSoundPlayerDetailNavigatorScreenParams, } from './tab-detail';
 
@@ -16,6 +17,7 @@ export type DrawerHomeParams = {
     TabSoundPlayerDetail: TabSoundPlayerDetailNavigatorScreenParams;
     TabSearch: TabSearchNavigatorScreenParams;
     TabListSongs: TabListSongsDetailNavigatorScreenParams;
+    TabSongsAddition: TabSongsAdditionScreenParams;
 }
 
 export type DrawerHomeNavigationProp = BottomTabNavigationProp<DrawerHomeParams>;

@@ -3,7 +3,9 @@ import * as React from 'react';
 import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, StyleSheet, Text, TextInputBase, TouchableOpacity, View, VirtualizedList } from 'react-native';
 
+import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import LinearGradient from 'react-native-linear-gradient';
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
 import { ListSongsDetailType } from 'types/index';
@@ -11,6 +13,7 @@ import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@common/components/SoundItem';
 import { useGetListMenuSelections, } from '@hooks/list-songs-detail-screen-hooks';
 import { useHomeBottomTabHelper } from '@hooks/index';
+import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 
 const wait = (timeout: number) => {
@@ -35,7 +38,10 @@ function ListSongsDetailScreen() {
 
     if (route.params.info.listSongs.length === 0) {
         return (
-            <ListSongsDetailScreenEmptyPlaylist type={route.params.type}/>
+            <ListSongsDetailScreenEmptyPlaylist
+                type={route.params.type}
+                playlist={route.params.playlist}
+            />
         )
     }
 
@@ -93,9 +99,12 @@ function ListSongsDetailScreenCustomSoundItem({
 
 function ListSongsDetailScreenEmptyPlaylist({
     type,
+    playlist,
 }: {
     type: ListSongsDetailType,
+    playlist?: IPlaylist,
 }) {
+    const navigation = useNavigation<DrawerHomeNavigationProp>();
     if (type !== 'custom-playlist') {
         return (
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
@@ -116,7 +125,17 @@ function ListSongsDetailScreenEmptyPlaylist({
             <Text style={{ fontSize: 18, marginBottom: 10, }}>Không có bài hát nào trong danh sách phát</Text>
             <TouchableOpacity
                 style={{ width: '80%', marginBottom: 10, }}
-                onPress={() => {}}
+                onPress={() => {
+                    navigation.navigate('TabSongsAddition', {
+                        screen: 'SongAddition',
+                        params: {
+                            screen: 'All',
+                            params: {
+                                playlist,
+                            }
+                        }
+                    })
+                }}
             >
                 <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
                     <Text style={styles.buttonText}>
