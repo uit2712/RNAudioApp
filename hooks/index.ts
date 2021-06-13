@@ -398,15 +398,23 @@ export function useCheckAll({
     const [isCheckedAll, setIsCheckedAll] = React.useState(false);
 
     function checkAll() {
-        setIsCheckedAll(!isCheckedAll);
+        if (isCheckedAllReal() === false && isCheckedAll === true) {
+            setListChecked(prevListChecked => prevListChecked.map(() => true));
+        } else {
+            setIsCheckedAll(!isCheckedAll);
+        }
     }
 
     React.useEffect(() => {
-        setListChecked(prevListCheced => prevListCheced.map(() => isCheckedAll));
+        setListChecked(prevListChecked => prevListChecked.map(() => isCheckedAll));
     }, [isCheckedAll]);
+
+    function isCheckedAllReal() {
+        return isCheckedAll && isCheckedAllFromListChecked;
+    }
     
     return {
-        isCheckedAll: isCheckedAll && isCheckedAllFromListChecked,
+        isCheckedAll: isCheckedAllReal(),
         checkAll,
     }
 }

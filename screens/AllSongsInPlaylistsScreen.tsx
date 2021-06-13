@@ -47,6 +47,7 @@ function AllSongsInPlaylistsScreen() {
                 getItemCount={(data: SoundFileType[]) => data.length}
                 getItem={(data: SoundFileType[], index: number) => data[index]}
                 showsVerticalScrollIndicator={true}
+                extraData={checked}
             />
         </>
     )
