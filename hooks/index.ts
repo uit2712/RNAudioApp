@@ -356,7 +356,7 @@ export function useFavorite(audio: SoundFileType) {
     }
 }
 
-export function useListChecked(array: Array<any>) {
+export function useListChecked<T>(array: Array<T>) {
     const [checked, setListChecked] = React.useState<boolean[]>(array.map(() => false));
     
     function onCheck(index: number) {
@@ -385,6 +385,7 @@ export function useListChecked(array: Array<any>) {
         onCheck,
         setListChecked,
         isCheckedAllFromListChecked: isCheckedAllFromListChecked(),
+        listSelectedItems: array.filter((item, index) => checked[index]),
     }
 }
 
