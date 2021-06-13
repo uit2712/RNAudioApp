@@ -1,8 +1,10 @@
 import * as React from 'react';
 
 import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
-import { RefreshControl, VirtualizedList } from 'react-native';
+import { RefreshControl, StyleSheet, Text, TextInputBase, TouchableOpacity, View, VirtualizedList } from 'react-native';
 
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import LinearGradient from 'react-native-linear-gradient';
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
 import { ListSongsDetailType } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
@@ -30,6 +32,12 @@ function ListSongsDetailScreen() {
         onBack: () => setIsShowTabBar(true),
         onFocus: () => setIsShowTabBar(false)
     });
+
+    if (route.params.info.listSongs.length === 0) {
+        return (
+            <ListSongsDetailScreenEmptyPlaylist type={route.params.type}/>
+        )
+    }
 
     return (
         <VirtualizedList
@@ -82,5 +90,58 @@ function ListSongsDetailScreenCustomSoundItem({
         />
     )
 }
+
+function ListSongsDetailScreenEmptyPlaylist({
+    type,
+}: {
+    type: ListSongsDetailType,
+}) {
+    if (type !== 'custom-playlist') {
+        return (
+            <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                <Fontisto
+                    name='applemusic'
+                    size={50}
+                    style={{
+                        marginBottom: 10,
+                    }}
+                />
+                <Text>Không tìm thấy bài hát nào</Text>
+            </View>
+        );
+    }
+
+    return (
+        <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end' }}>
+            <Text style={{ fontSize: 18, marginBottom: 10, }}>Không có bài hát nào trong danh sách phát</Text>
+            <TouchableOpacity
+                style={{ width: '80%', marginBottom: 10, }}
+                onPress={() => {}}
+            >
+                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
+                    <Text style={styles.buttonText}>
+                        Thêm bài hát
+                    </Text>
+                </LinearGradient>
+            </TouchableOpacity>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    linearGradient: {
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 5,
+    },
+    buttonText: {
+        fontSize: 20,
+        fontFamily: 'Gill Sans',
+        textAlign: 'center',
+        margin: 10,
+        color: '#ffffff',
+        backgroundColor: 'transparent',
+    },
+});
 
 export default ListSongsDetailScreen;
