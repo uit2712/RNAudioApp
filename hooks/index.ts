@@ -26,10 +26,10 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from 'types/index';
 import { BackHandler } from 'react-native';
-import { DrawerHomeContext, } from '@context-api/index';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
+import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';
@@ -353,5 +353,60 @@ export function useFavorite(audio: SoundFileType) {
         isFavorite,
         onFavoritePress,
         removeFromPlayList: () => dispatch(removeAudioFromPlaylistAction({ type: 'favorite', audioId: audio.id ?? '' }))
+    }
+}
+
+export function useListChecked(array: Array<any>) {
+    const [checked, setListChecked] = React.useState<boolean[]>(array.map(() => false));
+    
+    function onCheck(index: number) {
+        setListChecked(oldChecked => {
+            const newChecked = update(oldChecked, {
+                [index]: {
+                    $apply: (current) => !current,
+                }
+            });
+            return newChecked;
+        });
+    }
+
+    function isCheckedAllFromListChecked() {
+        for(let i = 0; i < checked.length; i++) {
+            if (checked[i] === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return {
+        checked,
+        onCheck,
+        setListChecked,
+        isCheckedAllFromListChecked: isCheckedAllFromListChecked(),
+    }
+}
+
+export function useCheckAll({
+    isCheckedAllFromListChecked,
+    setListChecked,
+}: {
+    isCheckedAllFromListChecked: boolean,
+    setListChecked: React.Dispatch<React.SetStateAction<boolean[]>>,
+}) {
+    const [isCheckedAll, setIsCheckedAll] = React.useState(false);
+
+    function checkAll() {
+        setIsCheckedAll(!isCheckedAll);
+    }
+
+    React.useEffect(() => {
+        setListChecked(prevListCheced => prevListCheced.map(() => isCheckedAll));
+    }, [isCheckedAll]);
+    
+    return {
+        isCheckedAll: isCheckedAll && isCheckedAllFromListChecked,
+        checkAll,
     }
 }

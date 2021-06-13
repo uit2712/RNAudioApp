@@ -4,6 +4,7 @@ import { IMAGE_RESOURCE_URL } from '@constants/index';
 import { IPlaylistsScreenState } from '@store/interfaces';
 import { PlaylistsScreenActions } from '@store/actions/playlists-screen-actions';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
+import { distinct } from '@functions/tab-songs-addition-functions';
 import { makeId } from '@functions/index';
 
 const initializeState: IPlaylistsScreenState = {
@@ -49,6 +50,7 @@ export const PlaylistsScreenReducerPersistConfig = {
 
 export function PlaylistsScreenReducer(state = initializeState, action: PlaylistsScreenActions): IPlaylistsScreenState {
     switch(action.type) {
+        default: return state;
         case 'REMOVE_AUDIO_FROM_PLAYLIST':
             return {
                 ...state,
@@ -92,6 +94,19 @@ export function PlaylistsScreenReducer(state = initializeState, action: Playlist
                     }
                 ]
             }
-        default: return state;
+        case 'ADD_LIST_AUDIO_TO_PLAYLIST':
+            return {
+                ...state,
+                playlists: state.playlists.map(item => {
+                    if (item.id === action.payload.playlistId) {
+                        item.listSongs = distinct([
+                            ...item.listSongs,
+                            ...action.payload.listAudio,
+                        ], 'id');
+                    }
+
+                    return item;
+                }),
+            }
     }
 }

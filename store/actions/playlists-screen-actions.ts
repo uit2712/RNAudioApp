@@ -14,6 +14,10 @@ type AddNewPlaylistPayload = {
     name: string;
     cover?: string;
 }
+type AddListAudioToPlaylistPayload = {
+    playlistId: string;
+    listAudio: SoundFileType[];
+}
 export type PlaylistsScreenActions = {
     type: 'ADD_AUDIO_TO_PLAYLIST';
     payload: AddAudioToPlaylistPayload
@@ -23,6 +27,9 @@ export type PlaylistsScreenActions = {
 } | {
     type: 'ADD_NEW_PLAYLIST';
     payload: AddNewPlaylistPayload;
+} | {
+    type: 'ADD_LIST_AUDIO_TO_PLAYLIST';
+    payload: AddListAudioToPlaylistPayload;
 }
 
 export const addAudioToPlaylistAction = (request: AddAudioToPlaylistPayload): PlaylistsScreenActions => ({
@@ -38,4 +45,9 @@ export const removeAudioFromPlaylistAction = (request: RemoveAudioFromPlaylistPa
 export const addNewPlaylistAction = (request: AddNewPlaylistPayload): PlaylistsScreenActions => ({
     type: 'ADD_NEW_PLAYLIST',
     payload: request,
-})
+});
+
+export const addListAudioToPlaylistAction = (request: AddListAudioToPlaylistPayload): PlaylistsScreenActions => ({
+    type: 'ADD_LIST_AUDIO_TO_PLAYLIST',
+    payload: request,
+});

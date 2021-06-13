@@ -34,7 +34,7 @@ function SongsOfflineScreen() {
     )
 }
 
-function SongsOfflineSection({
+const SongsOfflineSection = React.memo(function({
     item,
     index,
     section,
@@ -63,9 +63,9 @@ function SongsOfflineSection({
                 <ArtistItem value={item as IArtist}/>
             )
     }
-}
+});
 
-function SongsOfflineSectionSoundItem({
+const SongsOfflineSectionSoundItem = React.memo(function({
     item,
     index,
     section
@@ -89,9 +89,9 @@ function SongsOfflineSectionSoundItem({
             onPress={() => player.setListSoundsAndPlay(section.data as SoundFileType[], index)}
         />
     )
-}
+})
 
 const styles = StyleSheet.create({
 })
 
-export default SongsOfflineScreen;
+export default React.memo(SongsOfflineScreen);

@@ -18,7 +18,7 @@ export interface ITrackInfo {
 }
 
 export interface ISoundFile {
-    id?: string;
+    id: string;
     name: string;
     artist?: string;
     album?: string;

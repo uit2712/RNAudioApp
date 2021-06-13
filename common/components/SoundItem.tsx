@@ -1,23 +1,25 @@
-import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import React from 'react';
 import SettingsMenu from './SettingsMenu';
 import { SoundFileType } from 'types/songs-screen-types';
+import SoundItemCover from './SoundItemCover';
+import SoundItemInfo from './SoundItemInfo';
 import { TouchableOpacity } from 'react-native';
 import { navigate } from '@navigators/config/root';
 
+interface ISoundItemProps {
+    value: SoundFileType,
+    isActive: boolean,
+    listMenuSelections: IMenuSelection[],
+    onPress?: () => void,
+}
 function SoundItem({
     value,
     isActive,
     listMenuSelections,
     onPress,
-}: {
-    value: SoundFileType,
-    isActive: boolean,
-    listMenuSelections: IMenuSelection[],
-    onPress?: () => void,
-}) {
+}: ISoundItemProps) {
     function goToSoundPlayerDetail() {
         onPress && onPress();
         navigate('Home', {
@@ -47,51 +49,6 @@ function SoundItem({
     )
 }
 
-function SoundItemCover({
-    value,
-}: {
-    value: SoundFileType,
-}) {
-    return (
-        <>
-            {
-                value.cover && (
-                    <FastImage
-                        style={{ width: 50, height: 50, borderRadius: 10, }}
-                        source={{
-                            uri: value.cover,
-                            priority: FastImage.priority.normal,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover}
-                    />
-                )
-            }
-        </>
-    )
-}
-
-function SoundItemInfo({
-    value,
-    isActive,
-}: {
-    value: SoundFileType,
-    isActive: boolean,
-}) {
-    return (
-        <ListItem.Content>
-            <ListItem.Title style={{
-                color: isActive === true ? '#3498DB': 'black',
-            }}>{value.name}</ListItem.Title>
-            {
-                (value.other || value.duration) && <ListItem.Subtitle style={{
-                    color: isActive === true ? '#3498DB': 'gray',
-                    fontSize: 12,
-                }}>{`${value.other} - ${value.duration}`}</ListItem.Subtitle>
-            }
-        </ListItem.Content>
-    )
-}
-
 function SoundItemMenu({
     value,
     listMenuSelections,
@@ -107,4 +64,8 @@ function SoundItemMenu({
     )
 }
 
-export default SoundItem;
+function areEqual(prevProps: ISoundItemProps, nextProps: ISoundItemProps) {
+    return prevProps.value.id === nextProps.value.id && prevProps.isActive !== nextProps.isActive;
+}
+
+export default React.memo(SoundItem, areEqual);

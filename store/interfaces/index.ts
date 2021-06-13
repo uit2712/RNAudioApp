@@ -40,6 +40,11 @@ export interface ICommonState {
     currentListSongs: SoundFileType[];
 }
 
+export interface ITabSongsAdditionState {
+    listSelectedSongs: SoundFileType[];
+    playlist?: IPlaylist;
+}
+
 export interface IApplicationState {
     playlists: IPlaylistsScreenState;
     artists: IArtistsScreenState;
@@ -47,4 +52,5 @@ export interface IApplicationState {
     songs: ISongsScreenState;
     search: ISearchScreenState;
     common: ICommonState;
+    songsAddition: ITabSongsAdditionState;
 }
