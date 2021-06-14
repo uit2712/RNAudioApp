@@ -41,3 +41,7 @@ export function useGetSearchedAlbumsSelector() {
         return albums.filter(item => item.album.includes(searchText) === true);
     });
 }
+
+export function useGetAlbumByIdSelector(id?: string) {
+    return useSelector<IApplicationState, IAlbum | undefined>(state => state.albums.albums.find(item => item.id === id));
+}

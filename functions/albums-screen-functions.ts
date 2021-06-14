@@ -1,10 +1,11 @@
+import { formatTimeString, makeId } from '@functions/index';
+
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IListSongsDetail } from '@interfaces/index';
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import { SoundFileType } from 'types/songs-screen-types';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
-import { formatTimeString } from '@functions/index';
 
 export function getAllAlbums() {
     return new Promise((resolve: (value: IAlbum[]) => void, reject: (value?: Error) => void) => {
@@ -22,14 +23,19 @@ export function getAllAlbums() {
     });
 }
 
-export function getListSongsByAlbumId(album: IAlbum): Promise<IListSongsDetail> {
+export function getListSongsByAlbumId(album?: IAlbum): Promise<IListSongsDetail> {
     return new Promise((resolve: (value: IListSongsDetail) => void, reject: (value?: Error) => void) => {
+        if (!album) {
+            reject();
+            return;
+        }
+
         MusicFiles.getListSongs({
             albumId: album.id,
         }).then((tracks: ITrackInfo[]) => {
             const songs: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
                 type: 'other',
-                id: item.id,
+                id: item.id ?? makeId(),
                 name: item.title ?? '',
                 path: item.path ?? '',
                 author: item.artist ?? '<unknown>',

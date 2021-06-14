@@ -14,8 +14,11 @@ import { TabSoundPlayerDetailParams } from '@navigators/config/root/home/tab-det
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
+import { navigate } from '@navigators/config/root';
 import { useDispatch } from 'react-redux';
 import { useFavorite } from '@hooks/index';
+import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
 import { useIsAudioFromFavoritePlaylistSelector } from '@store/selectors/playlists-screen-selectors';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
@@ -77,6 +80,9 @@ function SoundPlayerDetailScreenHeaderRight() {
 
 function SoundPlayerDetailScreenHeaderRightMenu() {
     const theme = React.useContext(SoundPlayerDetailThemeContext);
+    const player = React.useContext(SoundPlayerContext);
+    const album = useGetAlbumByIdSelector(player.currentAudioInfo.originalInfo.albumId);
+
     const listMenuSelections: IMenuSelection[] = [
         { text: 'Chia sẻ', },
         { text: 'Đặt tốc độ phát lại' },
@@ -85,8 +91,25 @@ function SoundPlayerDetailScreenHeaderRightMenu() {
         { text: 'Cân bằng' },
         { text: 'Hẹn giờ ngủ' },
         { text: 'Đặt làm nhạc chuông' },
-        { text: 'Đi đến Album' },
-        { text: 'Đi đến Nghệ sĩ' },
+        {
+            text: 'Đi đến Album',
+            onSelect: async () => {
+                const info = await getListSongsByAlbumId(album);
+                navigate('Home', {
+                    screen: 'TabListSongs',
+                    params: {
+                        screen: 'ListSongs',
+                        params: {
+                            type: 'album',
+                            info
+                        }
+                    }
+                })
+            }
+        },
+        {
+            text: 'Đi đến Nghệ sĩ',
+        },
     ]
 
     return (
