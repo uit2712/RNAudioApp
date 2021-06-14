@@ -16,10 +16,7 @@ import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
 import { navigate } from '@navigators/config/root';
-import { useDispatch } from 'react-redux';
-import { useFavorite } from '@hooks/index';
 import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
-import { useIsAudioFromFavoritePlaylistSelector } from '@store/selectors/playlists-screen-selectors';
 
 const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
 

@@ -280,7 +280,7 @@ export function useGetAllData() {
  * 
  * @param callback The function callback should call when isRefresh=true
  */
-export function useRefresh(callback: () => Promise<any>) {
+export function useRefreshPromise(callback: () => Promise<any>) {
     const [isRefresh, setIsRefresh] = React.useState(false);
     React.useEffect(() => {
         if (isRefresh === true) {
@@ -295,6 +295,22 @@ export function useRefresh(callback: () => Promise<any>) {
     return {
         isRefresh,
         setIsRefresh,
+    }
+}
+
+export function useRefresh(callback: () => void) {
+    const [isRefresh, setIsRefresh] = React.useState(false);
+    React.useEffect(() => {
+        if (isRefresh === true) {
+            callback();
+            setIsRefresh(false);
+        }
+    }, [isRefresh]);
+
+    return {
+        isRefresh,
+        setIsRefresh,
+        onRefresh: callback,
     }
 }
 

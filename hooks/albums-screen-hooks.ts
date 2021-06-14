@@ -3,7 +3,7 @@ import { getAllAlbums } from '@functions/albums-screen-functions';
 import { setListAlbumsAction } from '@store/actions/albums-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
-import { useRefresh } from '@hooks/index';
+import { useRefreshPromise } from '@hooks/index';
 
 export function useGetAllAlbums() {
     const { albums, isLoadFirstTime } = useGetAllAlbumsSelector();
@@ -26,7 +26,7 @@ export function useGetAllAlbums() {
         });
     }
 
-    const { setIsRefresh } = useRefresh(getAlbums);
+    const { setIsRefresh } = useRefreshPromise(getAlbums);
 
     return {
         albums,

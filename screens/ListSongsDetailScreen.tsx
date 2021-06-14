@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, StyleSheet, Text, TextInputBase, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { useHomeBottomTabHelper, useRefresh } from '@hooks/index';
 
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import { FAB } from 'react-native-elements';
@@ -15,7 +16,7 @@ import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@common/components/SoundItem';
 import { useGetListMenuSelections, } from '@hooks/list-songs-detail-screen-hooks';
 import { useGetPlaylistByIdSelector } from '@store/selectors/playlists-screen-selectors';
-import { useHomeBottomTabHelper } from '@hooks/index';
+import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 
@@ -27,18 +28,33 @@ function ListSongsDetailScreen() {
     const route = useRoute<ListSongsDetailScreenRouteProp>();
     const navigation = useNavigation<DrawerHomeNavigationProp>();
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const newPlaylist = useGetPlaylistByIdSelector(route.params.playlist?.id ?? '');
 
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(1000).then(() => setRefreshing(false));
-    }, []);
+    const { isRefresh, setIsRefresh, onRefresh } = useRefresh(React.useCallback(() => {
+        if (newPlaylist) {
+            navigation.setParams({
+                ...route.params,
+                info: {
+                    ...route.params.info,
+                    name: newPlaylist.name,
+                    listSongs: newPlaylist.listSongs,
+                }
+            })
+        }
+    }, [newPlaylist]));
 
     const { setIsShowTabBar, } = React.useContext(DrawerHomeContext);
     useHomeBottomTabHelper({
         onBack: () => setIsShowTabBar(true),
         onFocus: () => setIsShowTabBar(false)
     });
+
+    const isAdded = useIsAddListSelectedSongsSuccessSelector();
+    React.useEffect(() => {
+        if (isAdded) {
+            setIsRefresh(true);
+        }
+    }, [isAdded]);
 
     if (route.params.info.listSongs.length === 0) {
         return (
@@ -69,7 +85,7 @@ function ListSongsDetailScreen() {
                 refreshControl={
                     <RefreshControl
                         colors={["#9Bd35A", "#689F38"]}
-                        refreshing={refreshing}
+                        refreshing={isRefresh}
                         onRefresh={onRefresh}
                     />
                 }

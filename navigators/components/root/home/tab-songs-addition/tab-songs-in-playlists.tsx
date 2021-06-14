@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { FAB, Tab, Text } from 'react-native-elements';
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationHelpers, ParamListBase, RouteProp, TabNavigationState } from '@react-navigation/native';
+import { NavigationHelpers, ParamListBase, RouteProp, TabNavigationState, useNavigation } from '@react-navigation/native';
 import { useGetListSelectedSongsSelector, useGetPlaylistSongsShouldBeAddedSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 import AllSongsInPlaylistsScreen from '@screens/AllSongsInPlaylistsScreen';
@@ -15,6 +15,7 @@ import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { TabSongsInPlaylistsParams } from '@navigators/config/root/home/tab-songs-addition/tab-songs-in-playlists';
 import { TouchableOpacity } from 'react-native';
 import { addListSelectedSongsToPlaylistAction } from '@store/actions/tab-songs-addition-actions';
+import { navigate } from '@navigators/config/root';
 import { useDispatch } from 'react-redux';
 
 const TabSongsInPlaylists = createMaterialTopTabNavigator<TabSongsInPlaylistsParams>();
@@ -168,13 +169,14 @@ function ButtonAddSongsToPlaylist() {
     const dispatch = useDispatch();
     const listSelectedSongs = useGetListSelectedSongsSelector();
     const playlist = useGetPlaylistSongsShouldBeAddedSelector();
+    const navigation = useNavigation();
     if (!playlist) {
         return null;
     }
 
     return (
         <FAB
-            placement='left'
+            placement='right'
             color='#3498DB'
             title={`Thêm vào "${playlist.name}"`}
             style={{
@@ -183,7 +185,10 @@ function ButtonAddSongsToPlaylist() {
                 bottom: 0,
                 zIndex: 1,
             }}
-            onPress={() => dispatch(addListSelectedSongsToPlaylistAction(playlist.id, listSelectedSongs))}
+            onPress={() => {
+                dispatch(addListSelectedSongsToPlaylistAction(playlist.id, listSelectedSongs));
+                navigation.goBack();
+            }}
             disabled={listSelectedSongs.length === 0}
         />
     )

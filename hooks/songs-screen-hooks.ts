@@ -5,7 +5,7 @@ import React from 'react';
 import { setListSongsAction } from '@store/actions/songs-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
-import { useRefresh } from '.';
+import { useRefreshPromise } from '.';
 
 export function useGetAllMusicFiles() {
     const [isLoading, setIsLoading] = React.useState(false);
@@ -42,7 +42,7 @@ export function useGetAllMusicFiles() {
         })
     }
 
-    const { setIsRefresh } = useRefresh(async () => checkPermission({
+    const { setIsRefresh } = useRefreshPromise(async () => checkPermission({
         permission,
         onError: (err: Error) => setErrorMessage(err.message),
         onGranted: initialize,
