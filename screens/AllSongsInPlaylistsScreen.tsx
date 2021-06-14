@@ -12,7 +12,7 @@ function AllSongsInPlaylistsScreen() {
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch(setPlaylistSongsShouldBeAddedAction(route.params?.playlist));
-    }, []);
+    }, [route.params?.playlist]);
     const { songs } = useGetAllSongsSelector();
 
     return (

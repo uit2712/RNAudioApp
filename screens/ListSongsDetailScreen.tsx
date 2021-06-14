@@ -74,34 +74,38 @@ function ListSongsDetailScreen() {
                     />
                 }
             />
-            <FAB
-                title='Thêm bài hát'
-                style={{
-                    position: 'absolute',
-                    margin: 16,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 1,
-                }}
-                icon={
-                    <Ionicons
-                        name='add'
-                        size={30}
-                        color='white'
-                    />
-                }
-                onPress={() => {
-                    navigation.navigate('TabSongsAddition', {
-                        screen: 'SongAddition',
-                        params: {
-                            screen: 'All',
-                            params: {
-                                playlist: route.params.playlist,
-                            }
+            {
+                route.params.type === 'custom-playlist' && (
+                    <FAB
+                        title='Thêm bài hát'
+                        style={{
+                            position: 'absolute',
+                            margin: 16,
+                            right: 0,
+                            bottom: 0,
+                            zIndex: 1,
+                        }}
+                        icon={
+                            <Ionicons
+                                name='add'
+                                size={30}
+                                color='white'
+                            />
                         }
-                    })
-                }}
-            />
+                        onPress={() => {
+                            navigation.navigate('TabSongsAddition', {
+                                screen: 'SongAddition',
+                                params: {
+                                    screen: 'All',
+                                    params: {
+                                        playlist: route.params.playlist,
+                                    }
+                                }
+                            })
+                        }}
+                    />
+                )
+            }
         </>
     )
 }
