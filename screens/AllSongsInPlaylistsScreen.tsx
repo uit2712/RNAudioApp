@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Text, View, VirtualizedList } from 'react-native';
+import { setListSelectedSongsAction, setPlaylistSongsShouldBeAddedAction } from '@store/actions/tab-songs-addition-actions';
 import { useCheckAll, useListChecked } from '@hooks/index';
 
 import { AllSongsInPlaylistsScreenRouteProp } from '@navigators/config/root/home/tab-songs-addition/tab-songs-in-playlists';
@@ -8,7 +9,6 @@ import { CheckBox } from 'react-native-elements';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SoundAdditionItem from '@common/components/SoundAdditionItem';
 import { SoundFileType } from 'types/songs-screen-types';
-import { setPlaylistSongsShouldBeAddedAction } from '@store/actions/tab-songs-addition-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 import { useRoute } from '@react-navigation/native';
@@ -20,8 +20,14 @@ function AllSongsInPlaylistsScreen() {
         dispatch(setPlaylistSongsShouldBeAddedAction(route.params?.playlist));
     }, []);
     const { songs } = useGetAllSongsSelector();
-    const { checked, onCheck, setListChecked, isCheckedAllFromListChecked } = useListChecked(songs);
+    const { checked, onCheck, setListChecked, isCheckedAllFromListChecked, listSelectedItems } = useListChecked(songs);
     const { checkAll, isCheckedAll } = useCheckAll({ isCheckedAllFromListChecked, setListChecked });
+    React.useEffect(() => {
+        dispatch(setListSelectedSongsAction({
+            type: 'all',
+            listSongs: listSelectedItems,
+        }))
+    }, [listSelectedItems.length]);
 
     return (
         <>

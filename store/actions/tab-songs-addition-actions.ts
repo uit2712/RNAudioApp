@@ -1,11 +1,12 @@
 import { Dispatch } from 'redux';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
+import { ISelectedSongs } from '@interfaces/tab-songs-addition-interfaces';
 import { SoundFileType } from 'types/songs-screen-types';
 import { addListAudioToPlaylistAction } from './playlists-screen-actions';
 
 export type TabSongsAdditionActions = {
     type: 'SET_LIST_SELECTED_SONGS';
-    payload: SoundFileType[];
+    payload: ISelectedSongs;
 } | {
     type: 'CLEAR_LIST_SELECTED_SONGS';
 } | {
@@ -15,7 +16,7 @@ export type TabSongsAdditionActions = {
     type: 'ADD_LIST_SELECTED_SONGS_TO_PLAYLIST';
 }
 
-export const setListSelectedSongsAction = (request: SoundFileType[]): TabSongsAdditionActions => ({
+export const setListSelectedSongsAction = (request: ISelectedSongs): TabSongsAdditionActions => ({
     type: 'SET_LIST_SELECTED_SONGS',
     payload: request,
 });

@@ -3,8 +3,8 @@ export function distinct<T>(arr: Array<any>, propName: string) {
     let distinct = [];
     for(let i = 0; i < arr.length; i++ ){
         if(!unique[arr[i][propName]]){
-            distinct.push(arr[i].propName);
-            unique[arr[i].propName] = arr[i];
+            distinct.push(arr[i][propName]);
+            unique[arr[i][propName]] = arr[i];
         }
     }
 

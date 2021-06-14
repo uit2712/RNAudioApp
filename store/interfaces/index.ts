@@ -3,6 +3,7 @@ import { SortSongByPropertyType, SoundFileType } from 'types/songs-screen-types'
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
+import { ISelectedSongs } from '@interfaces/tab-songs-addition-interfaces';
 import { SortAlbumByPropertyType } from 'types/albums-screen-types';
 import { SortArtistByPropertyType } from 'types/artists-screen-types';
 import { SortOrderType } from 'types/index';
@@ -41,7 +42,7 @@ export interface ICommonState {
 }
 
 export interface ITabSongsAdditionState {
-    listSelectedSongs: SoundFileType[];
+    listSelectedSongsInPlaylists: ISelectedSongs[];
     playlist?: IPlaylist;
 }
 

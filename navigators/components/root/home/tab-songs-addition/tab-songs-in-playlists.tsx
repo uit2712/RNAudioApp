@@ -6,9 +6,13 @@ import MostPlayedSongsInPlaylistsScreen from '@screens/MostPlayedSongsInPlaylist
 import { TabSongsInPlaylistsParams } from '@navigators/config/root/home/tab-songs-addition/tab-songs-in-playlists';
 import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useGetListSelectedSongsSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 const TabSongsInPlaylists = createMaterialTopTabNavigator<TabSongsInPlaylistsParams>();
 function TabSongsInPlaylistsNavigator() {
+    const listSelectedSongs = useGetListSelectedSongsSelector();
+    console.log(listSelectedSongs.length);
+
     return (
         <TabSongsInPlaylists.Navigator>
             <TabSongsInPlaylists.Screen
