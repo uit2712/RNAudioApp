@@ -38,7 +38,7 @@ export function useGetSearchedAlbumsSelector() {
             return albums;
         }
 
-        return albums.filter(item => item.album.includes(searchText) === true);
+        return albums.filter(item => item.album.toLowerCase().includes(searchText.toLowerCase()) === true);
     });
 }
 

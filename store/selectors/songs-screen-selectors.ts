@@ -39,6 +39,6 @@ export function useGetSearchedSongsSelector() {
             return songs;
         }
 
-        return songs.filter(item => item.name.includes(searchText) === true);
+        return songs.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()) === true);
     });
 }

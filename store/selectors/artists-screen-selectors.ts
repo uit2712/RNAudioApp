@@ -38,6 +38,6 @@ export function useGetSearchedArtistsSelector() {
             return artists;
         }
 
-        return artists.filter(item => item.artist.includes(searchText) === true);
+        return artists.filter(item => item.artist.toLowerCase().includes(searchText.toLowerCase()) === true);
     });
 }
