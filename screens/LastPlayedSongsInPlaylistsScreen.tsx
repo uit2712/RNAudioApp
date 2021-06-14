@@ -1,12 +1,19 @@
 import * as React from 'react';
 
-import { Text, View } from 'react-native';
+import SongsInPlaylists from '@components/tab-songs-addition/SongsInPlaylists';
+import { useGetPlaylistByTypeSelector } from '@store/selectors/playlists-screen-selectors';
 
 function LastPlayedSongsInPlaylistsScreen() {
+    const playlist = useGetPlaylistByTypeSelector('last-played');
+    if (!playlist) {
+        return null
+    }
+
     return (
-        <View>
-            <Text>LastPlayedSongsInPlaylistsScreen</Text>
-        </View>
+        <SongsInPlaylists
+            type='last-played'
+            listSongs={playlist.listSongs}
+        />
     )
 }
 
