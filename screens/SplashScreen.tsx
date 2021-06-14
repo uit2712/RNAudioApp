@@ -4,8 +4,10 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 
 import Animated from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
+import { PERMISSIONS } from 'react-native-permissions';
 import { RootNavigationProp } from '@navigators/config/root';
 import { StyleSheet, } from 'react-native';
+import { showPopupRequestPermission } from '@functions/songs-screen-functions';
 import { useGetAllData } from '@hooks/index';
 import { useNavigation } from '@react-navigation/core';
 import { useTranslatedAppName } from '@hooks/splash-screen-hooks';
@@ -21,7 +23,17 @@ function SplashScreen() {
     });
     
     const navigation = useNavigation<RootNavigationProp>();
-    const { isGetAllDataFinished } = useGetAllData();
+    const [isGrantedPermission, setIsGrantedPermission]= React.useState(false);
+    React.useEffect(() => {
+        showPopupRequestPermission({
+            permission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+            onError: (error: Error) => {},
+            onGranted: () => setIsGrantedPermission(true),
+            onDenined: () => {},
+        })
+    }, []);
+
+    const { isGetAllDataFinished } = useGetAllData(isGrantedPermission);
     React.useEffect(() => {
         if (isAnimatedFinished && isGetAllDataFinished) {
             navigation.reset({

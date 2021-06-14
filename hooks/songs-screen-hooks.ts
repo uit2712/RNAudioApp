@@ -5,9 +5,9 @@ import React from 'react';
 import { setListSongsAction } from '@store/actions/songs-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
-import { useRefreshPromise } from '.';
+import { useRefresh, } from '.';
 
-export function useGetAllMusicFiles() {
+export function useGetAllMusicFiles(isGrantedPermission: boolean) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     const dispatch = useDispatch();
@@ -22,15 +22,10 @@ export function useGetAllMusicFiles() {
     const [errorMessage, setErrorMessage] = React.useState('');
     const permission = PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE;
     React.useEffect(() => {
-        if (isLoadFirstTime === false) {
-            checkPermission({
-                permission,
-                onError: (err: Error) => setErrorMessage(err.message),
-                onGranted: initialize,
-                onUnavailable: requestPermission,
-            });
+        if (isLoadFirstTime === false && isGrantedPermission === true) {
+            initialize();
         }
-    }, [isLoadFirstTime]);
+    }, [isLoadFirstTime, isGrantedPermission]);
 
     const [warningMessage, setWarningMessage] = React.useState('');
     function requestPermission() {
@@ -42,7 +37,7 @@ export function useGetAllMusicFiles() {
         })
     }
 
-    const { setIsRefresh } = useRefreshPromise(async () => checkPermission({
+    const { setIsRefresh } = useRefresh(() => checkPermission({
         permission,
         onError: (err: Error) => setErrorMessage(err.message),
         onGranted: initialize,

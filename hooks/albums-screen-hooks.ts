@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux';
 import { useGetAllAlbumsSelector } from '@store/selectors/albums-screen-selectors';
 import { useRefreshPromise } from '@hooks/index';
 
-export function useGetAllAlbums() {
+export function useGetAllAlbums(isGrantedPermission: boolean) {
     const { albums, isLoadFirstTime } = useGetAllAlbumsSelector();
     React.useEffect(() => {
-        if (isLoadFirstTime === false) {
+        if (isLoadFirstTime === false && isGrantedPermission === true) {
             getAlbums();
         }
-    }, [isLoadFirstTime]);
+    }, [isLoadFirstTime, isGrantedPermission]);
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');

@@ -6,13 +6,13 @@ import { setListArtistsAction } from '@store/actions/artists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetAllArtistsSelector } from '@store/selectors/artists-screen-selectors';
 
-export function useGetAllArtists() {
+export function useGetAllArtists(isGrantedPermission: boolean) {
     const { artists, isLoadFirstTime } = useGetAllArtistsSelector();
     React.useEffect(() => {
-        if (isLoadFirstTime === false) {
+        if (isLoadFirstTime === false && isGrantedPermission === true) {
             getArtists();
         }
-    }, [isLoadFirstTime]);
+    }, [isLoadFirstTime, isGrantedPermission]);
     
     const [isLoading, setIsLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');

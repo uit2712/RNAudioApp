@@ -267,12 +267,12 @@ export function useHomeBottomTabHelper({
 /**
  * Get all data includes: songs, artists, albums
  */
-export function useGetAllData() {
-    const songsData = useGetAllMusicFiles();
-    const artistsData = useGetAllArtists();
-    const albumsData = useGetAllAlbums();
+export function useGetAllData(isGrantedPermission: boolean) {
+    const songsData = useGetAllMusicFiles(isGrantedPermission);
+    const artistsData = useGetAllArtists(isGrantedPermission);
+    const albumsData = useGetAllAlbums(isGrantedPermission);
     return {
-        isGetAllDataFinished: songsData.isFinished && artistsData.isFinished && albumsData.isFinished,
+        isGetAllDataFinished: isGrantedPermission === false || (songsData.isFinished && artistsData.isFinished && albumsData.isFinished),
     }
 }
 
