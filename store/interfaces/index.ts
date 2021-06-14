@@ -44,6 +44,7 @@ export interface ICommonState {
 export interface ITabSongsAdditionState {
     listSelectedSongsInPlaylists: ISelectedSongs[];
     playlist?: IPlaylist;
+    isAdded: boolean;
 }
 
 export interface IApplicationState {

@@ -1,3 +1,4 @@
+import { clearListSelectedSongsAction, setListSelectedSongsAction, } from '@store/actions/tab-songs-addition-actions';
 import { useCheckAll, useListChecked } from '@hooks/index';
 
 import React from 'react';
@@ -6,8 +7,8 @@ import SongsInPlaylistsScreenCheckAll from './SongsInPlaylistsScreenCheckAll';
 import SongsInPlaylistsScreenSoundAdditionItem from './SongsInPlaylistsScreenSoundAdditionItem';
 import { SoundFileType } from 'types/songs-screen-types';
 import { VirtualizedList } from 'react-native';
-import { setListSelectedSongsAction, } from '@store/actions/tab-songs-addition-actions';
 import { useDispatch } from 'react-redux';
+import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 function SongsInPlaylists({
     type,
@@ -18,13 +19,21 @@ function SongsInPlaylists({
 }) {
     const dispatch = useDispatch();
     const { checked, onCheck, setListChecked, isCheckedAllFromListChecked, listSelectedItems } = useListChecked(listSongs);
-    const { checkAll, isCheckedAll } = useCheckAll({ isCheckedAllFromListChecked, setListChecked });
+    const { checkAll, isCheckedAll, uncheckAll } = useCheckAll({ isCheckedAllFromListChecked, setListChecked });
     React.useEffect(() => {
         dispatch(setListSelectedSongsAction({
             type,
             listSongs: listSelectedItems,
         }))
     }, [listSelectedItems.length]);
+
+    const isAdded = useIsAddListSelectedSongsSuccessSelector();
+    React.useEffect(() => {
+        if (isAdded === true) {
+            uncheckAll();
+            dispatch(clearListSelectedSongsAction())
+        }
+    }, [isAdded]);
 
     return (
         <>

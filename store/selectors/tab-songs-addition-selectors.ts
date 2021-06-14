@@ -15,3 +15,7 @@ export function useGetListSelectedSongsSelector() {
         return distinct(listSongs, 'id');
     });
 }
+
+export function useIsAddListSelectedSongsSuccessSelector() {
+    return useSelector<IApplicationState, boolean>(state => state.songsAddition.isAdded);
+}

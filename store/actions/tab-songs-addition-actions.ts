@@ -14,6 +14,8 @@ export type TabSongsAdditionActions = {
     payload?: IPlaylist;
 } | {
     type: 'ADD_LIST_SELECTED_SONGS_TO_PLAYLIST';
+} | {
+    type: 'ADD_LIST_SELECTED_SONGS_TO_PLAYLIST_SUCCESS';
 }
 
 export const setListSelectedSongsAction = (request: ISelectedSongs): TabSongsAdditionActions => ({
@@ -30,10 +32,14 @@ export const setPlaylistSongsShouldBeAddedAction = (request?: IPlaylist): TabSon
     payload: request,
 });
 
+export const addListSelectedSongsToPlaylistSuccessAction = (): TabSongsAdditionActions => ({
+    type: 'ADD_LIST_SELECTED_SONGS_TO_PLAYLIST_SUCCESS',
+});
+
 export const addListSelectedSongsToPlaylistAction = (playlistId: string, listAudio: SoundFileType[]) => (dispatch: Dispatch) => {
     dispatch(addListAudioToPlaylistAction({
         playlistId,
         listAudio,
     }))
-    dispatch(clearListSelectedSongsAction());
+    dispatch(addListSelectedSongsToPlaylistSuccessAction());
 }

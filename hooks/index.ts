@@ -413,9 +413,14 @@ export function useCheckAll({
     function isCheckedAllReal() {
         return isCheckedAll && isCheckedAllFromListChecked;
     }
+
+    function uncheckAll() {
+        setListChecked(prevListChecked => prevListChecked.map(() => false));
+    }
     
     return {
         isCheckedAll: isCheckedAllReal(),
         checkAll,
+        uncheckAll,
     }
 }

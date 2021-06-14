@@ -4,14 +4,17 @@ import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { RefreshControl, StyleSheet, Text, TextInputBase, TouchableOpacity, View, VirtualizedList } from 'react-native';
 
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { FAB } from 'react-native-elements';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
 import { ListSongsDetailType } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@common/components/SoundItem';
 import { useGetListMenuSelections, } from '@hooks/list-songs-detail-screen-hooks';
+import { useGetPlaylistByIdSelector } from '@store/selectors/playlists-screen-selectors';
 import { useHomeBottomTabHelper } from '@hooks/index';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
@@ -22,6 +25,7 @@ const wait = (timeout: number) => {
 
 function ListSongsDetailScreen() {
     const route = useRoute<ListSongsDetailScreenRouteProp>();
+    const navigation = useNavigation<DrawerHomeNavigationProp>();
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -46,29 +50,59 @@ function ListSongsDetailScreen() {
     }
 
     return (
-        <VirtualizedList
-            data={route.params.info.listSongs}
-            renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
-                <ListSongsDetailScreenCustomSoundItem
-                    key={item.id}
-                    index={index}
-                    item={item}
-                    songs={route.params.info.listSongs}
-                    type={route.params.type}
-                />
-            )}
-            keyExtractor={item => item.path.toString()}
-            initialNumToRender={7} // Reduce initial render amount
-            getItemCount={(data: SoundFileType[]) => data.length}
-            getItem={(data: SoundFileType[], index: number) => data[index]}
-            refreshControl={
-                <RefreshControl
-                    colors={["#9Bd35A", "#689F38"]}
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                />
-            }
-        />
+        <>
+            <VirtualizedList
+                data={route.params.info.listSongs}
+                renderItem={({ item, index }: { item: SoundFileType, index: number }) => (
+                    <ListSongsDetailScreenCustomSoundItem
+                        key={item.id}
+                        index={index}
+                        item={item}
+                        songs={route.params.info.listSongs}
+                        type={route.params.type}
+                    />
+                )}
+                keyExtractor={item => item.path.toString()}
+                initialNumToRender={7} // Reduce initial render amount
+                getItemCount={(data: SoundFileType[]) => data.length}
+                getItem={(data: SoundFileType[], index: number) => data[index]}
+                refreshControl={
+                    <RefreshControl
+                        colors={["#9Bd35A", "#689F38"]}
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            />
+            <FAB
+                title='Thêm bài hát'
+                style={{
+                    position: 'absolute',
+                    margin: 16,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1,
+                }}
+                icon={
+                    <Ionicons
+                        name='add'
+                        size={30}
+                        color='white'
+                    />
+                }
+                onPress={() => {
+                    navigation.navigate('TabSongsAddition', {
+                        screen: 'SongAddition',
+                        params: {
+                            screen: 'All',
+                            params: {
+                                playlist: route.params.playlist,
+                            }
+                        }
+                    })
+                }}
+            />
+        </>
     )
 }
 
@@ -105,7 +139,10 @@ function ListSongsDetailScreenEmptyPlaylist({
     playlist?: IPlaylist,
 }) {
     const navigation = useNavigation<DrawerHomeNavigationProp>();
-    if (type !== 'custom-playlist') {
+    const currentPlaylist = useGetPlaylistByIdSelector(playlist?.id ?? '');
+
+
+    if (!currentPlaylist || type !== 'custom-playlist') {
         return (
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                 <Fontisto

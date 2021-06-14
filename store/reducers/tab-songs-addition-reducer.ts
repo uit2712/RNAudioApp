@@ -20,6 +20,7 @@ const initializeState: ITabSongsAdditionState = {
     listSelectedSongsInPlaylists: [
         ...initListSelectedSongsInPlaylists
     ],
+    isAdded: false,
 }
 
 export default function TabSongsAdditionReducer(state = initializeState, action: TabSongsAdditionActions): ITabSongsAdditionState {
@@ -39,11 +40,17 @@ export default function TabSongsAdditionReducer(state = initializeState, action:
                 listSelectedSongsInPlaylists: [
                     ...initListSelectedSongsInPlaylists
                 ],
+                isAdded: false,
             }
         case 'SET_PLAYLIST_SONGS_SHOULD_BE_ADDED':
             return {
                 ...state,
                 playlist: action.payload,
+            }
+        case 'ADD_LIST_SELECTED_SONGS_TO_PLAYLIST_SUCCESS':
+            return {
+                ...state,
+                isAdded: true,
             }
     }
 }

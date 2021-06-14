@@ -25,3 +25,10 @@ export function useGetPlaylistByTypeSelector(type: PlaylistType) {
         return favoritePlaylist;
     });
 }
+
+export function useGetPlaylistByIdSelector(id: string) {
+    return useSelector<IApplicationState, IPlaylist | undefined>(state => {
+        const favoritePlaylist = state.playlists.playlists.find(item => item.id === id);
+        return favoritePlaylist;
+    });
+}
