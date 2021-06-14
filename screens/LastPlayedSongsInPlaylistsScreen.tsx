@@ -5,7 +5,7 @@ import { useGetPlaylistByTypeSelector } from '@store/selectors/playlists-screen-
 
 function LastPlayedSongsInPlaylistsScreen() {
     const playlist = useGetPlaylistByTypeSelector('last-played');
-    if (!playlist) {
+    if (!playlist || playlist.listSongs.length === 0) {
         return null
     }
 

@@ -1,12 +1,19 @@
 import * as React from 'react';
 
-import { Text, View } from 'react-native';
+import SongsInPlaylists from '@components/tab-songs-addition/SongsInPlaylists';
+import { useGetPlaylistByTypeSelector } from '@store/selectors/playlists-screen-selectors';
 
 function MostPlayedSongsInPlaylistsScreen() {
+    const playlist = useGetPlaylistByTypeSelector('most-played');
+    if (!playlist || playlist.listSongs.length === 0) {
+        return null
+    }
+
     return (
-        <View>
-            <Text>MostPlayedSongsInPlaylistsScreen</Text>
-        </View>
+        <SongsInPlaylists
+            type='most-played'
+            listSongs={playlist.listSongs}
+        />
     )
 }
 

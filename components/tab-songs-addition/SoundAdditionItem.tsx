@@ -18,7 +18,7 @@ class SoundAdditionItem extends React.PureComponent<{
             <>
                 <ListItem
                     Component={TouchableOpacity}
-                    onPress={() => {}}
+                    onPress={this.props.onCheck}
                     style={{
                         width: '100%',
                     }}

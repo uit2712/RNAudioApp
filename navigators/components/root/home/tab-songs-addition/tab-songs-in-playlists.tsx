@@ -7,11 +7,13 @@ import { TabSongsInPlaylistsParams } from '@navigators/config/root/home/tab-song
 import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useGetListSelectedSongsSelector } from '@store/selectors/tab-songs-addition-selectors';
+import { useGetPlaylistByTypeSelector } from '@store/selectors/playlists-screen-selectors';
 
 const TabSongsInPlaylists = createMaterialTopTabNavigator<TabSongsInPlaylistsParams>();
 function TabSongsInPlaylistsNavigator() {
     const listSelectedSongs = useGetListSelectedSongsSelector();
-    console.log(listSelectedSongs.length);
+    const mostPlayedPlaylist = useGetPlaylistByTypeSelector('most-played');
+    const lastPlayedPlaylist = useGetPlaylistByTypeSelector('last-played');
 
     return (
         <TabSongsInPlaylists.Navigator>
@@ -22,20 +24,28 @@ function TabSongsInPlaylistsNavigator() {
                     tabBarLabel: () => <Text>Tất cả</Text>
                 }}
             />
-            <TabSongsInPlaylists.Screen
-                name='MostPlayed'
-                component={MostPlayedSongsInPlaylistsScreen}
-                options={{
-                    tabBarLabel: () => <Text>Phát nhiều nhất</Text>
-                }}
-            />
-            <TabSongsInPlaylists.Screen
-                name='LastPlayed'
-                component={LastPlayedSongsInPlaylistsScreen}
-                options={{
-                    tabBarLabel: () => <Text>Phát lần cuối</Text>
-                }}
-            />
+            {
+                mostPlayedPlaylist && mostPlayedPlaylist.listSongs.length > 0 && (
+                    <TabSongsInPlaylists.Screen
+                        name='MostPlayed'
+                        component={MostPlayedSongsInPlaylistsScreen}
+                        options={{
+                            tabBarLabel: () => <Text>Phát nhiều nhất</Text>
+                        }}
+                    />
+                )
+            }
+            {
+                lastPlayedPlaylist && lastPlayedPlaylist.listSongs.length > 0 && (
+                    <TabSongsInPlaylists.Screen
+                        name='LastPlayed'
+                        component={LastPlayedSongsInPlaylistsScreen}
+                        options={{
+                            tabBarLabel: () => <Text>Phát lần cuối</Text>
+                        }}
+                    />
+                )
+            }
         </TabSongsInPlaylists.Navigator>
     )
 }
