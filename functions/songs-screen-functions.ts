@@ -58,7 +58,7 @@ export function getAllMusicFiles({
     }).then((tracks: ITrackInfo[]) => {
         const songs: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
             type: 'other',
-            id: item.id,
+            id: item.id ?? '',
             name: item.title ?? '',
             path: item.path ?? '',
             author: item.artist ?? '<unknown>',
