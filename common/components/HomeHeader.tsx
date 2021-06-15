@@ -22,7 +22,7 @@ function HomeHeader({
     HeaderTitle?: React.ComponentType<any>,
     onGoBack?: () => void,
 }) {
-    const navigation = useNavigation();
+    const navigation = useNavigation<RootNavigationProp>();
 
     return (
         <View

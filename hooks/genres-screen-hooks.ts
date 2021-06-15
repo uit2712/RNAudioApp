@@ -1,6 +1,4 @@
-import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IGenre } from '@interfaces/genres-screen-interfaces';
-import MusicFiles from 'react-native-get-music-files';
 import React from 'react';
 import { getAllGenres } from '@functions/genres-screen-functions';
 import { setListGenresAction } from '@store/actions/genres-screen-actions';
