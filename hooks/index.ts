@@ -35,6 +35,7 @@ import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
 import { useGetAllArtists } from '@hooks/artists-screen-hooks';
+import { useGetAllGenres } from './genres-screen-hooks';
 import { useGetAllMusicFiles } from '@hooks/songs-screen-hooks';
 import { useIsAudioFromFavoritePlaylistSelector } from '@store/selectors/playlists-screen-selectors';
 
@@ -276,8 +277,9 @@ export function useGetAllData(isGrantedPermission: boolean) {
     const songsData = useGetAllMusicFiles(isGrantedPermission);
     const artistsData = useGetAllArtists(isGrantedPermission);
     const albumsData = useGetAllAlbums(isGrantedPermission);
+    const genresData = useGetAllGenres(isGrantedPermission);
     return {
-        isGetAllDataFinished: isGrantedPermission === false || (songsData.isFinished && artistsData.isFinished && albumsData.isFinished),
+        isGetAllDataFinished: isGrantedPermission === false || (songsData.isFinished && artistsData.isFinished && albumsData.isFinished && genresData.isFinished),
     }
 }
 

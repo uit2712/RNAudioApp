@@ -2,6 +2,7 @@ import { SortSongByPropertyType, SoundFileType } from 'types/songs-screen-types'
 
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
+import { IGenre } from '@interfaces/genres-screen-interfaces';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ISelectedSongs } from '@interfaces/tab-songs-addition-interfaces';
 import { SortAlbumByPropertyType } from 'types/albums-screen-types';
@@ -47,6 +48,11 @@ export interface ITabSongsAdditionState {
     isAdded: boolean;
 }
 
+export interface IGenresScreenState {
+    genres: IGenre[];
+    isLoadListGenresFirstTime: boolean;
+}
+
 export interface IApplicationState {
     playlists: IPlaylistsScreenState;
     artists: IArtistsScreenState;
@@ -55,4 +61,5 @@ export interface IApplicationState {
     search: ISearchScreenState;
     common: ICommonState;
     songsAddition: ITabSongsAdditionState;
+    genres: IGenresScreenState;
 }
