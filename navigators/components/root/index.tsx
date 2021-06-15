@@ -2,21 +2,23 @@ import * as React from 'react';
 
 import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerNavigationState, NavigationContainer, ParamListBase, } from '@react-navigation/native';
+import { IDrawerNavigatorScreen, IPlayer, } from '@interfaces/index';
 import { Image, Text, } from 'react-native';
+import MusicControl, { Command } from 'react-native-music-control';
 import { RootParams, navigationRef } from '@navigators/config/root';
+import { useAudioHelper, useMusicControl, } from '@hooks/index';
 
 import DrawerHomeNavigator from './home';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import DrawerSettingsNavigator from './settings';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { IDrawerNavigatorScreen, } from '@interfaces/index';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { SoundPlayerContext, } from '@context-api/index';
 import StackSplashNavigator from './splash-screen';
-import { useAudioHelper, } from '@hooks/index';
+import { extend } from 'immutability-helper';
 
 const Root = createDrawerNavigator<RootParams>();
 
@@ -59,6 +61,7 @@ function RootNavigator() {
     const player = useAudioHelper({
         listSounds: [],
     });
+    useMusicControl(player);
 
     return (
         <SoundPlayerContext.Provider value={player}>
@@ -78,8 +81,29 @@ function RootNavigator() {
                     }
                 </Root.Navigator>
             </NavigationContainer>
+            <UpdatingMusicControl/>
         </SoundPlayerContext.Provider>
     )
+}
+
+class UpdatingMusicControl extends React.Component {
+    static context = SoundPlayerContext;
+
+    componentDidMount() {
+        const context = this.context as IPlayer;
+        MusicControl.enableBackgroundMode(true);
+
+        MusicControl.on(Command.play, context.play);
+        MusicControl.on(Command.pause, context.pause);
+        MusicControl.on(Command.stop, context.stop);
+        MusicControl.on(Command.nextTrack, context.next);
+        MusicControl.on(Command.previousTrack, context.previous);
+        MusicControl.on(Command.seek, context.seekToTime);
+    }
+
+    render() {
+        return null
+    }
 }
 
 function CustomDrawer(props: DrawerContentComponentProps<DrawerContentOptions>) {

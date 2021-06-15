@@ -8,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { IPlayer } from '@interfaces/index';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MusicControl from 'react-native-music-control';
 import Slider from '@react-native-community/slider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatTimeString } from '@functions/index';
@@ -120,6 +121,9 @@ class Progress extends React.Component {
                             currentTime,
                             currentTimeString: formatTimeString(currentTime * 1000),
                         }));
+                        MusicControl.updatePlayback({
+                            elapsedTime: currentTime, 
+                        });
                     }
                 })
             }, 100);

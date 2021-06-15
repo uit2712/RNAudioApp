@@ -26,9 +26,11 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { AudioStatusType } from 'types/index';
 import { BackHandler } from 'react-native';
+import MusicControl from 'react-native-music-control';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
+import { SoundPlayerContext } from '@context-api/index';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
@@ -185,6 +187,9 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         }).catch(() => {});
     }, [index, listSounds]);
 
+    const currentAudioInfo = getAudioHelperCurrentAudioInfo({ index, currentTime, duration, listSounds });
+    
+
     return {
         ...disabledButtonStatus,
         ...getPlayerSettings(),
@@ -214,7 +219,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         status,
         duration,
         currentTime,
-        currentAudioInfo: getAudioHelperCurrentAudioInfo({ index, currentTime, duration, listSounds }),
+        currentAudioInfo,
         errorMessage,
         setListSounds,
         getCurrentTime,
@@ -438,5 +443,44 @@ export function useCheckAll({
         isCheckedAll: isCheckedAllReal(),
         checkAll,
         uncheckAll,
+    }
+}
+
+export function useMusicControl(player: IPlayer) {
+    React.useEffect(() => {
+        if (player.status === 'success') {
+            const currentAudioInfo = player.currentAudioInfo;
+            MusicControl.setNowPlaying({
+                title: currentAudioInfo.name,
+                artwork: currentAudioInfo.cover, // URL or RN's image require()
+                artist: currentAudioInfo.artist,
+                album: currentAudioInfo.album,
+                genre: currentAudioInfo.genre,
+                duration: currentAudioInfo.duration, // (Seconds)
+                elapsedTime: 0,
+                description: '', // Android Only
+                color: 0xffffff, // Android Only - Notification Color
+                colorized: true, // Android 8+ Only - Notification Color extracted from the artwork. Set to false to use the color property instead
+                date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
+                rating: 84, // Android Only (Boolean or Number depending on the type)
+                // notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
+                isLiveStream: true, // iOS Only (Boolean), Show or hide Live Indicator instead of seekbar on lock screen for live streams. Default value is false.
+            })
+        }
+    }, [player.status]);
+
+    React.useEffect(() => {
+        MusicControl.updatePlayback({
+            state: getMusicControlStatus(),
+        })
+    }, [player.status]);
+
+    function getMusicControlStatus() {
+        switch(player.status) {
+            default: return MusicControl.STATE_BUFFERING;
+            case 'pause': return MusicControl.STATE_PAUSED;
+            case 'play': return MusicControl.STATE_PLAYING;
+            case 'stop': return MusicControl.STATE_STOPPED;
+        }
     }
 }

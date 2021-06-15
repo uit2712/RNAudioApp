@@ -30,7 +30,7 @@ function SplashScreen() {
             onError: (error: Error) => {},
             onGranted: () => setIsGrantedPermission(true),
             onDenined: () => {},
-        })
+        });
     }, []);
 
     const { isGetAllDataFinished } = useGetAllData(isGrantedPermission);

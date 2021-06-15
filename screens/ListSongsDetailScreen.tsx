@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
-import { RefreshControl, StyleSheet, Text, TextInputBase, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { RefreshControl, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
 import { useHomeBottomTabHelper, useRefresh } from '@hooks/index';
 
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
@@ -20,17 +20,13 @@ import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-s
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 
-const wait = (timeout: number) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
-
 function ListSongsDetailScreen() {
     const route = useRoute<ListSongsDetailScreenRouteProp>();
     const navigation = useNavigation<DrawerHomeNavigationProp>();
 
     const newPlaylist = useGetPlaylistByIdSelector(route.params.playlist?.id ?? '');
 
-    const { isRefresh, setIsRefresh, onRefresh } = useRefresh(React.useCallback(() => {
+    const { isRefresh, setIsRefresh, onRefresh } = useRefresh(() => {
         if (newPlaylist) {
             navigation.setParams({
                 ...route.params,
@@ -41,7 +37,7 @@ function ListSongsDetailScreen() {
                 }
             })
         }
-    }, [newPlaylist]));
+    });
 
     const { setIsShowTabBar, } = React.useContext(DrawerHomeContext);
     useHomeBottomTabHelper({

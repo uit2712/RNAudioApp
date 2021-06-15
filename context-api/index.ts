@@ -5,7 +5,7 @@ import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContextWithType, } from 
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { SoundFileType } from 'types/songs-screen-types';
 
-export const SoundPlayerContext = React.createContext<IPlayer>({
+const initSoundPlayerContext: IPlayer = {
     currentTime: 0,
     duration: 0,
     errorMessage: '',
@@ -43,7 +43,8 @@ export const SoundPlayerContext = React.createContext<IPlayer>({
     getCurrentTime: (cb?: ((seconds: number, isPlaying: boolean) => void) | undefined) => {},
     setCurrentTime: (seconds: number) => {},
     setListSoundsAndPlay: (listSounds: SoundFileType[], audioIndex: number) => {},
-});
+};
+export const SoundPlayerContext = React.createContext<IPlayer>(initSoundPlayerContext);
 
 export const DrawerHomeContext = React.createContext<IDrawerHomeContext>({
     isShowTabBar: true,
