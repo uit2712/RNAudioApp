@@ -71,6 +71,7 @@ function AddSongToPlaylistScreen() {
                     right: 0,
                     bottom: 0,
                 }}
+                color='#FF5733'
                 onPress={addSongToPlaylists}
                 disabled={listSelectedItems.length === 0}
             />
@@ -108,12 +109,14 @@ class AddSongToPlaylistItem extends React.Component<{
                         <MaterialIcons
                             name='check-box'
                             size={30}
+                            color='#FF5733'
                         />
                     }
                     uncheckedIcon={
                         <MaterialIcons
                             name='check-box-outline-blank'
                             size={30}
+                            color='#FF5733'
                         />
                     }
                     checked={this.props.isChecked}

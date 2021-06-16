@@ -1,5 +1,6 @@
 import { clearListSelectedSongsAction, setListSelectedSongsAction, } from '@store/actions/tab-songs-addition-actions';
 import { useCheckAll, useListChecked } from '@hooks/index';
+import { useGetPlaylistSongsShouldBeAddedSelector, useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 import React from 'react';
 import { SelectedSongsType } from 'types/tab-songs-addition-types';
@@ -8,7 +9,6 @@ import SongsInPlaylistsScreenSoundAdditionItem from './SongsInPlaylistsScreenSou
 import { SoundFileType } from 'types/songs-screen-types';
 import { VirtualizedList } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 function SongsInPlaylists({
     type,
@@ -18,19 +18,20 @@ function SongsInPlaylists({
     listSongs: SoundFileType[],
 }) {
     const dispatch = useDispatch();
-    const { checked, onCheck, setListChecked, isCheckedAllFromListChecked, listSelectedItems } = useListChecked(listSongs);
-    const { checkAll, isCheckedAll, uncheckAll } = useCheckAll({ isCheckedAllFromListChecked, setListChecked });
+    const { checked, onCheck, setListChecked, isCheckedAllFromListChecked, listSelectedItems, reset } = useListChecked(listSongs);
+    const { checkAll, isCheckedAll, } = useCheckAll({ isCheckedAllFromListChecked, setListChecked });
     React.useEffect(() => {
         dispatch(setListSelectedSongsAction({
             type,
             listSongs: listSelectedItems,
-        }))
+        }));
+
     }, [listSelectedItems.length]);
 
     const isAdded = useIsAddListSelectedSongsSuccessSelector();
     React.useEffect(() => {
         if (isAdded === true) {
-            uncheckAll();
+            reset();
             dispatch(clearListSelectedSongsAction())
         }
     }, [isAdded]);
@@ -43,17 +44,14 @@ function SongsInPlaylists({
             />
             <VirtualizedList
                 data={listSongs}
-                renderItem={({ item, index, }: { item: SoundFileType, index: number }) => {
-                    const check = () => onCheck(index);
-                    return (
-                        <SongsInPlaylistsScreenSoundAdditionItem
-                            key={item.id}
-                            item={item}
-                            isChecked={checked[index]}
-                            onCheck={check}
-                        />
-                    )
-                }}
+                renderItem={({ item, index, }: { item: SoundFileType, index: number }) => (
+                    <CustomSongsInPlaylistsScreenSoundAdditionItem
+                        key={item.id}
+                        check={() => onCheck(index)}
+                        isChecked={checked[index]}
+                        item={item}
+                    />
+                )}
                 keyExtractor={item => item.id}
                 initialNumToRender={7} // Reduce initial render amount
                 getItemCount={(data: SoundFileType[]) => data.length}
@@ -62,6 +60,29 @@ function SongsInPlaylists({
                 extraData={checked}
             />
         </>
+    )
+}
+
+function CustomSongsInPlaylistsScreenSoundAdditionItem({
+    check,
+    isChecked,
+    item,
+}: {
+    check: () => void,
+    isChecked: boolean,
+    item: SoundFileType,
+}) {
+    const playlist = useGetPlaylistSongsShouldBeAddedSelector();
+    const isExisted = playlist && playlist.listSongs.findIndex(value => item.id === value.id) >= 0;
+
+    return (
+        <SongsInPlaylistsScreenSoundAdditionItem
+            key={item.id}
+            item={item}
+            isChecked={isExisted || isChecked}
+            onCheck={check}
+            isDisabled={isExisted}
+        />
     )
 }
 

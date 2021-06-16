@@ -12,6 +12,7 @@ class SoundAdditionItem extends React.PureComponent<{
     item: SoundFileType,
     onCheck?: () => void,
     isChecked: boolean,
+    isDisabled?: boolean,
 }> {
     render() {
         return (
@@ -23,6 +24,10 @@ class SoundAdditionItem extends React.PureComponent<{
                         width: '100%',
                     }}
                     bottomDivider
+                    disabled={this.props.isDisabled}
+                    disabledStyle={{
+                        backgroundColor: 'lightgray',
+                    }}
                 >
                     <SoundItemCover value={this.props.item}/>
                     <SoundItemInfo value={this.props.item} isActive={false}/>
@@ -30,6 +35,7 @@ class SoundAdditionItem extends React.PureComponent<{
                         item={this.props.item}
                         onCheck={this.props.onCheck}
                         isChecked={this.props.isChecked}
+                        isDisabled={this.props.isDisabled}
                     />
                 </ListItem>
             </>
@@ -41,6 +47,7 @@ class SoundAdditionItemCheckbox extends React.PureComponent<{
     item: SoundFileType,
     onCheck?: () => void,
     isChecked: boolean,
+    isDisabled?: boolean,
 }> {
     render() {
         return (
@@ -60,6 +67,7 @@ class SoundAdditionItemCheckbox extends React.PureComponent<{
                 }
                 checked={this.props.isChecked}
                 onPress={() => this.props.onCheck && this.props.onCheck()}
+                disabled={this.props.isDisabled}
             />
         )
     }

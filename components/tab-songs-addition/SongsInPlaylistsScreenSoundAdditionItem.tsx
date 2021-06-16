@@ -6,6 +6,7 @@ class SongsInPlaylistsScreenSoundAdditionItem extends React.Component<{
     item: SoundFileType,
     onCheck?: () => void,
     isChecked: boolean,
+    isDisabled?: boolean,
 }> {
     shouldComponentUpdate(nextProps: {
         item: SoundFileType,
@@ -22,6 +23,7 @@ class SongsInPlaylistsScreenSoundAdditionItem extends React.Component<{
                 item={this.props.item}
                 onCheck={this.props.onCheck}
                 isChecked={this.props.isChecked}
+                isDisabled={this.props.isDisabled}
             />
         )
     }
