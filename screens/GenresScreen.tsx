@@ -19,7 +19,12 @@ import { useNavigation, } from '@react-navigation/native';
 function GenresScreen() {
     const { genres } = useGetListGenresSelector();
     const isShouldRefresh = useGenreIsShouldRefreshSelector();
-    useGetAllGenres(true, isShouldRefresh);
+    const { refresh, } = useGetAllGenres(true);
+    React.useEffect(() => {
+        if (isShouldRefresh) {
+            refresh();
+        }
+    }, [isShouldRefresh]);
 
     return (
         <>

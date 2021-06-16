@@ -1,16 +1,19 @@
 import * as React from 'react';
 
+import { FAB, ListItem } from 'react-native-elements';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
+import CreationModal from '@common/components/CreationModal';
+import { CreationModalContext } from '@context-api/index';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
-import { ListItem } from 'react-native-elements';
-import MusicFiles from 'react-native-get-music-files';
-import PlaylistItemCreation from '@common/components/PlaylistItemCreationModal';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import SettingsMenu from '@common/components/SettingsMenu';
+import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
+import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/core';
@@ -18,15 +21,6 @@ import { useNavigation } from '@react-navigation/core';
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();
     useAddLastPlayedAudioToPlaylists();
-
-    // React.useEffect(() => {
-    //     MusicFiles.updateSong({
-    //         id: "49",
-    //         artist: "Connie Talbot",
-    //         album: "Nhạc Tiếng Anh",
-    //         genreId: "1",
-    //     }).then(console.log).catch(console.log);
-    // }, []);
 
     return (
         <>
@@ -43,8 +37,52 @@ function PlaylistsScreen() {
                 )}
                 keyExtractor={item=> item.id}
             />
-            <PlaylistItemCreation/>
+            <PlaylistCreation/>
         </>
+    )
+}
+
+function PlaylistCreation() {
+    const { isVisible, toggleOverlay } = React.useContext(CreationModalContext);
+    const dispatch = useDispatch();
+
+    return (
+        <View>
+            {
+                isVisible === false && (
+                    <FAB
+                        title='Tạo mới'
+                        style={{
+                            position: 'absolute',
+                            margin: 16,
+                            right: 0,
+                            bottom: 0,
+                        }}
+                        icon={
+                            <Ionicons
+                                name='add'
+                                size={30}
+                                color='white'
+                            />
+                        }
+                        onPress={toggleOverlay}
+                    />
+                )
+            }
+            <CreationModal
+                isVisible={isVisible}
+                inputLabel='Tạo danh sách mới'
+                title='Tên'
+                toggleOverlay={toggleOverlay}
+                onConfirm={(name, onFinished) => {
+                    dispatch(addNewPlaylistAction({
+                        type: 'custom-playlist',
+                        name,
+                    }));
+                    onFinished();
+                }}
+            />
+        </View>
     )
 }
 
