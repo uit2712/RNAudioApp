@@ -5,6 +5,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from
 
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import { IGenre } from '@interfaces/genres-screen-interfaces';
+import MusicFiles from 'react-native-get-music-files';
 import { RootNavigationProp } from '@navigators/config/root';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { getListSongsByGenre } from '@functions/genres-screen-functions';
@@ -51,6 +52,7 @@ export function GenreItem({
     )
 }
 
+
 // error: can go back from ListSongsDetailScreen to GenresScreen
 function GenreItemColumn({
     item,
@@ -61,19 +63,22 @@ function GenreItemColumn({
 }) {
     const navigation = useNavigation<RootNavigationProp>();
     const { disable, enable, isDisabled } = useDisabledButton();
-    async function onPress() {
+    function onPress() {
         disable();
-        const info = await getListSongsByGenre(item);
-        enable();
-        navigation.navigate('Home', {
-            screen: 'TabListSongs',
-            params: {
-                screen: 'ListSongs',
+        getListSongsByGenre(item).then((info) => {
+            enable();
+            navigation.navigate('Home', {
+                screen: 'TabListSongs',
                 params: {
-                    type: 'genre',
-                    info,
-                },
-            }
+                    screen: 'ListSongs',
+                    params: {
+                        type: 'genre',
+                        info,
+                    },
+                }
+            });
+        }).catch(() => {
+            enable();
         });
     }
 

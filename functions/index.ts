@@ -1,3 +1,7 @@
+import { ITrackInfo } from "@interfaces/songs-screen-interfaces";
+import { SoundFileType } from "types/songs-screen-types";
+import { avatarHelper } from "@helpers/songs-screen-helpers";
+
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 export function shuffleArray<T>(array: T[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -79,4 +83,21 @@ export function makeId(length: number = 20) {
             charactersLength));
     }
     return result;
+}
+
+export function mapTrackInfoToSoundFileType(tracks: ITrackInfo[]): SoundFileType[] {
+    return tracks.map((item: ITrackInfo) => ({
+        type: 'other',
+        id: item.id ?? makeId(),
+        name: item.title ?? '',
+        path: item.path ?? '',
+        author: item.artist ?? '<unknown>',
+        album: item.album ?? '<unknown>',
+        albumId: item.albumId,
+        genre: item.genre ?? '<unknown>',
+        cover: item.cover ?? avatarHelper.getAvatar(),
+        duration: formatTimeString(item.duration ? Number(item.duration) : 0),
+        other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
+        bluredImage: item.blur,
+    }));
 }

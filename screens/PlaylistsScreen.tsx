@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
+import MusicFiles from 'react-native-get-music-files';
 import PlaylistItemCreation from '@common/components/PlaylistItemCreationModal';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
@@ -17,6 +18,15 @@ import { useNavigation } from '@react-navigation/core';
 function PlaylistsScreen() {
     const playlists = useGetPlaylists();
     useAddLastPlayedAudioToPlaylists();
+
+    // React.useEffect(() => {
+    //     MusicFiles.updateSong({
+    //         id: "49",
+    //         artist: "Connie Talbot",
+    //         album: "Nhạc Tiếng Anh",
+    //         genre: "Pop",
+    //     }).then(console.log).catch(console.log);
+    // }, []);
 
     return (
         <>

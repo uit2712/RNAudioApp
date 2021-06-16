@@ -1,13 +1,12 @@
 import * as RN from 'react-native';
 
 import { Permission, check } from 'react-native-permissions';
-import { formatTimeString, makeId } from '@functions/index';
 
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import { PermissionsAndroid } from 'react-native';
 import { SoundFileType } from 'types/songs-screen-types';
-import { avatarHelper } from '@helpers/songs-screen-helpers';
+import { mapTrackInfoToSoundFileType } from '@functions/index';
 
 export function checkPermission({
     permission,
@@ -56,21 +55,7 @@ export function getAllMusicFiles({
         album: true,
         blured: true,
     }).then((tracks: ITrackInfo[]) => {
-        const songs: SoundFileType[] = tracks.map((item: ITrackInfo) => ({
-            type: 'other',
-            id: item.id ?? makeId(),
-            name: item.title ?? '',
-            path: item.path ?? '',
-            author: item.artist ?? '<unknown>',
-            album: item.album ?? '<unknown>',
-            albumId: item.albumId,
-            genre: item.genre ?? '<unknown>',
-            cover: item.cover ?? avatarHelper.getAvatar(),
-            duration: formatTimeString(item.duration ? Number(item.duration) : 0),
-            other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
-            bluredImage: item.blur,
-        }));
-        onSuccess(songs);
+        onSuccess(mapTrackInfoToSoundFileType(tracks));
     }).catch(onError);
 }
 

@@ -27,7 +27,7 @@ function SplashScreen() {
     React.useEffect(() => {
         showPopupRequestPermission({
             permission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            onError: (error: Error) => {},
+            onError: console.log,
             onGranted: () => setIsGrantedPermission(true),
             onDenined: () => {},
         });

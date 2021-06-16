@@ -271,7 +271,7 @@ export function useHomeBottomTabHelper({
 }
 
 /**
- * Get all data includes: songs, artists, albums
+ * Get all data includes: songs, artists, albums, genres
  */
 export function useGetAllData(isGrantedPermission: boolean) {
     const songsData = useGetAllMusicFiles(isGrantedPermission);
