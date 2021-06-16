@@ -71,8 +71,8 @@ function PlaylistCreation() {
             }
             <CreationModal
                 isVisible={isVisible}
-                inputLabel='Tạo danh sách mới'
-                title='Tên'
+                inputLabel='Tên'
+                title='Tạo danh sách mới'
                 toggleOverlay={toggleOverlay}
                 onConfirm={(name, onFinished) => {
                     dispatch(addNewPlaylistAction({

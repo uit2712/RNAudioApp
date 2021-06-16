@@ -2,14 +2,16 @@ import * as React from 'react';
 
 import { CheckBox, FAB, ListItem } from 'react-native-elements';
 import { Text, ToastAndroid, TouchableOpacity, VirtualizedList } from 'react-native';
+import { addListAudioToPlaylistAction, addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/root/home/tab-others';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import CreationModal from '@common/components/CreationModal';
+import { CreationModalContext } from '@context-api/index';
 import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { addListAudioToPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetPlaylistsNotContainAudioSelector, } from '@store/selectors/playlists-screen-selectors';
 import { useListChecked } from '@hooks/index';
@@ -20,6 +22,15 @@ function AddSongToPlaylistScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const { checked, onCheck, listSelectedItems, reset, } = useListChecked(playlists);
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            reset();
+        });
+    
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
 
     const addSongToPlaylists = () => {
         listSelectedItems.forEach(playlist => {
@@ -32,19 +43,16 @@ function AddSongToPlaylistScreen() {
         ToastAndroid.show(`${listSelectedItems.length} bài hát được thêm vào danh sách thành công`, ToastAndroid.SHORT);
         navigation.goBack();
     }
+
+    React.useEffect(() => {
+        if (playlists.length > 0) {
+            onCheck(playlists.length - 1);
+        }
+    }, [playlists.length]);
     
     return (
         <>
-            <TouchableOpacity style={{ flexDirection: 'row', padding: 20, }}>
-                <AntDesign
-                    name='plus'
-                    size={25}
-                    style={{
-                        flex: 1,
-                    }}
-                />
-                <Text style={{ flex: 5, fontSize: 18, }}>Thêm danh sách phát</Text>
-            </TouchableOpacity>
+            <AddSongToPlaylistCreationModal/>
             <VirtualizedList
                 data={playlists}
                 renderItem={({ item, index }: { item: IPlaylist, index: number }) => {
@@ -74,6 +82,42 @@ function AddSongToPlaylistScreen() {
                 color='#FF5733'
                 onPress={addSongToPlaylists}
                 disabled={listSelectedItems.length === 0}
+            />
+        </>
+    )
+}
+
+function AddSongToPlaylistCreationModal() {
+    const { isVisible, toggleOverlay } = React.useContext(CreationModalContext);
+    const dispatch = useDispatch();
+
+    return (
+        <>
+            <TouchableOpacity
+                style={{ flexDirection: 'row', padding: 20, }}
+                onPress={toggleOverlay}
+            >
+                <AntDesign
+                    name='plus'
+                    size={25}
+                    style={{
+                        flex: 1,
+                    }}
+                />
+                <Text style={{ flex: 5, fontSize: 18, }}>Thêm danh sách phát</Text>
+            </TouchableOpacity>
+            <CreationModal
+                isVisible={isVisible}
+                inputLabel='Tên'
+                title='Tạo danh sách mới'
+                toggleOverlay={toggleOverlay}
+                onConfirm={(name, onFinished) => {
+                    dispatch(addNewPlaylistAction({
+                        type: 'custom-playlist',
+                        name,
+                    }));
+                    onFinished();
+                }}
             />
         </>
     )

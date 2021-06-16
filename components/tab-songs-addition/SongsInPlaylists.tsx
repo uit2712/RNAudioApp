@@ -9,6 +9,7 @@ import SongsInPlaylistsScreenSoundAdditionItem from './SongsInPlaylistsScreenSou
 import { SoundFileType } from 'types/songs-screen-types';
 import { VirtualizedList } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 function SongsInPlaylists({
     type,
@@ -35,6 +36,16 @@ function SongsInPlaylists({
             dispatch(clearListSelectedSongsAction())
         }
     }, [isAdded]);
+
+    const navigation = useNavigation();
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            reset();
+        });
+    
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <>
