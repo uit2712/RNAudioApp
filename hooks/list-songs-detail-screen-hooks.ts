@@ -23,12 +23,14 @@ export function useGetListMenuSelections({
     const mostPlayedListMenuSelections = useGetMostPlayedListMenuSelections({ item, index, songs });
     const favoriteListMenuSelections = useGetFavoriteListMenuSelections({ item, index, songs });
     const otherListMenuSelections = useGetOtherListMenuSelections({ item, index, songs });
+    const customPlaylistListMenuSelections = useGetCustomPlaylistListMenuSelections({ item, index, songs });
 
     switch(type) {
         default: return otherListMenuSelections;
         case 'favorite': return favoriteListMenuSelections;
         case 'last-played': return lastPlayedListMenuSelections;
         case 'most-played': return mostPlayedListMenuSelections;
+        case 'custom-playlist': return customPlaylistListMenuSelections;
     }
 }
 
@@ -136,4 +138,28 @@ function useGetOtherListMenuSelections({
     ]
 
     return otherListMenuSelections;
+}
+
+function useGetCustomPlaylistListMenuSelections({
+    item,
+    index,
+    songs,
+}: {
+    item: SoundFileType,
+    index: number,
+    songs: SoundFileType[],
+}) {
+    const player = React.useContext(SoundPlayerContext);
+    const { isFavorite, onFavoritePress, } = useFavorite(item);
+    const lastPlayedListMenuSelections: IMenuSelection[] = [
+        { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(songs, index) },
+        { text: 'Thêm vào hàng đợi' },
+        { text: isFavorite ? 'Xóa khỏi Mục yêu thích' : 'Thêm vào Mục ưa thích', onSelect: onFavoritePress },
+        { text: 'Biết lời bài hát' },
+        { text: 'Chia sẻ' },
+        { text: 'Chỉnh sửa thẻ' },
+        { text: 'Đặt làm nhạc chuông' },
+    ];
+
+    return lastPlayedListMenuSelections;
 }
