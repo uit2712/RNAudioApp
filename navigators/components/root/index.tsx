@@ -8,7 +8,6 @@ import MusicControl, { Command } from 'react-native-music-control';
 import { RootParams, navigationRef } from '@navigators/config/root';
 import { useAudioHelper, useMusicControl, } from '@hooks/index';
 
-import DrawerGenresNavigator from './genres';
 import DrawerHomeNavigator from './home';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import DrawerSettingsNavigator from './settings';
@@ -54,18 +53,6 @@ const screens: IDrawerNavigatorScreen<RootParams>[] = [
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcons name='playlist-music' size={size ?? 35} color={color} />,
         isVisible: false,
-    },
-    {
-        name: 'Genres',
-        component: DrawerGenresNavigator,
-        title: 'Thể loại',
-        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
-        icon: ({ color, size }) => <MaterialCommunityIcons name='guitar-acoustic' size={size ?? 35} color={color} />,
-        isVisible: true,
-        activeBackgroundColor: 'rgb(255, 195, 0)',
-        activeTintColor: 'white',
-        inactiveBackgroundColor: 'white',
-        inactiveTintColor: 'black',
     },
 ]
 

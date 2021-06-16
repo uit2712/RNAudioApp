@@ -16,6 +16,7 @@ import LinearProgress from 'react-native-elements/dist/linearProgress/LinearProg
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabAlbumsNavigator from './tab-albums';
 import TabArtistsNavigators from './tab-artists';
+import TabGenresNavigator from './tab-genres';
 import TabListSongsNavigator from './tab-list-songs-detail';
 import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
@@ -62,6 +63,15 @@ const screens: IStackNavigatorScreen<DrawerHomeParams>[] = [
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
+        isVisible: true,
+    },
+    {
+        name: 'TabGenres',
+        title: 'Thể loại',
+        component: TabGenresNavigator,
+        getColor: (isFocused: boolean) => isFocused === true ? '#FF5733' : 'gray',
+        label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
+        icon: ({ color, size }) => <MaterialCommunityIcon name='guitar-acoustic' size={size ?? 35} color={color} />,
         isVisible: true,
     },
     {

@@ -49,6 +49,8 @@ export interface ITabSongsAdditionState {
 }
 
 export interface IGenresScreenState {
+    sortByProperyType: "name";
+    orderType: SortOrderType;
     genres: IGenre[];
     isLoadListGenresFirstTime: boolean;
 }

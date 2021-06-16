@@ -2,6 +2,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { TabAlbumsNavigatorScreenParams } from './tab-albums';
 import { TabArtistsNavigatorScreenParams } from './tab-artists';
+import { TabGenresScreenParams } from './tab-genres';
 import { TabListSongsDetailNavigatorScreenParams } from './tab-list-songs-detail';
 import { TabPlaylistsNavigatorScreenParams } from './tab-playlists';
 import { TabSearchNavigatorScreenParams } from './tab-search';
@@ -18,6 +19,7 @@ export type DrawerHomeParams = {
     TabSearch: TabSearchNavigatorScreenParams;
     TabListSongs: TabListSongsDetailNavigatorScreenParams;
     TabSongsAddition: TabSongsAdditionScreenParams;
+    TabGenres: TabGenresScreenParams;
 }
 
 export type DrawerHomeNavigationProp = BottomTabNavigationProp<DrawerHomeParams>;
