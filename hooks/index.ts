@@ -501,3 +501,13 @@ export function useCreationModal(): ICreationModalContext {
         toggleOverlay: () => setIsVisible(!isVisible),
     }
 }
+
+export function useFocusScreen(onFocus: () => void) {
+    const navigation = useNavigation();
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', onFocus);
+    
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
+}

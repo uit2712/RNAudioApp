@@ -3,6 +3,7 @@ import * as React from 'react';
 import { CheckBox, FAB, ListItem } from 'react-native-elements';
 import { Text, ToastAndroid, TouchableOpacity, VirtualizedList } from 'react-native';
 import { addListAudioToPlaylistAction, addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
+import { useFocusScreen, useListChecked } from '@hooks/index';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/root/home/tab-others';
@@ -14,35 +15,12 @@ import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch } from 'react-redux';
 import { useGetPlaylistsNotContainAudioSelector, } from '@store/selectors/playlists-screen-selectors';
-import { useListChecked } from '@hooks/index';
 
 function AddSongToPlaylistScreen() {
     const route = useRoute<AddSongToPlaylistScreenRouteProp>();
     const playlists = useGetPlaylistsNotContainAudioSelector(route.params.sound.id);
-    const dispatch = useDispatch();
-    const navigation = useNavigation();
     const { checked, onCheck, listSelectedItems, reset, } = useListChecked(playlists);
-
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            reset();
-        });
-    
-        // Return the function to unsubscribe from the event so it gets removed on unmount
-        return unsubscribe;
-    }, [navigation]);
-
-    const addSongToPlaylists = () => {
-        listSelectedItems.forEach(playlist => {
-            dispatch(addListAudioToPlaylistAction({
-                playlistId: playlist.id,
-                listAudio: [route.params.sound],
-            }));
-        });
-        reset();
-        ToastAndroid.show(`${listSelectedItems.length} bài hát được thêm vào danh sách thành công`, ToastAndroid.SHORT);
-        navigation.goBack();
-    }
+    useFocusScreen(reset);
 
     React.useEffect(() => {
         if (playlists.length > 0) {
@@ -71,18 +49,7 @@ function AddSongToPlaylistScreen() {
                 getItemCount={(data: IPlaylist[]) => data.length}
                 getItem={(data: IPlaylist[], index: number) => data[index]}
             />
-            <FAB
-                title='Thêm vào danh sách phát'
-                style={{
-                    position: 'absolute',
-                    margin: 16,
-                    right: 0,
-                    bottom: 0,
-                }}
-                color='#FF5733'
-                onPress={addSongToPlaylists}
-                disabled={listSelectedItems.length === 0}
-            />
+            <AddSongToPlaylistButton listSelectedItems={listSelectedItems}/>
         </>
     )
 }
@@ -177,6 +144,41 @@ class AddSongToPlaylistItem extends React.Component<{
             </ListItem>
         )
     }
+}
+
+function AddSongToPlaylistButton({
+    listSelectedItems,
+}: {
+    listSelectedItems: IPlaylist[],
+}) {
+    const route = useRoute<AddSongToPlaylistScreenRouteProp>();
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+    const addSongToPlaylists = () => {
+        listSelectedItems.forEach(playlist => {
+            dispatch(addListAudioToPlaylistAction({
+                playlistId: playlist.id,
+                listAudio: [route.params.sound],
+            }));
+        });
+        ToastAndroid.show(`${listSelectedItems.length} bài hát được thêm vào danh sách thành công`, ToastAndroid.SHORT);
+        navigation.goBack();
+    }
+
+    return (
+        <FAB
+            title='Thêm vào danh sách phát'
+            style={{
+                position: 'absolute',
+                margin: 16,
+                right: 0,
+                bottom: 0,
+            }}
+            color='#FF5733'
+            onPress={addSongToPlaylists}
+            disabled={listSelectedItems.length === 0}
+        />
+    )
 }
 
 export default AddSongToPlaylistScreen;

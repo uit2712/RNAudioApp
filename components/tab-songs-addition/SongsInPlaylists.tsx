@@ -1,5 +1,5 @@
 import { clearListSelectedSongsAction, setListSelectedSongsAction, } from '@store/actions/tab-songs-addition-actions';
-import { useCheckAll, useListChecked } from '@hooks/index';
+import { useCheckAll, useFocusScreen, useListChecked } from '@hooks/index';
 import { useGetPlaylistSongsShouldBeAddedSelector, useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 import React from 'react';
@@ -9,7 +9,6 @@ import SongsInPlaylistsScreenSoundAdditionItem from './SongsInPlaylistsScreenSou
 import { SoundFileType } from 'types/songs-screen-types';
 import { VirtualizedList } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 function SongsInPlaylists({
     type,
@@ -37,15 +36,7 @@ function SongsInPlaylists({
         }
     }, [isAdded]);
 
-    const navigation = useNavigation();
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            reset();
-        });
-    
-        // Return the function to unsubscribe from the event so it gets removed on unmount
-        return unsubscribe;
-    }, [navigation]);
+    useFocusScreen(reset);
 
     return (
         <>
