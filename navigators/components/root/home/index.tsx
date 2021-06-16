@@ -18,11 +18,11 @@ import TabAlbumsNavigator from './tab-albums';
 import TabArtistsNavigators from './tab-artists';
 import TabGenresNavigator from './tab-genres';
 import TabListSongsNavigator from './tab-list-songs-detail';
+import TabOthersNavigator from './tab-others';
 import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
 import TabSongsAdditionNavigator from './tab-songs-addition';
 import TabSongsNavigators from './tab-songs';
-import TabSoundPlayerDetailNavigator from './tab-detail';
 import { navigate } from '@navigators/config/root';
 import { useDrawHomeSettings } from '@hooks/index';
 
@@ -75,9 +75,9 @@ const screens: IStackNavigatorScreen<DrawerHomeParams>[] = [
         isVisible: true,
     },
     {
-        name: 'TabSoundPlayerDetail',
+        name: 'TabOthers',
         title: 'Trình chơi nhạc',
-        component: TabSoundPlayerDetailNavigator,
+        component: TabOthersNavigator,
         getColor: (isFocused: boolean) => isFocused === true ? '#2ECC71' : 'gray',
         label: ({ title, color }) => <Text style={{ color }}>{title}</Text>,
         icon: ({ color, size }) => <MaterialCommunityIcon name='album' size={size ?? 35} color={color} />,
@@ -256,7 +256,7 @@ function MiniPlayer() {
         setIsShowTabBar(false);
         setIsShowMiniPlayer(false);
         navigate('Home', {
-            screen: 'TabSoundPlayerDetail',
+            screen: 'TabOthers',
             params: {
                 screen: 'SoundPlayerDetail',
                 params: {

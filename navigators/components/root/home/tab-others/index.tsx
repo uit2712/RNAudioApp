@@ -3,6 +3,7 @@ import * as React from 'react';
 import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
 import { addAudioToPlaylistAction, removeAudioFromPlaylistAction } from '@store/actions/playlists-screen-actions';
 
+import AddSongToPlaylistScreen from '@screens/AddSongToPlaylistScreen';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import CustomMenu from '@common/components/CustomMenu';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -10,7 +11,7 @@ import Favorite from '@common/components/Favorite';
 import { IMenuSelection } from '@interfaces/index';
 import { SoundPlayerDetailThemeContext } from '@navigators/themes';
 import SoundPlayerScreen from '@screens/SoundPlayerScreen';
-import { TabSoundPlayerDetailParams } from '@navigators/config/root/home/tab-detail';
+import { TabOthersParams, } from '@navigators/config/root/home/tab-others';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -18,27 +19,54 @@ import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
 import { navigate } from '@navigators/config/root';
 import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
 
-const TabSoundPlayerDetail = createStackNavigator<TabSoundPlayerDetailParams>();
+const TabOthers = createStackNavigator<TabOthersParams>();
 
-function TabSoundPlayerDetailNavigator() {
+function TabOthersNavigator() {
+    const theme = React.useContext(SoundPlayerDetailThemeContext);
+
     return (
-        <TabSoundPlayerDetail.Navigator>
-            <TabSoundPlayerDetail.Screen
+        <TabOthers.Navigator>
+            <TabOthers.Screen
                 name='SoundPlayerDetail'
                 component={SoundPlayerScreen}
                 options={({ navigation }) => ({
                     title: '',
-                    headerLeft: () => <SoundPlayerDetailScreenHeaderLeft navigation={navigation}/>,
+                    headerLeft: () => (
+                        <BackButton
+                            navigation={navigation}
+                            color={theme.colors.iconInactive}
+                        />
+                    ),
                     headerRight: () => <SoundPlayerDetailScreenHeaderRight/>,
                     headerTransparent: true,
                 })}
             />
-        </TabSoundPlayerDetail.Navigator>
+            <TabOthers.Screen
+                name='AddSongToPlaylist'
+                component={AddSongToPlaylistScreen}
+                options={({ navigation }) => ({
+                    title: 'Thêm vào Danh sách phát',
+                    headerLeft: () => (
+                        <BackButton
+                            navigation={navigation}
+                            color='black'
+                        />
+                    ),
+                    // headerTransparent: true,
+                })}
+            />
+        </TabOthers.Navigator>
     )
 }
 
-function SoundPlayerDetailScreenHeaderLeft({ navigation }: { navigation: any }) {
-    const theme = React.useContext(SoundPlayerDetailThemeContext);
+function BackButton({
+    navigation,
+    color,
+}: {
+    navigation: any,
+    color: string,
+}) {
+    
     const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
 
     return (
@@ -52,7 +80,7 @@ function SoundPlayerDetailScreenHeaderLeft({ navigation }: { navigation: any }) 
             <AntDesignIcon
                 name='left'
                 size={30}
-                color={theme.colors.iconInactive}
+                color={color}
             />
         </TouchableOpacity>
     );
@@ -72,8 +100,6 @@ function SoundPlayerDetailScreenHeaderRight() {
         </View>
     )
 }
-
-
 
 function SoundPlayerDetailScreenHeaderRightMenu() {
     const theme = React.useContext(SoundPlayerDetailThemeContext);
@@ -123,4 +149,4 @@ function SoundPlayerDetailScreenHeaderRightMenu() {
     )
 }
 
-export default TabSoundPlayerDetailNavigator;
+export default TabOthersNavigator;

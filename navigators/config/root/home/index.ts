@@ -4,18 +4,18 @@ import { TabAlbumsNavigatorScreenParams } from './tab-albums';
 import { TabArtistsNavigatorScreenParams } from './tab-artists';
 import { TabGenresScreenParams } from './tab-genres';
 import { TabListSongsDetailNavigatorScreenParams } from './tab-list-songs-detail';
+import { TabOthersNavigatorScreenParams, } from './tab-others';
 import { TabPlaylistsNavigatorScreenParams } from './tab-playlists';
 import { TabSearchNavigatorScreenParams } from './tab-search';
 import { TabSongsAdditionScreenParams } from './tab-songs-addition';
 import { TabSongsNavigatorScreenParams } from './tab-songs';
-import { TabSoundPlayerDetailNavigatorScreenParams, } from './tab-detail';
 
 export type DrawerHomeParams = {
     TabAlbums: TabAlbumsNavigatorScreenParams;
     TabArtists: TabArtistsNavigatorScreenParams;
     TabPlaylists: TabPlaylistsNavigatorScreenParams;
     TabSongs: TabSongsNavigatorScreenParams;
-    TabSoundPlayerDetail: TabSoundPlayerDetailNavigatorScreenParams;
+    TabOthers: TabOthersNavigatorScreenParams;
     TabSearch: TabSearchNavigatorScreenParams;
     TabListSongs: TabListSongsDetailNavigatorScreenParams;
     TabSongsAddition: TabSongsAdditionScreenParams;

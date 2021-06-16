@@ -23,7 +23,7 @@ function SoundItem({
     function goToSoundPlayerDetail() {
         onPress && onPress();
         navigate('Home', {
-            screen: 'TabSoundPlayerDetail',
+            screen: 'TabOthers',
             params: {
                 screen: 'SoundPlayerDetail',
                 params: {
