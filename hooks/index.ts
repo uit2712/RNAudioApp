@@ -404,12 +404,17 @@ export function useListChecked<T>(array: Array<T>) {
         return true;
     }
 
+    function reset() {
+        setListChecked(oldChecked => oldChecked.map(() => false));
+    }
+
     return {
         checked,
         onCheck,
         setListChecked,
         isCheckedAllFromListChecked: isCheckedAllFromListChecked(),
         listSelectedItems: array.filter((item, index) => checked[index]),
+        reset,
     }
 }
 

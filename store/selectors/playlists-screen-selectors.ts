@@ -3,7 +3,7 @@ import { IPlaylist, } from '@interfaces/playlists-screen-interfaces';
 import { PlaylistType } from 'types/playlists-screen-types';
 import { useSelector } from 'react-redux';
 
-export function useGetPlaylists() {
+export function useGetPlaylistsSelector() {
     return useSelector<IApplicationState, IPlaylist[]>(state => state.playlists.playlists);
 }
 
@@ -30,5 +30,11 @@ export function useGetPlaylistByIdSelector(id: string) {
     return useSelector<IApplicationState, IPlaylist | undefined>(state => {
         const favoritePlaylist = state.playlists.playlists.find(item => item.id === id);
         return favoritePlaylist;
+    });
+}
+
+export function useGetPlaylistsNotContainAudioSelector(audioId: string) {
+    return useSelector<IApplicationState, IPlaylist[]>(state => {
+        return state.playlists.playlists.filter(item => item.type === 'custom-playlist' && item.listSongs.findIndex(song => song.id === audioId) < 0);
     });
 }

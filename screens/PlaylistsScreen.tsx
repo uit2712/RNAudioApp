@@ -15,11 +15,11 @@ import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
 import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
-import { useGetPlaylists } from '@store/selectors/playlists-screen-selectors';
+import { useGetPlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/core';
 
 function PlaylistsScreen() {
-    const playlists = useGetPlaylists();
+    const playlists = useGetPlaylistsSelector();
     useAddLastPlayedAudioToPlaylists();
 
     return (

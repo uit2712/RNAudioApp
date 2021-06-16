@@ -18,4 +18,4 @@ export type TabOthersParams = {
 
 export type TabOthersNavigationProp = BottomTabNavigationProp<TabOthersParams>;
 export type TabOthersNavigatorScreenParams = NavigatorScreenParams<TabOthersParams>;
-export type TabOthersScreenRouteProp = RouteProp<TabOthersParams, 'SoundPlayerDetail'>;
+export type AddSongToPlaylistScreenRouteProp = RouteProp<TabOthersParams, 'AddSongToPlaylist'>;
