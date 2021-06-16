@@ -6,6 +6,7 @@ const initializeState: IGenresScreenState = {
     isLoadListGenresFirstTime: false,
     orderType: 'asc',
     sortByProperyType: 'name',
+    isRefresh: false,
 }
 
 export default function GenresScreenReducer(state = initializeState, action: GenresScreenActions): IGenresScreenState {
@@ -26,6 +27,11 @@ export default function GenresScreenReducer(state = initializeState, action: Gen
             return {
                 ...state,
                 sortByProperyType: action.payload,
+            }
+        case 'SET_GENRE_IS_REFRESH':
+            return {
+                ...state,
+                isRefresh: action.payload,
             }
     }
 }

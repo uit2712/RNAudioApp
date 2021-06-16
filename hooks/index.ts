@@ -1,5 +1,6 @@
 import {
     IBottomSheetSectionWithType,
+    ICreationModalContext,
     IDrawerHomeContext,
     IPlayer,
     IRequestAudioHelper,
@@ -484,5 +485,14 @@ export function useMusicControl(player: IPlayer) {
             case 'play': return MusicControl.STATE_PLAYING;
             case 'stop': return MusicControl.STATE_STOPPED;
         }
+    }
+}
+
+export function useCreationModal(): ICreationModalContext {
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    return {
+        isVisible,
+        toggleOverlay: () => setIsVisible(!isVisible),
     }
 }

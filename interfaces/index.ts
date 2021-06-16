@@ -140,3 +140,8 @@ export interface IListSongsDetail {
     name: string;
     cover?: Source | number | string;
 }
+
+export interface ICreationModalContext {
+    isVisible: boolean;
+    toggleOverlay: () => void;
+}

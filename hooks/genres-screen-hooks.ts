@@ -5,7 +5,7 @@ import { setListGenresAction } from '@store/actions/genres-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useGetListGenresSelector } from '@store/selectors/genres-screen-selectors';
 
-export function useGetAllGenres(isGrantedPermission: boolean) {
+export function useGetAllGenres(isGrantedPermission: boolean, isShouldRefresh?: boolean) {
     const { genres, isLoadFirstTime } = useGetListGenresSelector();
     React.useEffect(() => {
         if (isLoadFirstTime === false && isGrantedPermission === true) {
@@ -32,10 +32,10 @@ export function useGetAllGenres(isGrantedPermission: boolean) {
     
     const [isRefresh, setIsRefresh] = React.useState(false);
     React.useEffect(() => {
-        if (isRefresh === true) {
+        if (isRefresh === true || isShouldRefresh === true) {
             getGenres();
         }
-    }, [isRefresh]);
+    }, [isRefresh, isShouldRefresh]);
 
     return {
         genres,

@@ -1,33 +1,61 @@
 import * as React from 'react';
 
-import { CommonActions, useNavigation, useNavigationState } from '@react-navigation/native';
 import { Image, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { createGenre, getListSongsByGenre } from '@functions/genres-screen-functions';
+import { useGenreIsShouldRefreshSelector, useGetListGenresSelector } from '@store/selectors/genres-screen-selectors';
 
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import CreationModal from '@common/components/CreationModal';
+import { CreationModalContext } from '@context-api/index';
 import { IGenre } from '@interfaces/genres-screen-interfaces';
-import MusicFiles from 'react-native-get-music-files';
 import { RootNavigationProp } from '@navigators/config/root';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
-import { getListSongsByGenre } from '@functions/genres-screen-functions';
 import { listToMatrix } from '@functions/index';
+import { setGenreIsShouldRefreshAction } from '@store/actions/genres-screen-actions';
 import { useDisabledButton } from '@hooks/index';
-import { useGetListGenresSelector } from '@store/selectors/genres-screen-selectors';
+import { useDispatch } from 'react-redux';
+import { useGetAllGenres } from '@hooks/genres-screen-hooks';
+import { useNavigation, } from '@react-navigation/native';
 
 function GenresScreen() {
     const { genres } = useGetListGenresSelector();
+    const isShouldRefresh = useGenreIsShouldRefreshSelector();
+    useGetAllGenres(true, isShouldRefresh);
 
     return (
-        <VirtualizedList
-            data={listToMatrix(genres, 2)}
-            renderItem={({ item, index }: { item: IGenre[], index: number }) => (
-                <GenreItem
-                    key={index}
-                    items={item}
-                />
-            )}
-            keyExtractor={(items) => items.map(value => value.id).join('')}
-            getItemCount={(data: Array<IGenre[]>) => data.length}
-            getItem={(data: Array<IGenre[]>, index: number) => data[index]}
+        <>
+            <GenreCreation/>
+            <VirtualizedList
+                data={listToMatrix(genres, 2)}
+                renderItem={({ item, index }: { item: IGenre[], index: number }) => (
+                    <GenreItem
+                        key={index}
+                        items={item}
+                    />
+                )}
+                keyExtractor={(items) => items.map(value => value.id).join('')}
+                getItemCount={(data: Array<IGenre[]>) => data.length}
+                getItem={(data: Array<IGenre[]>, index: number) => data[index]}
+            />
+        </>
+    )
+}
+
+function GenreCreation() {
+    const dispatch = useDispatch();
+    const { isVisible, toggleOverlay } = React.useContext(CreationModalContext);
+
+    return (
+        <CreationModal
+            isVisible={isVisible}
+            toggleOverlay={toggleOverlay}
+            inputLabel='Tên'
+            title='Tạo thể loại mới'
+            onConfirm={(name: string, onFinished: () => void) => {
+                createGenre(name).then(() => {
+                    onFinished();
+                    dispatch(setGenreIsShouldRefreshAction(true));
+                }).catch(console.log)
+            }}
         />
     )
 }

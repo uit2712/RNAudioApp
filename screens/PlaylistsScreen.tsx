@@ -24,7 +24,7 @@ function PlaylistsScreen() {
     //         id: "49",
     //         artist: "Connie Talbot",
     //         album: "Nhạc Tiếng Anh",
-    //         genre: "Pop",
+    //         genreId: "1",
     //     }).then(console.log).catch(console.log);
     // }, []);
 

@@ -38,3 +38,21 @@ export function getListSongsByGenre(genre?: IGenre): Promise<IListSongsDetail> {
         });
     });
 }
+
+export function createGenre(name: string) {
+    return new Promise((resolve: (value?: any) => void, reject: (value?: Error) => void) => {
+        if (!name) {
+            reject();
+            return;
+        }
+
+        MusicFiles.createGenre({
+            name,
+        }).then(() => {
+            resolve();
+        }).catch((error: Error) => {
+            console.log(error);
+            reject(error);
+        });
+    });
+}

@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import { IDrawerHomeContext, IPlayer, ISortByBottomSheetContextWithType, } from '@interfaces/index';
+import {
+    ICreationModalContext,
+    IDrawerHomeContext,
+    IPlayer,
+    ISortByBottomSheetContextWithType,
+} from '@interfaces/index';
 
 import { AUDIO_HELPER_CURRENT_AUDIO_INFO } from '@constants/index';
 import { SoundFileType } from 'types/songs-screen-types';
@@ -59,4 +64,9 @@ export const SortByBottomSheetContext = React.createContext<ISortByBottomSheetCo
     setSelectedType: (sectionIndex: number, selectedType: string) => {},
     getSelectedType: (sectionIndex: number) => '',
     data: [],
+});
+
+export const CreationModalContext = React.createContext<ICreationModalContext>({
+    isVisible: false,
+    toggleOverlay: () => {},
 });

@@ -11,6 +11,9 @@ export type GenresScreenActions = {
 } | {
     type: 'SET_GENRE_SORT_BY_PROPERTY_TYPE';
     payload: SortGenreByPropertyType;
+} | {
+    type: 'SET_GENRE_IS_REFRESH';
+    payload: boolean;
 }
 
 export const setListGenresAction = (request: IGenre[]): GenresScreenActions => ({
@@ -25,5 +28,10 @@ export const setGenreOrderTypeAction = (request: SortOrderType): GenresScreenAct
 
 export const setGenreByPropertyTypeAction = (request: SortGenreByPropertyType): GenresScreenActions => ({
     type: 'SET_GENRE_SORT_BY_PROPERTY_TYPE',
+    payload: request,
+});
+
+export const setGenreIsShouldRefreshAction = (request: boolean): GenresScreenActions => ({
+    type: 'SET_GENRE_IS_REFRESH',
     payload: request,
 });

@@ -35,3 +35,9 @@ export function useGetSearchedAlbumsSelector() {
         return genres.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()) === true);
     });
 }
+
+export function useGenreIsShouldRefreshSelector() {
+    return useSelector<IApplicationState, boolean>(state => {
+        return state.genres.isRefresh;
+    });
+}
