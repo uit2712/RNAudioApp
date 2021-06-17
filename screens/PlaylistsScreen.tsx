@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { FAB, ListItem } from 'react-native-elements';
 import { FlatList, TouchableOpacity, View } from 'react-native';
+import { useAddLastPlayedAudioToPlaylists, useGetListMenuSelections } from '@hooks/playlists-screen-hooks';
 
 import CreationModal from '@common/components/CreationModal';
 import { CreationModalContext } from '@context-api/index';
@@ -12,7 +13,6 @@ import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
-import { useAddLastPlayedAudioToPlaylists } from '@hooks/playlists-screen-hooks';
 import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetPlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
@@ -136,29 +136,22 @@ function PlaylistsItem({
             <ListItem.Content>
                 <ListItem.Title>{value.name}</ListItem.Title>
             </ListItem.Content>
-            <PlaylistsItemMenu name={value.name}/>
+            <PlaylistsItemMenu value={value}/>
         </ListItem>
     )
 }
 
 function PlaylistsItemMenu({
-    name,
+    value,
 }: {
-    name: string,
+    value: IPlaylist,
 }) {
-    const listMenuSelections: IMenuSelection[] = [
-        { text: 'Phát', },
-        { text: 'Phát tiếp theo', },
-        { text: 'Thêm vào hàng đợi' },
-        { text: 'Trộn' },
-        { text: 'Ẩn danh sách phát' },
-        { text: 'Chia sẻ' },
-    ]
+    const listMenuSelections = useGetListMenuSelections({ playlist: value });
 
     return (
         <SettingsMenu
             listMenuSelections={listMenuSelections}
-            title={name}
+            title={value.name}
         />
     )
 }
