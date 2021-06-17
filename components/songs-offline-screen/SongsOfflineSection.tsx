@@ -8,7 +8,7 @@ import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { SectionListRenderItemInfo, } from 'react-native';
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItem from '@common/components/SoundItem';
+import SoundItem from '@components/shared/SoundItem';
 import { SoundPlayerContext } from '@context-api/index';
 import { useFavorite } from '@hooks/index';
 

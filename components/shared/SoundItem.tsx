@@ -3,8 +3,8 @@ import { ListItem } from 'react-native-elements';
 import React from 'react';
 import SettingsMenu from '@components/shared/SettingsMenu';
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItemCover from './SoundItemCover';
-import SoundItemInfo from './SoundItemInfo';
+import SoundItemCover from '@components/shared/SoundItemCover';
+import SoundItemInfo from '@components/shared/SoundItemInfo';
 import { TouchableOpacity } from 'react-native';
 import { navigate } from '@navigators/config/root';
 

@@ -1,7 +1,7 @@
 import { ListSongsDetailType } from 'types/index';
 import React from 'react';
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItem from '@common/components/SoundItem';
+import SoundItem from '@components/shared/SoundItem';
 import { SoundPlayerContext } from '@context-api/index';
 import { useGetListMenuSelections } from '@hooks/list-songs-detail-screen-hooks';
 

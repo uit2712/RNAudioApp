@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItem from '@common/components/SoundItem';
+import SoundItem from '@components/shared/SoundItem';
 import { SoundPlayerContext, } from '@context-api/index';
 import { VirtualizedList, } from 'react-native';
 import { navigateToAddToPlaylistScreen } from '@functions/index';

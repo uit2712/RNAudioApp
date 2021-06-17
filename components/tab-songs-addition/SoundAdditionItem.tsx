@@ -4,8 +4,8 @@ import { CheckBox, ListItem } from 'react-native-elements';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItemCover from '@common/components/SoundItemCover';
-import SoundItemInfo from '@common/components/SoundItemInfo';
+import SoundItemCover from '@components/shared/SoundItemCover';
+import SoundItemInfo from '@components/shared/SoundItemInfo';
 import { TouchableOpacity, } from 'react-native';
 
 class SoundAdditionItem extends React.PureComponent<{
