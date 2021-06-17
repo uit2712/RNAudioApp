@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { SongsOfflineSectionItemType, SongsOfflineSectionType } from 'types/songs-offline-screen-types';
 
-import { AlbumItem } from './AlbumsScreen';
+import AlbumItem from '@components/albums-screen/AlbumItem';
 import { ArtistItem } from './ArtistsScreen';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
