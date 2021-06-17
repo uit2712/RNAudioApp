@@ -8,7 +8,7 @@ import {
 import { SongsOfflineSectionItemType, SongsOfflineSectionType } from 'types/songs-offline-screen-types';
 
 import AlbumItem from '@components/albums-screen/AlbumItem';
-import { ArtistItem } from './ArtistsScreen';
+import ArtistItem from '@components/artists-screen/ArtistItem';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { SoundFileType } from 'types/songs-screen-types';
