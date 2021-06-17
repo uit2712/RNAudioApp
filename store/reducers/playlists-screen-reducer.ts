@@ -127,5 +127,19 @@ export function PlaylistsScreenReducer(state = initializeState, action: Playlist
                 ...state,
                 playlists: state.playlists.filter(item => item.id !== action.payload),
             }
+        case 'UPDATE_PLAYLIST_NAME':
+            return {
+                ...state,
+                playlists: state.playlists.map(item => {
+                    if (item.id === action.payload.playlistId) {
+                        return {
+                            ...item,
+                            name: action.payload.name,
+                        }
+                    }
+
+                    return item;
+                }),
+            }
     }
 }

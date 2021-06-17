@@ -164,11 +164,11 @@ export interface IShowUpdatingModal {
     onConfirm: (param: any, onFinished: () => void) => void;
     cancelLabel: string;
     confirmLabel: string;
+    input?: string;
 }
 
 export interface IUpdatingModal extends IShowUpdatingModal {
     isVisible: boolean;
-    input: string;
 }
 
 export interface IUpdatingModalRef {

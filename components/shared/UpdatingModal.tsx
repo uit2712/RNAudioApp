@@ -33,7 +33,7 @@ class UpdatingModal extends React.Component<{}, IUpdatingModal> {
         modalManager.unregister(this);
     }
 
-    showModal({ inputLabel, onConfirm, title, cancelLabel, confirmLabel, }: IShowUpdatingModal) {
+    showModal({ inputLabel, onConfirm, title, cancelLabel, confirmLabel, input }: IShowUpdatingModal) {
         this.setState({
             inputLabel,
             isVisible: true,
@@ -41,6 +41,7 @@ class UpdatingModal extends React.Component<{}, IUpdatingModal> {
             title,
             cancelLabel,
             confirmLabel,
+            input: input ?? '',
         });
     }
 
@@ -60,7 +61,7 @@ class UpdatingModal extends React.Component<{}, IUpdatingModal> {
     isVisible = () => this.state.isVisible;
 
     render() {
-        const { isVisible, input, inputLabel, onConfirm, title, cancelLabel, confirmLabel } = this.state;
+        const { isVisible, input, inputLabel, onConfirm, title, cancelLabel, confirmLabel, } = this.state;
         const toggleOverlay = () => this.setState({ isVisible: !isVisible });
 
         return (
@@ -101,7 +102,7 @@ class UpdatingModal extends React.Component<{}, IUpdatingModal> {
                         confirmLabel={confirmLabel}
                         onCancel={this.onFinished}
                         onConfirm={() => onConfirm(input, this.onFinished)}
-                        isDisabledConfirmButton={input.trim() === ''}
+                        isDisabledConfirmButton={input?.trim() === ''}
                     />
                 </View>
             </Overlay>

@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {
     IDrawerHomeContext,
-    IOverlayModalContext,
     IPlayer,
     ISortByBottomSheetContextWithType,
 } from '@interfaces/index';

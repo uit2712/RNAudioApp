@@ -1,10 +1,11 @@
 import { IPlaylist, IRemovePlaylistContext } from '@interfaces/playlists-screen-interfaces';
-import { addAudioToPlaylistAction, setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
+import { addAudioToPlaylistAction, setPlaylistVisibilityAction, updatePlaylistAction } from '@store/actions/playlists-screen-actions';
 
 import { IMenuSelection } from '@interfaces/index';
 import React from 'react';
 import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
 import { SoundPlayerContext, } from '@context-api/index';
+import { showUpdatingModal } from '@functions/index';
 import { useDispatch } from 'react-redux';
 import { useOverlayModal } from '.';
 
@@ -97,6 +98,7 @@ function useGetFavoriteListMenuSelections() {
 }
 
 function useGetCustomPlaylistListMenuSelections(playlist: IPlaylist) {
+    const dispatch = useDispatch();
     const { setPlaylist, toggleOverlay } = React.useContext(RemovePlaylistContext);
     const lastPlayedListMenuSelections: IMenuSelection[] = [
         { text: 'Phát', },
@@ -105,7 +107,26 @@ function useGetCustomPlaylistListMenuSelections(playlist: IPlaylist) {
         { text: 'Thêm vào hàng đợi' },
         { text: 'Chia sẻ' },
         { text: 'Thêm bài hát' },
-        { text: 'Sửa danh sách phát' },
+        {
+            text: 'Sửa danh sách phát',
+            onSelect: () => {
+                const onConfirm = (name: string, onFinished: () => void) => {
+                    dispatch(updatePlaylistAction({
+                        playlistId: playlist.id,
+                        name,
+                    }));
+                    onFinished();
+                };
+                showUpdatingModal({
+                    inputLabel: 'Tên',
+                    title: 'Sửa danh sách phát',
+                    onConfirm,
+                    cancelLabel: 'Hủy',
+                    confirmLabel: 'Xong',
+                    input: playlist.name,
+                });
+            }
+        },
         {
             text: 'Xóa danh sách phát',
             onSelect: () => {
