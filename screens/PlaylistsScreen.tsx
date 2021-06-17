@@ -2,16 +2,16 @@ import * as React from 'react';
 
 import { FAB, ListItem } from 'react-native-elements';
 import { FlatList, TouchableOpacity, View } from 'react-native';
-import { useAddLastPlayedAudioToPlaylists, useGetListMenuSelections } from '@hooks/playlists-screen-hooks';
+import { useAddLastPlayedAudioToPlaylists, useGetListMenuSelections, useRemovePlaylistContext } from '@hooks/playlists-screen-hooks';
 
-import CreationModal from '@common/components/CreationModal';
 import { CreationModalContext } from '@context-api/index';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
+import RemovePlaylistWarningModal from '@components/playlists-screen/RemovePlaylistWarningModal';
 import SettingsMenu from '@common/components/SettingsMenu';
-import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetVisiblePlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
@@ -19,10 +19,11 @@ import { useNavigation } from '@react-navigation/core';
 
 function PlaylistsScreen() {
     const playlists = useGetVisiblePlaylistsSelector();
+    const removePlaylistContext = useRemovePlaylistContext();
     useAddLastPlayedAudioToPlaylists();
 
     return (
-        <>
+        <RemovePlaylistContext.Provider value={removePlaylistContext}>
             <FlatList
                 data={playlists}
                 style={{
@@ -37,7 +38,8 @@ function PlaylistsScreen() {
                 keyExtractor={item=> item.id}
             />
             <PlaylistCreation/>
-        </>
+            <RemovePlaylistWarningModal/>
+        </RemovePlaylistContext.Provider>
     )
 }
 
@@ -68,7 +70,7 @@ function PlaylistCreation() {
                     />
                 )
             }
-            <CreationModal
+            {/* <CreationModal
                 isVisible={isVisible}
                 inputLabel='Tên'
                 title='Tạo danh sách mới'
@@ -80,7 +82,7 @@ function PlaylistCreation() {
                     }));
                     onFinished();
                 }}
-            />
+            /> */}
         </View>
     )
 }

@@ -7,7 +7,7 @@ import HomeHeader from '@common/components/HomeHeader';
 import PlaylistsScreen from '@screens/PlaylistsScreen';
 import ShowHiddenPlaylistModal from '@components/playlists-screen/ShowHiddenPlaylistModal';
 import { TabPlaylistsParams } from '@navigators/config/root/home/tab-playlists';
-import { setPlaylistVisibility } from '@store/actions/playlists-screen-actions';
+import { setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useOverlayModal } from '@hooks/index';
 
@@ -55,7 +55,7 @@ function TabPlaylistsHeader() {
                 toggleOverlay={toggleOverlay}
                 isVisible={isVisible}
                 onConfirm={(listPlaylistIds, onFinished) => {
-                    dispatch(setPlaylistVisibility({
+                    dispatch(setPlaylistVisibilityAction({
                         isHidden: false,
                         listPlaylistIds: listPlaylistIds
                     }));

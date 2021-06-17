@@ -37,6 +37,9 @@ export type PlaylistsScreenActions = {
 } | {
     type: 'SET_PLAYLIST_VISIBILITY';
     payload: SetPlaylistVisibilityPayload;
+} | {
+    type: 'REMOVE_PLAYLIST';
+    payload: string;
 }
 
 export const addAudioToPlaylistAction = (request: AddAudioToPlaylistPayload): PlaylistsScreenActions => ({
@@ -59,7 +62,12 @@ export const addListAudioToPlaylistAction = (request: AddListAudioToPlaylistPayl
     payload: request,
 });
 
-export const setPlaylistVisibility = (request: SetPlaylistVisibilityPayload): PlaylistsScreenActions => ({
+export const setPlaylistVisibilityAction = (request: SetPlaylistVisibilityPayload): PlaylistsScreenActions => ({
     type: 'SET_PLAYLIST_VISIBILITY',
+    payload: request,
+});
+
+export const removePlaylistAction = (request: string): PlaylistsScreenActions => ({
+    type: 'REMOVE_PLAYLIST',
     payload: request,
 });

@@ -1,4 +1,7 @@
+import React, { FunctionComponent } from 'react';
+
 import { AudioStatusType, } from 'types/index';
+import { ComponentProvider } from 'react-native';
 import { SoundFileType } from 'types/songs-screen-types';
 import { Source } from 'react-native-fast-image';
 

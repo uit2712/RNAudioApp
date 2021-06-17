@@ -1,10 +1,14 @@
-import { addAudioToPlaylistAction, setPlaylistVisibility } from '@store/actions/playlists-screen-actions';
+import { CreationModalContext, SoundPlayerContext } from '@context-api/index';
+import { IPlaylist, IRemovePlaylistContext } from '@interfaces/playlists-screen-interfaces';
+import { addAudioToPlaylistAction, removePlaylistAction, setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
 
 import { IMenuSelection } from '@interfaces/index';
-import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import React from 'react';
-import { SoundPlayerContext } from '@context-api/index';
+import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
+import RemovePlaylistWarningModal from '@components/playlists-screen/RemovePlaylistWarningModal';
+import { Text } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
+import { useOverlayModal } from '.';
 
 export function useAddLastPlayedAudioToPlaylists() {
     const dispatch = useDispatch();
@@ -27,7 +31,7 @@ export function useGetListMenuSelections({
     const lastPlayedListMenuSelections = useGetLastPlayedListMenuSelections(playlist);
     const mostPlayedListMenuSelections = useGetMostPlayedListMenuSelections(playlist);
     const favoriteListMenuSelections = useGetFavoriteListMenuSelections();
-    const customPlaylistListMenuSelections = useGetCustomPlaylistListMenuSelections();
+    const customPlaylistListMenuSelections = useGetCustomPlaylistListMenuSelections(playlist);
 
     switch(playlist.type) {
         default: return [];
@@ -48,7 +52,7 @@ function useGetLastPlayedListMenuSelections(playlist: IPlaylist) {
         {
             text: 'Ẩn danh sách phát',
             onSelect: () => {
-                dispatch(setPlaylistVisibility({
+                dispatch(setPlaylistVisibilityAction({
                     isHidden: true,
                     listPlaylistIds: [playlist.id],
                 }))
@@ -70,7 +74,7 @@ function useGetMostPlayedListMenuSelections(playlist: IPlaylist) {
         {
             text: 'Ẩn danh sách phát',
             onSelect: () => {
-                dispatch(setPlaylistVisibility({
+                dispatch(setPlaylistVisibilityAction({
                     isHidden: true,
                     listPlaylistIds: [playlist.id],
                 }))
@@ -94,7 +98,8 @@ function useGetFavoriteListMenuSelections() {
     return favoriteListMenuSelections;
 }
 
-function useGetCustomPlaylistListMenuSelections() {
+function useGetCustomPlaylistListMenuSelections(playlist: IPlaylist) {
+    const { setPlaylist, toggleOverlay } = React.useContext(RemovePlaylistContext);
     const lastPlayedListMenuSelections: IMenuSelection[] = [
         { text: 'Phát', },
         { text: 'Phát tiếp theo', },
@@ -103,8 +108,26 @@ function useGetCustomPlaylistListMenuSelections() {
         { text: 'Chia sẻ' },
         { text: 'Thêm bài hát' },
         { text: 'Sửa danh sách phát' },
-        { text: 'Xóa danh sách phát' },
+        {
+            text: 'Xóa danh sách phát',
+            onSelect: () => {
+                setPlaylist(playlist);
+                toggleOverlay();
+            },
+        },
     ];
 
     return lastPlayedListMenuSelections;
+}
+
+export function useRemovePlaylistContext(): IRemovePlaylistContext {
+    const { isVisible, toggleOverlay } = useOverlayModal();
+    const [playlist, setPlaylist] = React.useState<IPlaylist>();
+
+    return {
+        isVisible,
+        toggleOverlay,
+        playlist,
+        setPlaylist,
+    }
 }

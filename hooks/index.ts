@@ -32,7 +32,6 @@ import MusicControl from 'react-native-music-control';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
-import { SoundPlayerContext } from '@context-api/index';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';

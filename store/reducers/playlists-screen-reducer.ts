@@ -122,5 +122,10 @@ export function PlaylistsScreenReducer(state = initializeState, action: Playlist
                     return item;
                 }),
             }
+        case 'REMOVE_PLAYLIST':
+            return {
+                ...state,
+                playlists: state.playlists.filter(item => item.id !== action.payload),
+            }
     }
 }
