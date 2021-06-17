@@ -4,6 +4,7 @@ import { ListSongsDetailType } from 'types/index';
 import React from 'react';
 import { SoundFileType } from 'types/songs-screen-types';
 import { SoundPlayerContext } from '@context-api/index';
+import { navigateToAddToPlaylistScreen } from '@functions/index';
 import { useFavorite } from '.';
 import { useGetPlaylistByTypeSelector } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/native';
@@ -130,7 +131,7 @@ function useGetOtherListMenuSelections({
     const otherListMenuSelections: IMenuSelection[] = [
         { text: 'Phát tiếp theo', onSelect: () => player.setListSoundsAndPlay(songs, index) },
         { text: 'Thêm vào hàng đợi' },
-        { text: 'Thêm vào danh sách phát' },
+        { text: 'Thêm vào danh sách phát', onSelect: () => navigateToAddToPlaylistScreen(item), },
         { text: isFavorite ? 'Xóa khỏi mục yêu thích' : 'Thêm vào Mục ưa thích', onSelect: onFavoritePress },
         { text: 'Biết lời bài hát' },
         { text: 'Chia sẻ' },

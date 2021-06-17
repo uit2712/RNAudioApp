@@ -9,4 +9,5 @@ export interface IPlaylist {
     cover: Source | number;
     shadowColor: string;
     listSongs: SoundFileType[];
+    isHidden?: boolean;
 }

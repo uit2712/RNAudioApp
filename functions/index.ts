@@ -1,6 +1,7 @@
 import { ITrackInfo } from "@interfaces/songs-screen-interfaces";
 import { SoundFileType } from "types/songs-screen-types";
 import { avatarHelper } from "@helpers/songs-screen-helpers";
+import { navigate } from "@navigators/config/root";
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 export function shuffleArray<T>(array: T[]) {
@@ -100,4 +101,16 @@ export function mapTrackInfoToSoundFileType(tracks: ITrackInfo[]): SoundFileType
         other: item.author ?? item.artist ?? item.album ?? item.albumArtist ?? '<unknown>',
         bluredImage: item.blur,
     }));
+}
+
+export function navigateToAddToPlaylistScreen(item: SoundFileType) {
+    navigate('Home', {
+        screen: 'TabOthers',
+        params: {
+            screen: 'AddSongToPlaylist',
+            params: {
+                sound: item,
+            }
+        }
+    })
 }

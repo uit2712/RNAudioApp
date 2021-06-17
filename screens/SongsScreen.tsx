@@ -4,7 +4,7 @@ import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@common/components/SoundItem';
 import { SoundPlayerContext, } from '@context-api/index';
 import { VirtualizedList, } from 'react-native';
-import { navigate } from '@navigators/config/root';
+import { navigateToAddToPlaylistScreen } from '@functions/index';
 import { useFavorite } from '@hooks/index';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
 
@@ -51,17 +51,7 @@ function SoundsScreenCustomSoundItem({
                 { text: 'Thêm vào hàng đợi' },
                 {
                     text: 'Thêm vào danh sách phát',
-                    onSelect: () => {
-                        navigate('Home', {
-                            screen: 'TabOthers',
-                            params: {
-                                screen: 'AddSongToPlaylist',
-                                params: {
-                                    sound: item,
-                                }
-                            }
-                        })
-                    },
+                    onSelect: () => navigateToAddToPlaylistScreen(item),
                 },
                 { text: isFavorite ? 'Xóa khỏi Mục ưa thích' : 'Thêm vào Mục ưa thích', onSelect: onFavoritePress },
                 { text: 'Đặt làm nhạc chuông' },
