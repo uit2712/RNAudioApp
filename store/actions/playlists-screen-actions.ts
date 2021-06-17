@@ -18,6 +18,10 @@ type AddListAudioToPlaylistPayload = {
     playlistId: string;
     listAudio: SoundFileType[];
 }
+type SetPlaylistVisibilityPayload = {
+    playlistId: string;
+    isHidden: boolean;
+}
 export type PlaylistsScreenActions = {
     type: 'ADD_AUDIO_TO_PLAYLIST';
     payload: AddAudioToPlaylistPayload
@@ -30,6 +34,9 @@ export type PlaylistsScreenActions = {
 } | {
     type: 'ADD_LIST_AUDIO_TO_PLAYLIST';
     payload: AddListAudioToPlaylistPayload;
+} | {
+    type: 'SET_PLAYLIST_VISIBILITY';
+    payload: SetPlaylistVisibilityPayload;
 }
 
 export const addAudioToPlaylistAction = (request: AddAudioToPlaylistPayload): PlaylistsScreenActions => ({
@@ -49,5 +56,10 @@ export const addNewPlaylistAction = (request: AddNewPlaylistPayload): PlaylistsS
 
 export const addListAudioToPlaylistAction = (request: AddListAudioToPlaylistPayload): PlaylistsScreenActions => ({
     type: 'ADD_LIST_AUDIO_TO_PLAYLIST',
+    payload: request,
+});
+
+export const setPlaylistVisibility = (request: SetPlaylistVisibilityPayload): PlaylistsScreenActions => ({
+    type: 'SET_PLAYLIST_VISIBILITY',
     payload: request,
 });

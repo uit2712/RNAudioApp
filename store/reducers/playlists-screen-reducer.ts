@@ -108,5 +108,19 @@ export function PlaylistsScreenReducer(state = initializeState, action: Playlist
                     return item;
                 }),
             }
+        case 'SET_PLAYLIST_VISIBILITY':
+            return {
+                ...state,
+                playlists: state.playlists.map(item => {
+                    if (item.id === action.payload.playlistId) {
+                        return {
+                            ...item,
+                            isHidden: action.payload.isHidden,
+                        }
+                    }
+
+                    return item;
+                }),
+            }
     }
 }

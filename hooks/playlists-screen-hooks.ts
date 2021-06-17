@@ -1,8 +1,9 @@
+import { addAudioToPlaylistAction, setPlaylistVisibility } from '@store/actions/playlists-screen-actions';
+
 import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import React from 'react';
 import { SoundPlayerContext } from '@context-api/index';
-import { addAudioToPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 
 export function useAddLastPlayedAudioToPlaylists() {
@@ -23,8 +24,8 @@ export function useGetListMenuSelections({
 }: {
     playlist: IPlaylist,
 }) {
-    const lastPlayedListMenuSelections = useGetLastPlayedListMenuSelections();
-    const mostPlayedListMenuSelections = useGetMostPlayedListMenuSelections();
+    const lastPlayedListMenuSelections = useGetLastPlayedListMenuSelections(playlist);
+    const mostPlayedListMenuSelections = useGetMostPlayedListMenuSelections(playlist);
     const favoriteListMenuSelections = useGetFavoriteListMenuSelections();
     const customPlaylistListMenuSelections = useGetCustomPlaylistListMenuSelections();
 
@@ -37,26 +38,44 @@ export function useGetListMenuSelections({
     }
 }
 
-function useGetLastPlayedListMenuSelections() {
+function useGetLastPlayedListMenuSelections(playlist: IPlaylist) {
+    const dispatch = useDispatch();
     const lastPlayedListMenuSelections: IMenuSelection[] = [
         { text: 'Phát', },
         { text: 'Phát tiếp theo', },
         { text: 'Thêm vào hàng đợi' },
         { text: 'Trộn' },
-        { text: 'Ẩn danh sách phát' },
+        {
+            text: 'Ẩn danh sách phát',
+            onSelect: () => {
+                dispatch(setPlaylistVisibility({
+                    isHidden: true,
+                    playlistId: playlist.id,
+                }))
+            }
+        },
         { text: 'Chia sẻ' },
     ];
 
     return lastPlayedListMenuSelections;
 }
 
-function useGetMostPlayedListMenuSelections() {
+function useGetMostPlayedListMenuSelections(playlist: IPlaylist) {
+    const dispatch = useDispatch();
     const mostPlayedListMenuSelections: IMenuSelection[] = [
         { text: 'Phát', },
         { text: 'Phát tiếp theo', },
         { text: 'Thêm vào hàng đợi' },
         { text: 'Trộn' },
-        { text: 'Ẩn danh sách phát' },
+        {
+            text: 'Ẩn danh sách phát',
+            onSelect: () => {
+                dispatch(setPlaylistVisibility({
+                    isHidden: true,
+                    playlistId: playlist.id,
+                }))
+            }
+        },
         { text: 'Chia sẻ' },
     ];
 
