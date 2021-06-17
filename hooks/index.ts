@@ -98,7 +98,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
         })
     }
 
-    function playComplete(isEnd: boolean) {
+    const playComplete = React.useCallback((isEnd: boolean) => {
         if (isEnd === true) {
             if (isLoop === false) {
                 _next();
@@ -106,7 +106,7 @@ export function useAudioHelper(request: IRequestAudioHelper = {
                 repeat();
             }
         }
-    }
+    }, [isLoop]);
 
     function repeat() {
         setCurrentTime(0);
