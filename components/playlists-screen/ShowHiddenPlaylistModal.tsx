@@ -25,9 +25,11 @@ function ShowHiddenPlaylistModal({
 }) {
     const playlists = useGetHiddenPlaylistsSelector();
     const listChecked = useListChecked(playlists);
-    const showHiddenPlaylists = () => onConfirm(listChecked.listSelectedItems.map(item => item.id), () => {
+    const showHiddenPlaylists = () => onConfirm(listChecked.listSelectedItems.map(item => item.id), onFinished);
+    const onFinished = () => {
         toggleOverlay();
-    });
+        listChecked.reset();
+    }
 
     return (
         <Overlay
@@ -42,14 +44,13 @@ function ShowHiddenPlaylistModal({
                     <Text style={styles.modalTitleText}>{title}</Text>
                 </View>
                 <ListHiddenPlaylists
-                    isVisible={isVisible}
                     playlists={playlists}
                     {...listChecked}
                 />
                 <ButtonsModal
                     cancelLabel='Hủy'
                     confirmLabel='Hiển thị'
-                    onCancel={toggleOverlay}
+                    onCancel={onFinished}
                     onConfirm={showHiddenPlaylists}
                     isDisabledConfirmButton={listChecked.listSelectedItems.length === 0}
                 />
@@ -60,21 +61,12 @@ function ShowHiddenPlaylistModal({
 
 interface IListHiddenPlaylistsProps extends IUseListChecked<IPlaylist> {
     playlists: IPlaylist[];
-    isVisible: boolean;
 }
 function ListHiddenPlaylists({
-    isVisible,
     checked,
     onCheck,
     playlists,
-    reset,
 }: IListHiddenPlaylistsProps) {
-    React.useEffect(() => {
-        if (isVisible) {
-            reset();
-        }
-    }, [isVisible])
-
     return (
         <VirtualizedList
             data={playlists}

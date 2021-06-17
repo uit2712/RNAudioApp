@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import { Button, Input, Overlay } from 'react-native-elements';
+import { Input, Overlay } from 'react-native-elements';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import ButtonsModal from './ButtonsModal';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 
 function CreationModal({
@@ -24,10 +23,12 @@ function CreationModal({
     const [input, setInput] = React.useState('');
 
     function addNewPlaylist() {
-        onConfirm(input, () => {
-            toggleOverlay();
-            setInput('');
-        });
+        onConfirm(input, onFinished);
+    }
+
+    const onFinished = () => {
+        toggleOverlay();
+        setInput('');
     }
 
     return (
@@ -63,47 +64,13 @@ function CreationModal({
                         onChangeText={setInput}
                     />
                 </View>
-                <View style={styles.modalActions}>
-                    <View style={styles.modalActionsContainer}>
-                        <Button
-                            type='outline'
-                            icon={
-                                <AntDesign
-                                    name='close'
-                                    size={15}
-                                    style={{ marginRight: 10, }}
-                                    color='rgb(66, 76, 177)'
-                                />
-                            }
-                            title='Hủy'
-                            titleStyle={{
-                                color: 'rgb(66, 76, 177)',
-                            }}
-                            buttonStyle={{
-                                borderColor: 'black',
-                            }}
-                            onPress={toggleOverlay}
-                        />
-                    </View>
-                    <View style={styles.modalActionsContainer}>
-                        <Button
-                            icon={
-                                <Feather
-                                    name='check'
-                                    size={15}
-                                    style={{ marginRight: 10, }}
-                                    color='white'
-                                />
-                            }
-                            title='Thêm mới'
-                            buttonStyle={{
-                                backgroundColor: 'rgb(66, 76, 177)',
-                            }}
-                            disabled={input.trim() === ''}
-                            onPress={addNewPlaylist}
-                        />
-                    </View>
-                </View>
+                <ButtonsModal
+                    cancelLabel='Hủy'
+                    confirmLabel='Thêm mới'
+                    onCancel={onFinished}
+                    onConfirm={addNewPlaylist}
+                    isDisabledConfirmButton={input.trim() === ''}
+                />
             </View>
         </Overlay>
     )
@@ -141,15 +108,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingRight: 20,
         alignItems: 'center',
-    },
-    modalActions: {
-        flexDirection: 'row',
-        marginBottom: 10,
-    },
-    modalActionsContainer: {
-        flex: 0.5,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
     },
 });
 
