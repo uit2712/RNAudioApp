@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 import { CreationModalContext, DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
-import { addAudioToPlaylistAction, removeAudioFromPlaylistAction } from '@store/actions/playlists-screen-actions';
 
 import AddSongToPlaylistScreen from '@screens/AddSongToPlaylistScreen';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import CustomMenu from '@common/components/CustomMenu';
+import CustomMenu from '@components/shared/CustomMenu';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Favorite from '@common/components/Favorite';
 import { IMenuSelection } from '@interfaces/index';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import CustomMenu from './CustomMenu';
+import CustomMenu from '@components/shared/CustomMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IMenuSelection } from '@interfaces/index';
 import { MenuOption } from 'react-native-popup-menu';

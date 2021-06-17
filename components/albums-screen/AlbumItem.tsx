@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import CustomMenu from '@common/components/CustomMenu';
+import CustomMenu from '@components/shared/CustomMenu';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
