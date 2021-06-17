@@ -7,19 +7,14 @@ import Common from '@components/sound-player-screen/Common';
 import FastImage from 'react-native-fast-image';
 import OtherActions from '@components/sound-player-screen/OtherActions';
 import Progress from '@components/sound-player-screen/Progress';
-import { useHomeBottomTabHelper } from '@hooks/index';
+import { useCustomBackButton, } from '@hooks/index';
 
 function SoundPlayerScreen() {
     const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
-    useHomeBottomTabHelper({
-        onBack: () => {
-            setIsShowTabBar(true);
-            setIsShowMiniPlayer(true);
-        },
-        onFocus: () => {
-            setIsShowTabBar(false);
-            setIsShowMiniPlayer(false);
-        }
+
+    useCustomBackButton(() => {
+        setIsShowTabBar(true);
+        setIsShowMiniPlayer(true);
     });
 
     const player = React.useContext(SoundPlayerContext);

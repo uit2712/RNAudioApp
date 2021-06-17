@@ -257,6 +257,7 @@ function MiniPlayer() {
     function goToSoundPlayerDetail() {
         setIsShowTabBar(false);
         setIsShowMiniPlayer(false);
+        
         navigate('Home', {
             screen: 'TabOthers',
             params: {

@@ -1,9 +1,11 @@
 import * as React from 'react';
 
+import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
+
 import { SoundFileType } from 'types/songs-screen-types';
 import SoundItem from '@components/shared/SoundItem';
-import { SoundPlayerContext, } from '@context-api/index';
 import { VirtualizedList, } from 'react-native';
+import { navigate } from '@navigators/config';
 import { navigateToAddToPlaylistScreen } from '@functions/index';
 import { useFavorite } from '@hooks/index';
 import { useGetAllSongsSelector } from '@store/selectors/songs-screen-selectors';
@@ -41,6 +43,8 @@ function SoundsScreenCustomSoundItem({
 }) {
     const player = React.useContext(SoundPlayerContext);
     const { isFavorite, onFavoritePress } = useFavorite(item);
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
+    
     return (
         <SoundItem
             key={item.id}
@@ -54,6 +58,20 @@ function SoundsScreenCustomSoundItem({
                     onSelect: () => navigateToAddToPlaylistScreen(item),
                 },
                 { text: isFavorite ? 'Xóa khỏi Mục ưa thích' : 'Thêm vào Mục ưa thích', onSelect: onFavoritePress },
+                { text: 'Chia sẻ' },
+                {
+                    text: 'Chỉnh sửa',
+                    onSelect: () => {
+                        setIsShowTabBar(false);
+                        setIsShowMiniPlayer(false);
+                        navigate('Home', {
+                            screen: 'TabSongs',
+                            params: {
+                                screen: 'UpdatingSong',
+                            }
+                        });
+                    }
+                },
                 { text: 'Đặt làm nhạc chuông' },
                 { text: 'Xóa' },
             ]}

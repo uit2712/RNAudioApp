@@ -14,6 +14,7 @@ import { SortByBottomSheetContext } from '@context-api/index';
 import { SortOrderType } from 'types/index';
 import { SortSongByPropertyType } from 'types/songs-screen-types';
 import { TabSongsParams } from '@navigators/config/drawer-home/tab-songs';
+import UpdatingSongScreen from '@screens/UpdatingSongScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 import { useSortByBottomSheetSettings } from '@hooks/index';
@@ -43,6 +44,10 @@ function TabSongsNavigators() {
                 <TabSongs.Screen
                     name='Songs'
                     component={SongsScreen}
+                />
+                <TabSongs.Screen
+                    name='UpdatingSong'
+                    component={UpdatingSongScreen}
                 />
             </TabSongs.Navigator>
         </SortByBottomSheetContext.Provider>

@@ -242,17 +242,6 @@ export function useDrawHomeSettings(): IDrawerHomeContext {
     }
 }
 
-export function useHomeBottomTabHelper({
-    onFocus,
-    onBack,
-}: {
-    onFocus?: () => void,
-    onBack?: () => void,
-}) {
-    useFocusScreen(onFocus);
-    useCustomBackButton(onBack);
-}
-
 /**
  * Get all data includes: songs, artists, albums, genres
  */

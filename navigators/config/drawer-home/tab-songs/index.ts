@@ -6,12 +6,12 @@ import { IScreenParams } from '@navigators/route-params';
 export interface ISongsScreenParams extends IScreenParams {
 }
 
-export interface ISongDetailScreenParams extends IScreenParams {
+export interface IUpdatingSongScreenParams extends IScreenParams {
 }
 
 export type TabSongsParams = {
-    Songs: ISongsScreenParams;
-    SongDetail: ISongDetailScreenParams;
+    Songs?: ISongsScreenParams;
+    UpdatingSong?: IUpdatingSongScreenParams;
 }
 
 export type TabSongsNavigationProp = BottomTabNavigationProp<TabSongsParams>;

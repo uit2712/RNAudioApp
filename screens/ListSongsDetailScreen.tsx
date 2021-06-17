@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { RefreshControl, VirtualizedList } from 'react-native';
-import { useHomeBottomTabHelper, useRefresh } from '@hooks/index';
+import { useCustomBackButton, useFocusScreen, useRefresh } from '@hooks/index';
 
 import CustomListButtonAdd from '@components/list-songs-detail-screen/CustomListButtonAdd';
 import { DrawerHomeContext, } from '@context-api/index';
@@ -35,10 +35,8 @@ function ListSongsDetailScreen() {
     });
 
     const { setIsShowTabBar, } = React.useContext(DrawerHomeContext);
-    useHomeBottomTabHelper({
-        onBack: () => setIsShowTabBar(true),
-        onFocus: () => setIsShowTabBar(false)
-    });
+    useFocusScreen(() => setIsShowTabBar(false))
+    useCustomBackButton(() => setIsShowTabBar(true));
 
     const isAdded = useIsAddListSelectedSongsSuccessSelector();
     React.useEffect(() => {

@@ -1,3 +1,4 @@
+import { DrawerHomeContext } from '@context-api/index';
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import React from 'react';
@@ -20,7 +21,11 @@ function SoundItem({
     listMenuSelections,
     onPress,
 }: ISoundItemProps) {
+    const { setIsShowTabBar, setIsShowMiniPlayer } = React.useContext(DrawerHomeContext);
+
     function goToSoundPlayerDetail() {
+        setIsShowTabBar(false);
+        setIsShowMiniPlayer(false);
         onPress && onPress();
         navigate('Home', {
             screen: 'TabOthers',
