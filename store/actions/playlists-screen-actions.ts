@@ -19,7 +19,7 @@ type AddListAudioToPlaylistPayload = {
     listAudio: SoundFileType[];
 }
 type SetPlaylistVisibilityPayload = {
-    playlistId: string;
+    listPlaylistIds: string[];
     isHidden: boolean;
 }
 export type PlaylistsScreenActions = {

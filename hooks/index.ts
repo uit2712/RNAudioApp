@@ -5,6 +5,7 @@ import {
     IPlayer,
     IRequestAudioHelper,
     ISortByBottomSheetContextWithType,
+    IUseListChecked,
 } from '@interfaces/index';
 import { addAudioToPlaylistAction, removeAudioFromPlaylistAction } from '@store/actions/playlists-screen-actions';
 import {
@@ -380,7 +381,7 @@ export function useFavorite(audio: SoundFileType) {
     }
 }
 
-export function useListChecked<T>(array: Array<T>) {
+export function useListChecked<T>(array: Array<T>): IUseListChecked<T> {
     const [checked, setListChecked] = React.useState<boolean[]>(array.map(() => false));
     
     function onCheck(index: number) {
@@ -493,7 +494,7 @@ export function useMusicControl(player: IPlayer) {
     }
 }
 
-export function useCreationModal(): ICreationModalContext {
+export function useOverlayModal(): ICreationModalContext {
     const [isVisible, setIsVisible] = React.useState(false);
 
     return {

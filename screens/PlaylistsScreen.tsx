@@ -8,18 +8,17 @@ import CreationModal from '@common/components/CreationModal';
 import { CreationModalContext } from '@context-api/index';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import FastImage from 'react-native-fast-image';
-import { IMenuSelection } from '@interfaces/index';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SettingsMenu from '@common/components/SettingsMenu';
 import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
-import { useGetPlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
+import { useGetVisiblePlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/core';
 
 function PlaylistsScreen() {
-    const playlists = useGetPlaylistsSelector();
+    const playlists = useGetVisiblePlaylistsSelector();
     useAddLastPlayedAudioToPlaylists();
 
     return (

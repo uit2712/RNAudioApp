@@ -17,14 +17,14 @@ import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
 import { navigate } from '@navigators/config/root';
-import { useCreationModal } from '@hooks/index';
 import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
+import { useOverlayModal } from '@hooks/index';
 
 const TabOthers = createStackNavigator<TabOthersParams>();
 
 function TabOthersNavigator() {
     const theme = React.useContext(SoundPlayerDetailThemeContext);
-    const modal = useCreationModal();
+    const modal = useOverlayModal();
 
     return (
         <CreationModalContext.Provider value={modal}>

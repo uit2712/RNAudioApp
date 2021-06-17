@@ -3,8 +3,12 @@ import { IPlaylist, } from '@interfaces/playlists-screen-interfaces';
 import { PlaylistType } from 'types/playlists-screen-types';
 import { useSelector } from 'react-redux';
 
-export function useGetPlaylistsSelector() {
+export function useGetVisiblePlaylistsSelector() {
     return useSelector<IApplicationState, IPlaylist[]>(state => state.playlists.playlists.filter(item => !item.isHidden));
+}
+
+export function useGetHiddenPlaylistsSelector() {
+    return useSelector<IApplicationState, IPlaylist[]>(state => state.playlists.playlists.filter(item => item.isHidden));
 }
 
 export function useIsAudioFromFavoritePlaylistSelector(audioId: string) {

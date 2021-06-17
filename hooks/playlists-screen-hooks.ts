@@ -50,7 +50,7 @@ function useGetLastPlayedListMenuSelections(playlist: IPlaylist) {
             onSelect: () => {
                 dispatch(setPlaylistVisibility({
                     isHidden: true,
-                    playlistId: playlist.id,
+                    listPlaylistIds: [playlist.id],
                 }))
             }
         },
@@ -72,7 +72,7 @@ function useGetMostPlayedListMenuSelections(playlist: IPlaylist) {
             onSelect: () => {
                 dispatch(setPlaylistVisibility({
                     isHidden: true,
-                    playlistId: playlist.id,
+                    listPlaylistIds: [playlist.id],
                 }))
             }
         },

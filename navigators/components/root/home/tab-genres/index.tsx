@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { CreationModalContext, SortByBottomSheetContext } from '@context-api/index';
 import { setGenreByPropertyTypeAction, setGenreOrderTypeAction } from '@store/actions/genres-screen-actions';
-import { useCreationModal, useSortByBottomSheetSettings } from '@hooks/index';
 import { useGetGenreOrderTypeSelector, useGetGenreSortByPropertyTypeSelector } from '@store/selectors/genres-screen-selectors';
+import { useOverlayModal, useSortByBottomSheetSettings } from '@hooks/index';
 
 import GenresScreen from '@screens/GenresScreen';
 import HomeHeader from '@common/components/HomeHeader';
@@ -22,7 +22,7 @@ const TabGenres = createStackNavigator<TabGenresParams>()
 function TabGenresNavigator() {
     const listDataInBottomSheet = useGetListDataInBottomSheet();
     const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
-    const modal = useCreationModal();
+    const modal = useOverlayModal();
 
     return (
         <SortByBottomSheetContext.Provider value={settings}>

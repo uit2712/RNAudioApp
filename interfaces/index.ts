@@ -145,3 +145,12 @@ export interface ICreationModalContext {
     isVisible: boolean;
     toggleOverlay: () => void;
 }
+
+export interface IUseListChecked<T> {
+    checked: boolean[];
+    onCheck: (index: number) => void;
+    setListChecked: React.Dispatch<React.SetStateAction<boolean[]>>;
+    isCheckedAllFromListChecked: boolean;
+    listSelectedItems: T[];
+    reset: () => void;
+}
