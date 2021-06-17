@@ -10,7 +10,7 @@ import HomeHeader from '@components/shared/HomeHeader';
 import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SortByBottomSheet from '@common/components/SortByBottomSheet';
+import SortByBottomSheet from '@components/shared/SortByBottomSheet';
 import { SortGenreByPropertyType } from 'types/genres-screen-types';
 import { SortOrderType } from 'types/index';
 import { TabGenresParams } from '@navigators/config/root/home/tab-genres';
