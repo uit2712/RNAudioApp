@@ -6,7 +6,7 @@ import AddSongToPlaylistScreen from '@screens/AddSongToPlaylistScreen';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import CustomMenu from '@components/shared/CustomMenu';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import Favorite from '@common/components/Favorite';
+import Favorite from '@components/shared/Favorite';
 import { IMenuSelection } from '@interfaces/index';
 import { SoundPlayerDetailThemeContext } from '@navigators/themes';
 import SoundPlayerScreen from '@screens/SoundPlayerScreen';
