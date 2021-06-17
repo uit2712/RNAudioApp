@@ -3,7 +3,7 @@ import * as React from 'react';
 import { setSongOrderTypeAction, setSortSongByPropertyTypeAction } from '@store/actions/songs-screen-actions';
 import { useGetSongOrderType, useGetSongSortByPropertyType } from '@store/selectors/songs-screen-selectors';
 
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import { IBottomSheetSectionWithType, } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

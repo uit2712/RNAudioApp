@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { CreationModalContext } from '@context-api/index';
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import PlaylistsScreen from '@screens/PlaylistsScreen';
 import ShowHiddenPlaylistModal from '@components/playlists-screen/ShowHiddenPlaylistModal';
 import { TabPlaylistsParams } from '@navigators/config/root/home/tab-playlists';

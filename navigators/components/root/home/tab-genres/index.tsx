@@ -6,7 +6,7 @@ import { useGetGenreOrderTypeSelector, useGetGenreSortByPropertyTypeSelector } f
 import { useOverlayModal, useSortByBottomSheetSettings } from '@hooks/index';
 
 import GenresScreen from '@screens/GenresScreen';
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

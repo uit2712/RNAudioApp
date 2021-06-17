@@ -5,7 +5,7 @@ import { useGetArtistOrderType, useGetArtistSortByPropertyType } from '@store/se
 
 import ArtistsScreen from '@screens/ArtistsScreen';
 import Foundation from 'react-native-vector-icons/Foundation';
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

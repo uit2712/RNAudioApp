@@ -5,7 +5,7 @@ import { useGetAlbumOrderTypeSelector, useGetAlbumSortByPropertyTypeSelector } f
 
 import AlbumsScreen from '@screens/AlbumsScreen';
 import Foundation from 'react-native-vector-icons/Foundation';
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

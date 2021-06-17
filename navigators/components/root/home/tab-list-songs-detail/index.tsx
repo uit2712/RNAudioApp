@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { DrawerHomeContext } from '@context-api/index';
-import HomeHeader from '@common/components/HomeHeader';
+import HomeHeader from '@components/shared/HomeHeader';
 import ListSongsDetailScreen from '@screens/ListSongsDetailScreen';
 import { TabListSongsDetailParams } from '@navigators/config/root/home/tab-list-songs-detail';
 import { Text } from 'react-native';
