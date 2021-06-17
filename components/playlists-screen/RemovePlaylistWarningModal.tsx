@@ -27,9 +27,7 @@ function RemovePlaylistWarningModal() {
     return (
         <Overlay isVisible={isVisible}>
             <View style={styles.modal}>
-                <View
-                    style={styles.modalTitle}
-                >
+                <View style={styles.modalTitle}>
                     <Text style={styles.modalTitleText}>Xóa danh sách <Text style={{ fontWeight: 'bold' }}>{playlist.name}</Text></Text>
                 </View>
                 <View style={styles.modalInput}>

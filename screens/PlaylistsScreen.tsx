@@ -4,6 +4,7 @@ import { FAB, ListItem } from 'react-native-elements';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useAddLastPlayedAudioToPlaylists, useGetListMenuSelections, useRemovePlaylistContext } from '@hooks/playlists-screen-hooks';
 
+import CreationModal from '@common/components/CreationModal';
 import { CreationModalContext } from '@context-api/index';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
 import FastImage from 'react-native-fast-image';
@@ -12,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
 import RemovePlaylistWarningModal from '@components/playlists-screen/RemovePlaylistWarningModal';
 import SettingsMenu from '@common/components/SettingsMenu';
+import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetVisiblePlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
@@ -70,7 +72,7 @@ function PlaylistCreation() {
                     />
                 )
             }
-            {/* <CreationModal
+            <CreationModal
                 isVisible={isVisible}
                 inputLabel='Tên'
                 title='Tạo danh sách mới'
@@ -82,7 +84,7 @@ function PlaylistCreation() {
                     }));
                     onFinished();
                 }}
-            /> */}
+            />
         </View>
     )
 }
