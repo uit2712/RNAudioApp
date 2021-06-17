@@ -5,7 +5,7 @@ import { useFocusScreen, useListChecked } from '@hooks/index';
 import AddSongToPlaylistButton from '@components/add-song-to-playlist-screen/AddSongToPlaylistButton';
 import AddSongToPlaylistCreationModal from '@components/add-song-to-playlist-screen/AddSongToPlaylistCreationModal';
 import AddSongToPlaylistItem from '@components/add-song-to-playlist-screen/AddSongToPlaylistItem';
-import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/root/home/tab-others';
+import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/drawer-home/tab-others';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { VirtualizedList } from 'react-native';
 import { useGetPlaylistsNotContainAudioSelector, } from '@store/selectors/playlists-screen-selectors';

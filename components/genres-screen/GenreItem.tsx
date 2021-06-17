@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { IGenre } from '@interfaces/genres-screen-interfaces';
 import React from 'react';
-import { RootNavigationProp } from '@navigators/config/root';
+import { RootNavigationProp } from '@navigators/config';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { getListSongsByGenre } from '@functions/genres-screen-functions';
 import { useDisabledButton } from '@hooks/index';

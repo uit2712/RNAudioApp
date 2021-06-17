@@ -12,10 +12,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs/lib/typescript/src/types';
 import MostPlayedSongsInPlaylistsScreen from '@screens/MostPlayedSongsInPlaylistsScreen';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
-import { TabSongsInPlaylistsParams } from '@navigators/config/root/home/tab-songs-addition/tab-songs-in-playlists';
+import { TabSongsInPlaylistsParams } from '@navigators/config/drawer-home/tab-songs-addition/tab-songs-in-playlists';
 import { TouchableOpacity } from 'react-native';
 import { addListSelectedSongsToPlaylistAction } from '@store/actions/tab-songs-addition-actions';
-import { navigate } from '@navigators/config/root';
+import { navigate } from '@navigators/config';
 import { useDispatch } from 'react-redux';
 
 const TabSongsInPlaylists = createMaterialTopTabNavigator<TabSongsInPlaylistsParams>();

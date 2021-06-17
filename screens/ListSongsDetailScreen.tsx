@@ -5,10 +5,10 @@ import { useHomeBottomTabHelper, useRefresh } from '@hooks/index';
 
 import CustomListButtonAdd from '@components/list-songs-detail-screen/CustomListButtonAdd';
 import { DrawerHomeContext, } from '@context-api/index';
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { DrawerHomeNavigationProp } from '@navigators/config/drawer-home';
 import ListSongsDetailScreenCustomSoundItem from '@components/list-songs-detail-screen/ListSongsDetailScreenCustomSoundItem';
 import ListSongsDetailScreenEmptyPlaylist from '@components/list-songs-detail-screen/ListSongsDetailScreenEmptyPlaylist';
-import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
+import { ListSongsDetailScreenRouteProp } from '@navigators/config/drawer-home/tab-list-songs-detail';
 import { SoundFileType } from 'types/songs-screen-types';
 import { useGetPlaylistByIdSelector } from '@store/selectors/playlists-screen-selectors';
 import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';

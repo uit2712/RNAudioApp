@@ -13,7 +13,7 @@ import SortByBottomSheet from '@components/shared/SortByBottomSheet';
 import { SortByBottomSheetContext } from '@context-api/index';
 import { SortOrderType } from 'types/index';
 import { SortSongByPropertyType } from 'types/songs-screen-types';
-import { TabSongsParams } from '@navigators/config/root/home/tab-songs';
+import { TabSongsParams } from '@navigators/config/drawer-home/tab-songs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 import { useSortByBottomSheetSettings } from '@hooks/index';

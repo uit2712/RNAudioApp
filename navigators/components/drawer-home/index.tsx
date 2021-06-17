@@ -8,7 +8,7 @@ import { NavigationHelpers, ParamListBase, RouteProp, TabNavigationState } from 
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { DrawerHomeParams } from '@navigators/config/root/home';
+import { DrawerHomeParams } from '@navigators/config/drawer-home';
 import Favorite from '@components/shared/Favorite';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,7 +23,7 @@ import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
 import TabSongsAdditionNavigator from './tab-songs-addition';
 import TabSongsNavigators from './tab-songs';
-import { navigate } from '@navigators/config/root';
+import { navigate } from '@navigators/config';
 import { useDrawHomeSettings } from '@hooks/index';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();

@@ -8,7 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { IMenuSelection } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { RootNavigationProp } from '@navigators/config/root';
+import { RootNavigationProp } from '@navigators/config';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View, } from 'react-native';
 import { useNavigation } from '@react-navigation/core';

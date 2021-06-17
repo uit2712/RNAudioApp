@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AllSongsInPlaylistsScreenRouteProp } from '@navigators/config/root/home/tab-songs-addition/tab-songs-in-playlists';
+import { AllSongsInPlaylistsScreenRouteProp } from '@navigators/config/drawer-home/tab-songs-addition/tab-songs-in-playlists';
 import SongsInPlaylists from '@components/tab-songs-addition/SongsInPlaylists';
 import { setPlaylistSongsShouldBeAddedAction } from '@store/actions/tab-songs-addition-actions';
 import { useDispatch } from 'react-redux';

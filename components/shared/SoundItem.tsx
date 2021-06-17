@@ -6,7 +6,7 @@ import { SoundFileType } from 'types/songs-screen-types';
 import SoundItemCover from '@components/shared/SoundItemCover';
 import SoundItemInfo from '@components/shared/SoundItemInfo';
 import { TouchableOpacity } from 'react-native';
-import { navigate } from '@navigators/config/root';
+import { navigate } from '@navigators/config';
 
 interface ISoundItemProps {
     value: SoundFileType,

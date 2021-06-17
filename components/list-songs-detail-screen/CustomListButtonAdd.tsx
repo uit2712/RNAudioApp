@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { DrawerHomeNavigationProp } from '@navigators/config/drawer-home';
 import { FAB } from 'react-native-elements';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import Ionicons from 'react-native-vector-icons/Ionicons';

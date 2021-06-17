@@ -1,5 +1,5 @@
 import { IMenuSelection } from '@interfaces/index';
-import { ListSongsDetailNavigationProp, } from '@navigators/config/root/home/tab-list-songs-detail';
+import { ListSongsDetailNavigationProp, } from '@navigators/config/drawer-home/tab-list-songs-detail';
 import { ListSongsDetailType } from 'types/index';
 import React from 'react';
 import { SoundFileType } from 'types/songs-screen-types';

@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SortByBottomSheet from '@components/shared/SortByBottomSheet';
 import { SortGenreByPropertyType } from 'types/genres-screen-types';
 import { SortOrderType } from 'types/index';
-import { TabGenresParams } from '@navigators/config/root/home/tab-genres';
+import { TabGenresParams } from '@navigators/config/drawer-home/tab-genres';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 

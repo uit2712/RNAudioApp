@@ -10,12 +10,12 @@ import Favorite from '@components/shared/Favorite';
 import { IMenuSelection } from '@interfaces/index';
 import { SoundPlayerDetailThemeContext } from '@navigators/themes';
 import SoundPlayerScreen from '@screens/SoundPlayerScreen';
-import { TabOthersParams, } from '@navigators/config/root/home/tab-others';
+import { TabOthersParams, } from '@navigators/config/drawer-home/tab-others';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
-import { navigate } from '@navigators/config/root';
+import { navigate } from '@navigators/config';
 import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
 import { useOverlayModal } from '@hooks/index';
 

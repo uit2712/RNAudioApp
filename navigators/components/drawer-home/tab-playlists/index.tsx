@@ -6,7 +6,7 @@ import { CreationModalContext } from '@context-api/index';
 import HomeHeader from '@components/shared/HomeHeader';
 import PlaylistsScreen from '@screens/PlaylistsScreen';
 import ShowHiddenPlaylistModal from '@components/playlists-screen/ShowHiddenPlaylistModal';
-import { TabPlaylistsParams } from '@navigators/config/root/home/tab-playlists';
+import { TabPlaylistsParams } from '@navigators/config/drawer-home/tab-playlists';
 import { setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 import { useOverlayModal } from '@hooks/index';

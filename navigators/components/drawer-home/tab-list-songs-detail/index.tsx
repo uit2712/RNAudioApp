@@ -5,7 +5,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { DrawerHomeContext } from '@context-api/index';
 import HomeHeader from '@components/shared/HomeHeader';
 import ListSongsDetailScreen from '@screens/ListSongsDetailScreen';
-import { TabListSongsDetailParams } from '@navigators/config/root/home/tab-list-songs-detail';
+import { TabListSongsDetailParams } from '@navigators/config/drawer-home/tab-list-songs-detail';
 import { Text } from 'react-native';
 
 const TabListSongs = createStackNavigator<TabListSongsDetailParams>();

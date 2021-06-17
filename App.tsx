@@ -4,7 +4,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { PersistGate } from 'redux-persist/integration/react';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import RootNavigator from '@navigators/components/root';
+import RootNavigator from '@navigators/components';
 
 function App() {
     return (

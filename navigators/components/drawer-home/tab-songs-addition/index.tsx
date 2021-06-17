@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { TabSongsAdditionParams } from '@navigators/config/root/home/tab-songs-addition';
+import { TabSongsAdditionParams } from '@navigators/config/drawer-home/tab-songs-addition';
 import TabSongsInPlaylistsNavigator from './tab-songs-in-playlists';
 import { createStackNavigator } from '@react-navigation/stack';
 

@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/root/home/tab-others';
+import { AddSongToPlaylistScreenRouteProp } from '@navigators/config/drawer-home/tab-others';
 import { FAB } from 'react-native-elements';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import React from 'react';

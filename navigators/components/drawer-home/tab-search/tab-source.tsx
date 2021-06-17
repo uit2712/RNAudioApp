@@ -3,7 +3,7 @@ import * as React from 'react';
 import { DrawerHomeContext } from '@context-api/index';
 import SongsOfflineScreen from '@screens/SongsOfflineScreen';
 import SongsOnlineScreen from '@screens/SongsOnlineScreen';
-import { TabSourceParams } from '@navigators/config/root/home/tab-search/tab-source';
+import { TabSourceParams } from '@navigators/config/drawer-home/tab-search/tab-source';
 import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useHomeBottomTabHelper } from '@hooks/index';

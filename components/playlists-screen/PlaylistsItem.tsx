@@ -1,6 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
 
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { DrawerHomeNavigationProp } from '@navigators/config/drawer-home';
 import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';

@@ -5,7 +5,7 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 import Animated from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import { PERMISSIONS } from 'react-native-permissions';
-import { RootNavigationProp } from '@navigators/config/root';
+import { RootNavigationProp } from '@navigators/config';
 import { StyleSheet, } from 'react-native';
 import { showPopupRequestPermission } from '@functions/songs-screen-functions';
 import { useGetAllData } from '@hooks/index';

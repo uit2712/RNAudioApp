@@ -1,10 +1,10 @@
 import * as React from 'react';
 
+import { DrawerSplashParams } from '@navigators/config/drawer-splash-screen';
 import SplashScreen from '@screens/SplashScreen';
-import { StackSplashParams } from '@navigators/config/root/splash-screen';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const StackSplash = createStackNavigator<StackSplashParams>()
+const StackSplash = createStackNavigator<DrawerSplashParams>()
 
 function StackSplashNavigator() {
     return (

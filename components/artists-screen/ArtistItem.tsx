@@ -1,4 +1,4 @@
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { DrawerHomeNavigationProp } from '@navigators/config/drawer-home';
 import FastImage from 'react-native-fast-image';
 import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IMenuSelection } from '@interfaces/index';

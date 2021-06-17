@@ -5,19 +5,19 @@ import { DrawerNavigationState, NavigationContainer, ParamListBase, } from '@rea
 import { IDrawerNavigatorScreen, IPlayer, } from '@interfaces/index';
 import { Image, Text, } from 'react-native';
 import MusicControl, { Command } from 'react-native-music-control';
-import { RootParams, navigationRef } from '@navigators/config/root';
+import { RootParams, navigationRef } from '@navigators/config';
 import { useAudioHelper, useMusicControl, } from '@hooks/index';
 
-import DrawerHomeNavigator from './home';
+import DrawerHomeNavigator from './drawer-home';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import DrawerSettingsNavigator from './settings';
+import DrawerSettingsNavigator from './drawer-settings';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { SoundPlayerContext, } from '@context-api/index';
-import StackSplashNavigator from './splash-screen';
+import StackSplashNavigator from './drawer-splash-screen';
 
 const Root = createDrawerNavigator<RootParams>();
 
@@ -132,7 +132,7 @@ function CustomDrawerHeader() {
             }}
         >
             <Image
-                source={require('../../../images/app-name.png')}
+                source={require('../../images/app-name.png')}
                 style={{
                     width: appNameSize.width,
                     height: appNameSize.height

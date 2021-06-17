@@ -1,15 +1,15 @@
 import { NavigationContainerRef, NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 
-import { DrawerHomeScreenParams } from './home';
+import { DrawerHomeScreenParams } from './drawer-home';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { DrawerSettingsScreenParams } from './settings';
+import { DrawerSettingsScreenParams } from './drawer-settings';
+import { DrawerSplashScreenParams } from './drawer-splash-screen';
 import React from 'react';
-import { StackSplashScreenParams } from './splash-screen';
 
 export type RootParams = {
     Home: DrawerHomeScreenParams;
     Settings: DrawerSettingsScreenParams;
-    Splash: StackSplashScreenParams;
+    Splash: DrawerSplashScreenParams;
 }
 
 export type RootNavigationProp = DrawerNavigationProp<RootParams>;

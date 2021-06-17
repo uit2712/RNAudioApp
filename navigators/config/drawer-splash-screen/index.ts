@@ -5,9 +5,9 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 export interface ISplashScreenParams extends IScreenParams {
 }
 
-export type StackSplashParams = {
+export type DrawerSplashParams = {
     Splash: ISplashScreenParams;
 }
 
-export type StackSplashNavigationProp = DrawerNavigationProp<StackSplashParams>;
-export type StackSplashScreenParams = NavigatorScreenParams<StackSplashParams>;
+export type DrawerSplashNavigationProp = DrawerNavigationProp<DrawerSplashParams>;
+export type DrawerSplashScreenParams = NavigatorScreenParams<DrawerSplashParams>;

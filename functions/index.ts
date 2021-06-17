@@ -1,7 +1,7 @@
 import { ITrackInfo } from "@interfaces/songs-screen-interfaces";
 import { SoundFileType } from "types/songs-screen-types";
 import { avatarHelper } from "@helpers/songs-screen-helpers";
-import { navigate } from "@navigators/config/root";
+import { navigate } from "@navigators/config";
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 export function shuffleArray<T>(array: T[]) {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DrawerSettingsParams } from '@navigators/config/root/settings';
+import { DrawerSettingsParams } from '@navigators/config/drawer-settings';
 import SettingsScreen from '@screens/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 

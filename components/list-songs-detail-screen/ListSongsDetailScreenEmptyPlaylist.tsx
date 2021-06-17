@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
+import { DrawerHomeNavigationProp } from '@navigators/config/drawer-home';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import LinearGradient from 'react-native-linear-gradient';
