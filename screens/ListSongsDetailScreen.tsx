@@ -1,20 +1,15 @@
 import * as React from 'react';
 
-import { DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
-import { RefreshControl, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { RefreshControl, VirtualizedList } from 'react-native';
 import { useHomeBottomTabHelper, useRefresh } from '@hooks/index';
 
+import CustomListButtonAdd from '@components/list-songs-detail-screen/CustomListButtonAdd';
+import { DrawerHomeContext, } from '@context-api/index';
 import { DrawerHomeNavigationProp } from '@navigators/config/root/home';
-import { FAB } from 'react-native-elements';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
+import ListSongsDetailScreenCustomSoundItem from '@components/list-songs-detail-screen/ListSongsDetailScreenCustomSoundItem';
+import ListSongsDetailScreenEmptyPlaylist from '@components/list-songs-detail-screen/ListSongsDetailScreenEmptyPlaylist';
 import { ListSongsDetailScreenRouteProp } from '@navigators/config/root/home/tab-list-songs-detail';
-import { ListSongsDetailType } from 'types/index';
 import { SoundFileType } from 'types/songs-screen-types';
-import SoundItem from '@common/components/SoundItem';
-import { useGetListMenuSelections, } from '@hooks/list-songs-detail-screen-hooks';
 import { useGetPlaylistByIdSelector } from '@store/selectors/playlists-screen-selectors';
 import { useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 import { useNavigation } from '@react-navigation/native';
@@ -86,134 +81,12 @@ function ListSongsDetailScreen() {
                     />
                 }
             />
-            {
-                route.params.type === 'custom-playlist' && (
-                    <FAB
-                        title='Thêm bài hát'
-                        style={{
-                            position: 'absolute',
-                            margin: 16,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 1,
-                        }}
-                        icon={
-                            <Ionicons
-                                name='add'
-                                size={30}
-                                color='white'
-                            />
-                        }
-                        onPress={() => {
-                            navigation.navigate('TabSongsAddition', {
-                                screen: 'SongAddition',
-                                params: {
-                                    screen: 'All',
-                                    params: {
-                                        playlist: route.params.playlist,
-                                    }
-                                }
-                            })
-                        }}
-                    />
-                )
-            }
+            <CustomListButtonAdd
+                type={route.params.type}
+                playlist={route.params.playlist}
+            />
         </>
     )
 }
-
-function ListSongsDetailScreenCustomSoundItem({
-    item,
-    index,
-    songs,
-    type,
-}: {
-    item: SoundFileType,
-    index: number,
-    songs: SoundFileType[],
-    type: ListSongsDetailType,
-}) {
-    const player = React.useContext(SoundPlayerContext);
-    const listMenuSelections = useGetListMenuSelections({ item, index, songs, type });
-
-    return (
-        <SoundItem
-            key={item.id}
-            value={item}
-            isActive={item.id === player.currentAudioInfo.originalInfo.id}
-            listMenuSelections={listMenuSelections}
-            onPress={() => player.setListSoundsAndPlay(songs, index)}
-        />
-    )
-}
-
-function ListSongsDetailScreenEmptyPlaylist({
-    type,
-    playlist,
-}: {
-    type: ListSongsDetailType,
-    playlist?: IPlaylist,
-}) {
-    const navigation = useNavigation<DrawerHomeNavigationProp>();
-    const currentPlaylist = useGetPlaylistByIdSelector(playlist?.id ?? '');
-
-
-    if (!currentPlaylist || type !== 'custom-playlist') {
-        return (
-            <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                <Fontisto
-                    name='applemusic'
-                    size={50}
-                    style={{
-                        marginBottom: 10,
-                    }}
-                />
-                <Text>Không tìm thấy bài hát nào</Text>
-            </View>
-        );
-    }
-
-    return (
-        <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 18, marginBottom: 10, }}>Không có bài hát nào trong danh sách phát</Text>
-            <TouchableOpacity
-                style={{ width: '80%', marginBottom: 10, }}
-                onPress={() => {
-                    navigation.navigate('TabSongsAddition', {
-                        screen: 'SongAddition',
-                        params: {
-                            screen: 'All',
-                            params: {
-                                playlist,
-                            }
-                        }
-                    })
-                }}
-            >
-                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
-                    <Text style={styles.buttonText}>
-                        Thêm bài hát
-                    </Text>
-                </LinearGradient>
-            </TouchableOpacity>
-        </View>
-    )
-}
-
-const styles = StyleSheet.create({
-    linearGradient: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5,
-    },
-    buttonText: {
-        fontSize: 20,
-        fontFamily: 'Gill Sans',
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-        backgroundColor: 'transparent',
-    },
-});
 
 export default ListSongsDetailScreen;
