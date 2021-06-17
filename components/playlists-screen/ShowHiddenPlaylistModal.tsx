@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CheckBox, ListItem, Overlay } from 'react-native-elements';
 import { StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
 
-import ButtonsModal from '@common/components/ButtonsModal';
+import ButtonsModal from '@components/shared/ButtonsModal';
 import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { IUseListChecked } from '@interfaces/index';

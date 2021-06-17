@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Input, Overlay } from 'react-native-elements';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import ButtonsModal from './ButtonsModal';
+import ButtonsModal from '@components/shared/ButtonsModal';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 

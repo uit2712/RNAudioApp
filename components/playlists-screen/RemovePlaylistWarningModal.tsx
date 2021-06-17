@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { StyleSheet, Text, View, } from 'react-native';
 
-import ButtonsModal from '@common/components/ButtonsModal';
+import ButtonsModal from '@components/shared/ButtonsModal';
 import { Overlay } from 'react-native-elements';
 import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
