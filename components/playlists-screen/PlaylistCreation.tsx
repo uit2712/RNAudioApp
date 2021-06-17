@@ -1,4 +1,4 @@
-import CreationModal from '@common/components/CreationModal';
+import CreationModal from '@components/shared/CreationModal';
 import { CreationModalContext } from '@context-api/index';
 import { FAB } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
