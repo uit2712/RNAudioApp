@@ -249,26 +249,8 @@ export function useHomeBottomTabHelper({
     onFocus?: () => void,
     onBack?: () => void,
 }) {
-    const navigation = useNavigation();
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            onFocus && onFocus();
-        });
-        // Return the function to unsubscribe from the event so it gets removed on unmount
-        return unsubscribe;
-    }, [navigation]);
-
-    useFocusEffect(
-        React.useCallback(() => {
-            const onBackPress = () => {
-                onBack && onBack();
-                return false;
-            };
-
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-        }, [])
-    );
+    useFocusScreen(onFocus);
+    useCustomBackButton(onBack);
 }
 
 /**
@@ -502,12 +484,28 @@ export function useOverlayModal(): IOverlayModalContext {
     }
 }
 
-export function useFocusScreen(onFocus: () => void) {
+export function useFocusScreen(onFocus?: () => void) {
     const navigation = useNavigation();
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', onFocus);
+        const unsubscribe = navigation.addListener('focus', () => {
+            onFocus && onFocus();
+        });
     
         // Return the function to unsubscribe from the event so it gets removed on unmount
         return unsubscribe;
     }, [navigation]);
+}
+
+export function useCustomBackButton(onBack?: () => void) {
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                onBack && onBack();
+                return false;
+            };
+
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
 }

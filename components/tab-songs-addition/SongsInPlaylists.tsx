@@ -1,5 +1,5 @@
 import { clearListSelectedSongsAction, setListSelectedSongsAction, } from '@store/actions/tab-songs-addition-actions';
-import { useCheckAll, useFocusScreen, useListChecked } from '@hooks/index';
+import { useCheckAll, useListChecked } from '@hooks/index';
 import { useGetPlaylistSongsShouldBeAddedSelector, useIsAddListSelectedSongsSuccessSelector } from '@store/selectors/tab-songs-addition-selectors';
 
 import React from 'react';
@@ -35,8 +35,6 @@ function SongsInPlaylists({
             dispatch(clearListSelectedSongsAction())
         }
     }, [isAdded]);
-
-    useFocusScreen(reset);
 
     return (
         <>
