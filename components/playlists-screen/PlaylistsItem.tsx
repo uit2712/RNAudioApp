@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { ListItem } from 'react-native-elements';
 import React from 'react';
-import SettingsMenu from '@common/components/SettingsMenu';
+import SettingsMenu from '@components/shared/SettingsMenu';
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetListMenuSelections } from '@hooks/playlists-screen-hooks';
 import { useNavigation } from '@react-navigation/native';

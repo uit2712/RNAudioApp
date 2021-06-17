@@ -4,7 +4,7 @@ import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import React from 'react';
-import SettingsMenu from '@common/components/SettingsMenu';
+import SettingsMenu from '@components/shared/SettingsMenu';
 import { TouchableOpacity } from 'react-native';
 import { getListSongsByArtistId } from '@functions/artists-screen-function';
 import { useDisabledButton } from '@hooks/index';

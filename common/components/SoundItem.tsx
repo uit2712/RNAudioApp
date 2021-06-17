@@ -1,7 +1,7 @@
 import { IMenuSelection } from '@interfaces/index';
 import { ListItem } from 'react-native-elements';
 import React from 'react';
-import SettingsMenu from './SettingsMenu';
+import SettingsMenu from '@components/shared/SettingsMenu';
 import { SoundFileType } from 'types/songs-screen-types';
 import SoundItemCover from './SoundItemCover';
 import SoundItemInfo from './SoundItemInfo';
