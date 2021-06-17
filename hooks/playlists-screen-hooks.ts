@@ -1,12 +1,10 @@
-import { CreationModalContext, SoundPlayerContext } from '@context-api/index';
 import { IPlaylist, IRemovePlaylistContext } from '@interfaces/playlists-screen-interfaces';
-import { addAudioToPlaylistAction, removePlaylistAction, setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
+import { addAudioToPlaylistAction, setPlaylistVisibilityAction } from '@store/actions/playlists-screen-actions';
 
 import { IMenuSelection } from '@interfaces/index';
 import React from 'react';
 import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
-import RemovePlaylistWarningModal from '@components/playlists-screen/RemovePlaylistWarningModal';
-import { Text } from 'react-native-elements';
+import { SoundPlayerContext, } from '@context-api/index';
 import { useDispatch } from 'react-redux';
 import { useOverlayModal } from '.';
 

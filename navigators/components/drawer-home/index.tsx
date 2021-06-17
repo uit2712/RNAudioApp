@@ -23,6 +23,7 @@ import TabPlaylistsNavigator from './tab-playlists';
 import TabSearchNavigator from './tab-search';
 import TabSongsAdditionNavigator from './tab-songs-addition';
 import TabSongsNavigators from './tab-songs';
+import UpdatingModal from '@components/shared/UpdatingModal';
 import { navigate } from '@navigators/config';
 import { useDrawHomeSettings } from '@hooks/index';
 
@@ -119,6 +120,7 @@ function DrawerHomeNavigator() {
 
     return (
         <DrawerHomeContext.Provider value={settings}>
+            <UpdatingModal/>
             <DrawerHome.Navigator
                 initialRouteName='TabPlaylists'
                 tabBar={(props) => <CustomTabBar {...props}/>}

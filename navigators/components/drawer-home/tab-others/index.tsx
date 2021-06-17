@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CreationModalContext, DrawerHomeContext, SoundPlayerContext } from '@context-api/index';
+import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
 
 import AddSongToPlaylistScreen from '@screens/AddSongToPlaylistScreen';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
@@ -17,48 +17,44 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { getListSongsByAlbumId } from '@functions/albums-screen-functions';
 import { navigate } from '@navigators/config';
 import { useGetAlbumByIdSelector } from '@store/selectors/albums-screen-selectors';
-import { useOverlayModal } from '@hooks/index';
 
 const TabOthers = createStackNavigator<TabOthersParams>();
 
 function TabOthersNavigator() {
     const theme = React.useContext(SoundPlayerDetailThemeContext);
-    const modal = useOverlayModal();
 
     return (
-        <CreationModalContext.Provider value={modal}>
-            <TabOthers.Navigator>
-                <TabOthers.Screen
-                    name='SoundPlayerDetail'
-                    component={SoundPlayerScreen}
-                    options={({ navigation }) => ({
-                        title: '',
-                        headerLeft: () => (
-                            <BackButton
-                                navigation={navigation}
-                                color={theme.colors.iconInactive}
-                            />
-                        ),
-                        headerRight: () => <SoundPlayerDetailScreenHeaderRight/>,
-                        headerTransparent: true,
-                    })}
-                />
-                <TabOthers.Screen
-                    name='AddSongToPlaylist'
-                    component={AddSongToPlaylistScreen}
-                    options={({ navigation }) => ({
-                        title: 'Thêm vào Danh sách phát',
-                        headerLeft: () => (
-                            <BackButton
-                                navigation={navigation}
-                                color='black'
-                            />
-                        ),
-                        // headerTransparent: true,
-                    })}
-                />
-            </TabOthers.Navigator>
-        </CreationModalContext.Provider>
+        <TabOthers.Navigator>
+            <TabOthers.Screen
+                name='SoundPlayerDetail'
+                component={SoundPlayerScreen}
+                options={({ navigation }) => ({
+                    title: '',
+                    headerLeft: () => (
+                        <BackButton
+                            navigation={navigation}
+                            color={theme.colors.iconInactive}
+                        />
+                    ),
+                    headerRight: () => <SoundPlayerDetailScreenHeaderRight/>,
+                    headerTransparent: true,
+                })}
+            />
+            <TabOthers.Screen
+                name='AddSongToPlaylist'
+                component={AddSongToPlaylistScreen}
+                options={({ navigation }) => ({
+                    title: 'Thêm vào Danh sách phát',
+                    headerLeft: () => (
+                        <BackButton
+                            navigation={navigation}
+                            color='black'
+                        />
+                    ),
+                    // headerTransparent: true,
+                })}
+            />
+        </TabOthers.Navigator>
     )
 }
 

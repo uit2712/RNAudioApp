@@ -1,7 +1,7 @@
 import {
     IBottomSheetSectionWithType,
-    ICreationModalContext,
     IDrawerHomeContext,
+    IOverlayModalContext,
     IPlayer,
     IRequestAudioHelper,
     ISortByBottomSheetContextWithType,
@@ -493,7 +493,7 @@ export function useMusicControl(player: IPlayer) {
     }
 }
 
-export function useOverlayModal(): ICreationModalContext {
+export function useOverlayModal(): IOverlayModalContext {
     const [isVisible, setIsVisible] = React.useState(false);
 
     return {

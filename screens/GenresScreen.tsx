@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { useGenreIsShouldRefreshSelector, useGetListGenresSelector } from '@store/selectors/genres-screen-selectors';
 
-import GenreCreation from '@components/genres-screen/GenreCreation';
 import GenreItem from '@components/genres-screen/GenreItem';
 import { IGenre } from '@interfaces/genres-screen-interfaces';
 import { VirtualizedList } from 'react-native';
@@ -21,7 +20,6 @@ function GenresScreen() {
 
     return (
         <>
-            <GenreCreation/>
             <VirtualizedList
                 data={listToMatrix(genres, 2)}
                 renderItem={({ item, index }: { item: IGenre[], index: number }) => (

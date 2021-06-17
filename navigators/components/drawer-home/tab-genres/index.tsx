@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-import { CreationModalContext, SortByBottomSheetContext } from '@context-api/index';
-import { setGenreByPropertyTypeAction, setGenreOrderTypeAction } from '@store/actions/genres-screen-actions';
+import { setGenreByPropertyTypeAction, setGenreIsShouldRefreshAction, setGenreOrderTypeAction } from '@store/actions/genres-screen-actions';
 import { useGetGenreOrderTypeSelector, useGetGenreSortByPropertyTypeSelector } from '@store/selectors/genres-screen-selectors';
-import { useOverlayModal, useSortByBottomSheetSettings } from '@hooks/index';
 
 import GenresScreen from '@screens/GenresScreen';
 import HomeHeader from '@components/shared/HomeHeader';
@@ -11,48 +9,64 @@ import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SortByBottomSheet from '@components/shared/SortByBottomSheet';
+import { SortByBottomSheetContext, } from '@context-api/index';
 import { SortGenreByPropertyType } from 'types/genres-screen-types';
 import { SortOrderType } from 'types/index';
 import { TabGenresParams } from '@navigators/config/drawer-home/tab-genres';
+import { createGenre } from '@functions/genres-screen-functions';
 import { createStackNavigator } from '@react-navigation/stack';
+import { showUpdatingModal } from '@functions/index';
 import { useDispatch } from 'react-redux';
+import { useSortByBottomSheetSettings } from '@hooks/index';
 
 const TabGenres = createStackNavigator<TabGenresParams>()
 
 function TabGenresNavigator() {
     const listDataInBottomSheet = useGetListDataInBottomSheet();
     const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
-    const modal = useOverlayModal();
+    const dispatch = useDispatch();
 
     return (
         <SortByBottomSheetContext.Provider value={settings}>
-            <CreationModalContext.Provider value={modal}>
-                <SortByBottomSheet/>
-                <TabGenres.Navigator
-                    screenOptions={{
-                        header: () => (
-                            <HomeHeader
-                                listMenuSelections={[
-                                    {
-                                        text: 'Tạo thể loại mới',
-                                        onSelect: modal.toggleOverlay,
+            <SortByBottomSheet/>
+            <TabGenres.Navigator
+                screenOptions={{
+                    header: () => (
+                        <HomeHeader
+                            listMenuSelections={[
+                                {
+                                    text: 'Tạo thể loại mới',
+                                    onSelect: () => {
+                                        const onConfirm = (name: string, onFinished: () => void) => {
+                                            createGenre(name).then(() => {
+                                                onFinished();
+                                                dispatch(setGenreIsShouldRefreshAction(true));
+                                            }).catch(console.log)
+                                        };
+                                        showUpdatingModal({
+                                            inputLabel: 'Tên',
+                                            title: 'Tạo thể loại mới',
+                                            onConfirm,
+                                            cancelLabel: 'Hủy',
+                                            confirmLabel: 'Xong',
+                                        });
                                     },
-                                    { text: 'Trợ lý giọng nói' },
-                                    {
-                                        text: 'Sắp xếp theo',
-                                        onSelect: () => settings.setIsShowSortByBottomSheet(true),
-                                    },
-                                ]}
-                            />
-                        )
-                    }}
-                >
-                    <TabGenres.Screen
-                        name='Genres'
-                        component={GenresScreen}
-                    />
-                </TabGenres.Navigator>
-            </CreationModalContext.Provider>
+                                },
+                                { text: 'Trợ lý giọng nói' },
+                                {
+                                    text: 'Sắp xếp theo',
+                                    onSelect: () => settings.setIsShowSortByBottomSheet(true),
+                                },
+                            ]}
+                        />
+                    )
+                }}
+            >
+                <TabGenres.Screen
+                    name='Genres'
+                    component={GenresScreen}
+                />
+            </TabGenres.Navigator>
         </SortByBottomSheetContext.Provider>
     )
 }

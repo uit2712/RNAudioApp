@@ -1,7 +1,10 @@
-import { ITrackInfo } from "@interfaces/songs-screen-interfaces";
-import { SoundFileType } from "types/songs-screen-types";
-import { avatarHelper } from "@helpers/songs-screen-helpers";
-import { navigate } from "@navigators/config";
+import { IShowUpdatingModal, IUpdatingModal } from '@interfaces/index';
+
+import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
+import { SoundFileType } from 'types/songs-screen-types';
+import { avatarHelper } from '@helpers/songs-screen-helpers';
+import modalManager from '@helpers/modal-helper';
+import { navigate } from '@navigators/config';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 export function shuffleArray<T>(array: T[]) {
@@ -42,7 +45,7 @@ export function listToMatrix<T>(list: T[], elementsPerSubArray: number): Array<T
 
 export function dynamicSort(property: string) {
     let sortOrder = 1;
-    if (property[0] === "-") {
+    if (property[0] === '-') {
         sortOrder = -1;
         property = property.substr(1);
     }
@@ -113,4 +116,27 @@ export function navigateToAddToPlaylistScreen(item: SoundFileType) {
             }
         }
     })
+}
+
+export function showUpdatingModal(props: IShowUpdatingModal) {
+    const ref = modalManager.getDefault();
+    if (!!ref) {
+        ref.current?.showModal(props);
+    }
+}
+
+export function hideUpdatingModal() {
+    const ref = modalManager.getDefault();
+    if (!!ref) {
+        ref.current?.hideModal();
+    }
+}
+
+export function isUpdatingModalVisible() {
+    const ref = modalManager.getDefault();
+    if (!!ref) {
+        return ref.current?.isVisible();
+    }
+
+    return false;
 }

@@ -1,5 +1,5 @@
-import CreationModal from '@components/shared/CreationModal';
-import { CreationModalContext } from '@context-api/index';
+import { isUpdatingModalVisible, showUpdatingModal } from '@functions/index';
+
 import { FAB } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
@@ -8,13 +8,26 @@ import { addNewPlaylistAction } from '@store/actions/playlists-screen-actions';
 import { useDispatch } from 'react-redux';
 
 function PlaylistCreation() {
-    const { isVisible, toggleOverlay } = React.useContext(CreationModalContext);
     const dispatch = useDispatch();
+    const onConfirm = (name: string, onFinished: () => void) => {
+        dispatch(addNewPlaylistAction({
+            type: 'custom-playlist',
+            name,
+        }));
+        onFinished();
+    };
+    const toggleOverlay = () => showUpdatingModal({
+        inputLabel: 'Tên',
+        title: 'Tạo danh sách mới',
+        onConfirm,
+        cancelLabel: 'Hủy',
+        confirmLabel: 'Xong',
+    });
 
     return (
         <View>
             {
-                isVisible === false && (
+                isUpdatingModalVisible() === false && (
                     <FAB
                         title='Tạo mới'
                         style={{
@@ -34,19 +47,6 @@ function PlaylistCreation() {
                     />
                 )
             }
-            <CreationModal
-                isVisible={isVisible}
-                inputLabel='Tên'
-                title='Tạo danh sách mới'
-                toggleOverlay={toggleOverlay}
-                onConfirm={(name, onFinished) => {
-                    dispatch(addNewPlaylistAction({
-                        type: 'custom-playlist',
-                        name,
-                    }));
-                    onFinished();
-                }}
-            />
         </View>
     )
 }

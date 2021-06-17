@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import {
-    ICreationModalContext,
     IDrawerHomeContext,
+    IOverlayModalContext,
     IPlayer,
     ISortByBottomSheetContextWithType,
 } from '@interfaces/index';
@@ -64,9 +64,4 @@ export const SortByBottomSheetContext = React.createContext<ISortByBottomSheetCo
     setSelectedType: (sectionIndex: number, selectedType: string) => {},
     getSelectedType: (sectionIndex: number) => '',
     data: [],
-});
-
-export const CreationModalContext = React.createContext<ICreationModalContext>({
-    isVisible: false,
-    toggleOverlay: () => {},
 });

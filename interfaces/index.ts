@@ -144,7 +144,7 @@ export interface IListSongsDetail {
     cover?: Source | number | string;
 }
 
-export interface ICreationModalContext {
+export interface IOverlayModalContext {
     isVisible: boolean;
     toggleOverlay: () => void;
 }
@@ -156,4 +156,24 @@ export interface IUseListChecked<T> {
     isCheckedAllFromListChecked: boolean;
     listSelectedItems: T[];
     reset: () => void;
+}
+
+export interface IShowUpdatingModal {
+    title: string;
+    inputLabel: string;
+    onConfirm: (param: any, onFinished: () => void) => void;
+    cancelLabel: string;
+    confirmLabel: string;
+}
+
+export interface IUpdatingModal extends IShowUpdatingModal {
+    isVisible: boolean;
+    input: string;
+}
+
+export interface IUpdatingModalRef {
+    readonly current: IUpdatingModalRef | null;
+    showModal: (props: IShowUpdatingModal) => void;
+    hideModal: () => void;
+    isVisible: () => boolean;
 }

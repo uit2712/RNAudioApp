@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { CreationModalContext } from '@context-api/index';
 import HomeHeader from '@components/shared/HomeHeader';
 import PlaylistsScreen from '@screens/PlaylistsScreen';
 import ShowHiddenPlaylistModal from '@components/playlists-screen/ShowHiddenPlaylistModal';
@@ -14,24 +13,20 @@ import { useOverlayModal } from '@hooks/index';
 const TabPlaylists = createStackNavigator<TabPlaylistsParams>();
 
 function TabPlaylistsNavigator() {
-    const modal = useOverlayModal();
-
     return (
-        <CreationModalContext.Provider value={modal}>
-            <TabPlaylists.Navigator
-                screenOptions={{
-                    cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid
+        <TabPlaylists.Navigator
+            screenOptions={{
+                cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid
+            }}
+        >
+            <TabPlaylists.Screen
+                name='Playlists'
+                component={PlaylistsScreen}
+                options={{
+                    header: () => <TabPlaylistsHeader/>
                 }}
-            >
-                <TabPlaylists.Screen
-                    name='Playlists'
-                    component={PlaylistsScreen}
-                    options={{
-                        header: () => <TabPlaylistsHeader/>
-                    }}
-                />
-            </TabPlaylists.Navigator>
-        </CreationModalContext.Provider>
+            />
+        </TabPlaylists.Navigator>
     )
 }
 
