@@ -3,7 +3,7 @@ import { IListSongsDetail } from '@interfaces/index';
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
-import { mapTrackInfoToSoundFileType } from '.';
+import { mapTrackInfoToSoundFileTypeMemo } from '.';
 
 export function getAllGenres(): Promise<IGenre[]> {
     return new Promise((resolve: (value: IGenre[]) => void, reject: (value?: Error) => void) => {
@@ -29,7 +29,7 @@ export function getListSongsByGenre(genre?: IGenre): Promise<IListSongsDetail> {
             genreId: genre.id,
         }).then((tracks: ITrackInfo[]) => {
             resolve({
-                listSongs: mapTrackInfoToSoundFileType(tracks),
+                listSongs: mapTrackInfoToSoundFileTypeMemo(tracks),
                 name: genre.name,
                 cover: genre.cover,
             });

@@ -15,6 +15,7 @@ export const AUDIO_HELPER_CURRENT_AUDIO_INFO: ICurrentAudioInfo = {
     currentTime: 0,
     originalInfo: {
         type: 'other',
+        id: '',
         name: '',
         other: '',
         path: '',

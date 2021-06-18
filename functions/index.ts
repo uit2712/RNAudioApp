@@ -3,6 +3,7 @@ import { IShowUpdatingModal, IUpdatingModal } from '@interfaces/index';
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import { SoundFileType } from 'types/songs-screen-types';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
+import memoizeOne from 'memoize-one';
 import modalManager from '@helpers/modal-helper';
 import { navigate } from '@navigators/config';
 
@@ -89,7 +90,7 @@ export function makeId(length: number = 20) {
     return result;
 }
 
-export function mapTrackInfoToSoundFileType(tracks: ITrackInfo[]): SoundFileType[] {
+function mapTrackInfoToSoundFileType(tracks: ITrackInfo[]): SoundFileType[] {
     return tracks.map((item: ITrackInfo) => ({
         type: 'other',
         id: item.id ?? makeId(),
@@ -105,6 +106,7 @@ export function mapTrackInfoToSoundFileType(tracks: ITrackInfo[]): SoundFileType
         bluredImage: item.blur,
     }));
 }
+export const mapTrackInfoToSoundFileTypeMemo = memoizeOne(mapTrackInfoToSoundFileType);
 
 export function navigateToAddToPlaylistScreen(item: SoundFileType) {
     navigate('Home', {

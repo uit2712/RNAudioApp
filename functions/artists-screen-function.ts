@@ -2,7 +2,7 @@ import { IArtist } from '@interfaces/artists-screen-interfaces';
 import { IListSongsDetail } from '@interfaces/index';
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import MusicFiles from 'react-native-get-music-files';
-import { mapTrackInfoToSoundFileType } from '.';
+import { mapTrackInfoToSoundFileTypeMemo } from '.';
 
 export function getListSongsByArtistId(artist: IArtist): Promise<IListSongsDetail> {
     return new Promise((resolve: (value: IListSongsDetail) => void, reject: (value?: Error) => void) => {
@@ -10,7 +10,7 @@ export function getListSongsByArtistId(artist: IArtist): Promise<IListSongsDetai
             artistId: artist.id,
         }).then((tracks: ITrackInfo[]) => {
             resolve({
-                listSongs: mapTrackInfoToSoundFileType(tracks),
+                listSongs: mapTrackInfoToSoundFileTypeMemo(tracks),
                 name: artist.artist,
                 cover: artist.cover,
             });
