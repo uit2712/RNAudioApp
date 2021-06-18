@@ -13,7 +13,7 @@ git clone https://github.com/uit2712/RNAudioApp
 npm i
 ```
 ## Cấu trúc project
-.
+    .
     ├── components                                  # Chứa các component con theo từng màn hình, tab
     │   ├── shared                                  # Chứa các component dùng cho nhiều nơi   
     |   ├── ...                                     
