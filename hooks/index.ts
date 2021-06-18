@@ -32,6 +32,7 @@ import MusicControl from 'react-native-music-control';
 import React from 'react';
 import Sound from 'react-native-sound';
 import { SoundFileType } from 'types/songs-screen-types';
+import memoizeOne from 'memoize-one';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { useGetAllAlbums } from '@hooks/albums-screen-hooks';
@@ -351,6 +352,16 @@ export function useFavorite(audio: SoundFileType) {
     }
 }
 
+function isCheckedAllFromListChecked(checked: boolean[]) {
+    for(let i = 0; i < checked.length; i++) {
+        if (checked[i] === false) {
+            return false;
+        }
+    }
+
+    return true;
+}
+const isCheckedAllFromListCheckedMemo = memoizeOne(isCheckedAllFromListChecked);
 export function useListChecked<T>(array: Array<T>): IUseListChecked<T> {
     const [checked, setListChecked] = React.useState<boolean[]>(array.map(() => false));
     
@@ -365,16 +376,6 @@ export function useListChecked<T>(array: Array<T>): IUseListChecked<T> {
         });
     }
 
-    function isCheckedAllFromListChecked() {
-        for(let i = 0; i < checked.length; i++) {
-            if (checked[i] === false) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     function reset() {
         setListChecked(oldChecked => oldChecked.map(() => false));
     }
@@ -383,7 +384,7 @@ export function useListChecked<T>(array: Array<T>): IUseListChecked<T> {
         checked,
         onCheck,
         setListChecked,
-        isCheckedAllFromListChecked: isCheckedAllFromListChecked(),
+        isCheckedAllFromListChecked: isCheckedAllFromListCheckedMemo(checked),
         listSelectedItems: array.filter((item, index) => checked[index]),
         reset,
     }
