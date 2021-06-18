@@ -1,5 +1,7 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 
+import { Text } from 'react-native';
+
 interface Props {
     children: ReactNode;
     message: string;
@@ -34,7 +36,7 @@ class ErrorBoundary extends React.Component<Props, State> {
         const error = this.props.message ?? this.state.defaultMessage ?? 'Error';
         if (this.state.hasError) {
             // You can render any custom fallback UI
-            return <h1>{error}</h1>;
+            return <Text>{error}</Text>;
         }
 
         return this.props.children;
