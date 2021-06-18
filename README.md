@@ -79,13 +79,12 @@ npm i
 - redux: https://www.npmjs.com/package/redux
 - redux-persist: https://www.npmjs.com/package/redux-persist
 - redux-thunk: https://www.npmjs.com/package/redux-thunk
+- react-redux: https://www.npmjs.com/package/react-redux
 ### react-native-elements
 - Link: https://www.npmjs.com/package/react-native-elements
 ### react-native-linear-gradient
 - Link: https://www.npmjs.com/package/react-native-linear-gradient
 ### react-native-vector-icons
 - Link: https://www.npmjs.com/package/react-native-vector-icons
-### react-redux
-- Link: https://www.npmjs.com/package/react-redux
 ### immutability-helper
 - Link: https://www.npmjs.com/package/immutability-helper
