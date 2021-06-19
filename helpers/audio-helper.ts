@@ -340,7 +340,6 @@ export function next({
     setIndex: (index: number) => void,
 }) {
     if (listSounds.length > 0) {
-        
         let newIndex = -1;
         if (isShuffle === true) {
             let newRemainingIndices = shuffleArray(remainingIndices.length === 0 ? [...Array(listSounds.length).keys()].filter(value => value !== index) : remainingIndices);

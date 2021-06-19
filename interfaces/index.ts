@@ -183,3 +183,14 @@ export interface ICurrentTimeProps {
     currentTimeString: string;
     player: IPlayer;
 }
+
+export interface ICustomModal {
+    title: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+    cancelLabel: string;
+    confirmLabel: string;
+    isVisible: boolean;
+    toggleOverlay: () => void;
+    isDisableButtonConfirm?: boolean;
+}

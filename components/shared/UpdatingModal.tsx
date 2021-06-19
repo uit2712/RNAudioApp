@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { IShowUpdatingModal, IUpdatingModal, IUpdatingModalRef } from '@interfaces/index';
-import { Input, Overlay } from 'react-native-elements';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import ButtonsModal from './ButtonsModal';
+import CustomModal from './CustomModal';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { Input, } from 'react-native-elements';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import modalManager from '@helpers/modal-helper';
 
@@ -65,65 +65,43 @@ class UpdatingModal extends React.Component<{}, IUpdatingModal> {
         const toggleOverlay = () => this.setState({ isVisible: !isVisible });
 
         return (
-            <Overlay
+            <CustomModal
+                onCancel={this.onFinished}
+                toggleOverlay={toggleOverlay}
+                cancelLabel={cancelLabel}
+                confirmLabel={confirmLabel}
                 isVisible={isVisible}
-                onBackdropPress={toggleOverlay}
-                transparent={true}
+                onConfirm={() => onConfirm(input, this.onFinished)}
+                title={title}
+                isDisableButtonConfirm={input?.trim() === ''}
             >
-                <View style={styles.modal}>
-                    <View
-                        style={styles.modalTitle}
-                    >
-                        <Text style={styles.modalTitleText}>{title}</Text>
-                    </View>
-                    <TouchableOpacity style={styles.modalCover}>
-                        <Entypo
-                            name='camera'
-                            color='gray'
-                            size={75}
-                            style={{
-                                textAlign: 'center',
-                            }}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.modalInput}>
-                        <Text style={{ fontSize: 18, }}>{inputLabel}</Text>
-                        <Input
-                            autoFocus={true}
-                            inputStyle={{
-                                height: 15,
-                            }}
-                            value={input}
-                            onChangeText={(input: string) => this.setState({ input })}
-                        />
-                    </View>
-                    <ButtonsModal
-                        cancelLabel={cancelLabel}
-                        confirmLabel={confirmLabel}
-                        onCancel={this.onFinished}
-                        onConfirm={() => onConfirm(input, this.onFinished)}
-                        isDisabledConfirmButton={input?.trim() === ''}
+                <TouchableOpacity style={styles.modalCover}>
+                    <Entypo
+                        name='camera'
+                        color='gray'
+                        size={75}
+                        style={{
+                            textAlign: 'center',
+                        }}
+                    />
+                </TouchableOpacity>
+                <View style={styles.modalInput}>
+                    <Text style={{ fontSize: 18, }}>{inputLabel}</Text>
+                    <Input
+                        autoFocus={true}
+                        inputStyle={{
+                            height: 15,
+                        }}
+                        value={input}
+                        onChangeText={(input: string) => this.setState({ input })}
                     />
                 </View>
-            </Overlay>
+            </CustomModal>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    modal: {
-        width: ScreenWidth * 0.8,
-        borderRadius: 15,
-    },
-    modalTitle: {
-        backgroundColor: 'rgb(66, 76, 177)',
-        marginTop: -10,
-        marginHorizontal: -10,
-        paddingVertical: 20,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        marginBottom: 10,
-    },
     modalCover: {
         width: ScreenWidth * 0.4,
         height: ScreenWidth * 0.4,
@@ -132,11 +110,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 10,
         borderRadius: 5,
-    },
-    modalTitleText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
     },
     modalInput: {
         flexDirection: 'row',
