@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { IShowUpdatingModal, IUpdatingModal, IUpdatingModalRef } from '@interfaces/index';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { initialStateUpdatingModal, updatingModalManager } from '@constants/index';
 
 import CustomModal from './CustomModal';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { IUpdatingModal, } from '@interfaces/index';
 import { Input, } from 'react-native-elements';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
 import { hideUpdatingModal } from '@functions/index';

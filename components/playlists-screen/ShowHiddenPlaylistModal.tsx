@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { CheckBox, ListItem, Overlay } from 'react-native-elements';
-import { StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { CheckBox, ListItem, } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, View, VirtualizedList } from 'react-native';
 
-import ButtonsModal from '@components/shared/ButtonsModal';
+import CustomModal from '@components/shared/CustomModal';
 import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { IUseListChecked } from '@interfaces/index';
@@ -32,30 +32,20 @@ function ShowHiddenPlaylistModal({
     }
 
     return (
-        <Overlay
+        <CustomModal
+            cancelLabel='Hủy'
+            confirmLabel='Hiển thị'
+            onCancel={onFinished}
+            onConfirm={showHiddenPlaylists}
+            isDisableButtonConfirm={listChecked.listSelectedItems.length === 0}
             isVisible={isVisible}
-            onBackdropPress={toggleOverlay}
-            transparent={true}
+            title={title}
         >
-            <View style={styles.modal}>
-                <View
-                    style={styles.modalTitle}
-                >
-                    <Text style={styles.modalTitleText}>{title}</Text>
-                </View>
-                <ListHiddenPlaylists
-                    playlists={playlists}
-                    {...listChecked}
-                />
-                <ButtonsModal
-                    cancelLabel='Hủy'
-                    confirmLabel='Hiển thị'
-                    onCancel={onFinished}
-                    onConfirm={showHiddenPlaylists}
-                    isDisabledConfirmButton={listChecked.listSelectedItems.length === 0}
-                />
-            </View>
-        </Overlay>
+            <ListHiddenPlaylists
+                playlists={playlists}
+                {...listChecked}
+            />
+        </CustomModal>
     )
 }
 
