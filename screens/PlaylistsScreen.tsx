@@ -12,6 +12,7 @@ import RemovePlaylistWarningModal from '@components/playlists-screen/RemovePlayl
 import { useDrawHomeSettings } from '@hooks/index';
 import { useGetVisiblePlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
 import { useNavigation } from '@react-navigation/native';
+import { withProfilerHOF } from '@hocs/shared/withProfiler';
 
 function PlaylistsScreen() {
     const playlists = useGetVisiblePlaylistsSelector();
@@ -60,6 +61,4 @@ function PlaylistsScreen() {
     )
 }
 
-
-
-export default PlaylistsScreen;
+export default withProfilerHOF(PlaylistsScreen, 'PlaylistsScreen');
