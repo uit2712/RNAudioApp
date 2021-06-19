@@ -3,7 +3,7 @@ import * as React from 'react';
 import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabDescriptorMap, BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { DrawerHomeContext, SoundPlayerContext, } from '@context-api/index';
-import { IPlayer, IStackNavigatorScreen } from '@interfaces/index';
+import { ICurrentTimeProps, IPlayer, IStackNavigatorScreen } from '@interfaces/index';
 import { NavigationHelpers, ParamListBase, RouteProp, TabNavigationState } from '@react-navigation/native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -26,6 +26,7 @@ import TabSongsNavigators from './tab-songs';
 import UpdatingModal from '@components/shared/UpdatingModal';
 import { navigate } from '@navigators/config';
 import { useDrawHomeSettings } from '@hooks/index';
+import { withCurrentTime } from '@hocs/shared/withCurrentTime';
 
 const DrawerHome = createBottomTabNavigator<DrawerHomeParams>();
 
@@ -232,7 +233,7 @@ function ListTabItem({
     return (
         <TouchableOpacity
             key={index}
-            accessibilityRole="button"
+            accessibilityRole='button'
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
@@ -287,7 +288,7 @@ function MiniPlayer() {
                 <MiniPlayerSummaryInfo goToSoundPlayerDetail={goToSoundPlayerDetail}/>
                 <MiniPlayerActions/>
             </TouchableOpacity>
-            <MiniPlayerDuration/>
+            <MiniPlayerDurationHOC/>
         </>
     )
 }
@@ -354,44 +355,23 @@ function MiniPlayerActions() {
     )
 }
 
-class MiniPlayerDuration extends React.Component {
-    static contextType = SoundPlayerContext;
-    isComponentUnmounted: boolean = false;
-
-    state = {
-        currentTime: 0,
-    }
-
-    interval: any;
-    componentDidMount() {
-        if (!this.interval) {
-            this.interval = setInterval(() => {
-                const context = this.context as IPlayer;
-                context.getCurrentTime((currentTime: number, isPlaying: boolean) => {
-                    if (isPlaying && this.isComponentUnmounted === false) {
-                        this.setState(prevState => ({
-                            currentTime,
-                        }))
-                    }
-                })
-            }, 100);
-        }
-    }
-    
-    componentWillUnmount() {
-        this.isComponentUnmounted = true;
-        clearInterval(this.interval);
-        this.interval = null;
-    }
-
+class MiniPlayerDuration extends React.Component<ICurrentTimeProps> {
     render() {
-        const context = this.context as IPlayer;
+        const {
+            currentTime,
+            player: {
+                currentAudioInfo: {
+                    duration,
+                },
+            }
+        } = this.props;
+
         return (
             <>
                 {
-                    context.currentAudioInfo.duration > 0 && (
+                    duration > 0 && (
                         <LinearProgress
-                            value={this.state.currentTime / context.currentAudioInfo.duration}
+                            value={currentTime / duration}
                             variant='determinate'
                             trackColor='gray'
                             color='blue'
@@ -402,5 +382,6 @@ class MiniPlayerDuration extends React.Component {
         )
     }
 }
+const MiniPlayerDurationHOC = withCurrentTime(MiniPlayerDuration);
 
 export default DrawerHomeNavigator;

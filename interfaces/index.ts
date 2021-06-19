@@ -177,3 +177,9 @@ export interface IUpdatingModalRef {
     hideModal: () => void;
     isVisible: () => boolean;
 }
+
+export interface ICurrentTimeProps {
+    currentTime: number;
+    currentTimeString: string;
+    player: IPlayer;
+}
