@@ -1,13 +1,11 @@
-import { IPlaylist, IRemovePlaylistContext } from '@interfaces/playlists-screen-interfaces';
-import { addAudioToPlaylistAction, setPlaylistVisibilityAction, updatePlaylistAction } from '@store/actions/playlists-screen-actions';
+import { addAudioToPlaylistAction, removePlaylistAction, setPlaylistVisibilityAction, updatePlaylistAction } from '@store/actions/playlists-screen-actions';
 
 import { IMenuSelection } from '@interfaces/index';
+import { IPlaylist, } from '@interfaces/playlists-screen-interfaces';
 import React from 'react';
-import { RemovePlaylistContext } from '@context-api/playlists-screen-context-api';
 import { SoundPlayerContext, } from '@context-api/index';
 import { showUpdatingModal } from '@functions/index';
 import { useDispatch } from 'react-redux';
-import { useOverlayModal } from '.';
 
 export function useAddLastPlayedAudioToPlaylists() {
     const dispatch = useDispatch();
@@ -99,7 +97,6 @@ function useGetFavoriteListMenuSelections() {
 
 function useGetCustomPlaylistListMenuSelections(playlist: IPlaylist) {
     const dispatch = useDispatch();
-    const { setPlaylist, toggleOverlay } = React.useContext(RemovePlaylistContext);
     const lastPlayedListMenuSelections: IMenuSelection[] = [
         { text: 'Phát', },
         { text: 'Phát tiếp theo', },
@@ -130,23 +127,25 @@ function useGetCustomPlaylistListMenuSelections(playlist: IPlaylist) {
         {
             text: 'Xóa danh sách phát',
             onSelect: () => {
-                setPlaylist(playlist);
-                toggleOverlay();
+                // setPlaylist(playlist);
+                // toggleOverlay();
+                const onConfirm = (value: any, onFinished: () => void) => {
+                    if (playlist) {
+                        dispatch(removePlaylistAction(playlist.id));
+                        onFinished();
+                    }
+                };
+                showUpdatingModal({
+                    inputLabel: 'Tên',
+                    title: `Xóa danh sách ${playlist.name}`,
+                    onConfirm,
+                    cancelLabel: 'Hủy',
+                    confirmLabel: 'Xóa',
+                    input: playlist.name,
+                });
             },
         },
     ];
 
     return lastPlayedListMenuSelections;
-}
-
-export function useRemovePlaylistContext(): IRemovePlaylistContext {
-    const { isVisible, toggleOverlay } = useOverlayModal();
-    const [playlist, setPlaylist] = React.useState<IPlaylist>();
-
-    return {
-        isVisible,
-        toggleOverlay,
-        playlist,
-        setPlaylist,
-    }
 }

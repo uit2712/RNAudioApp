@@ -11,10 +11,3 @@ export interface IPlaylist {
     listSongs: SoundFileType[];
     isHidden?: boolean;
 }
-
-export interface IRemovePlaylistContext {
-    isVisible: boolean;
-    playlist?: IPlaylist;
-    toggleOverlay: () => void;
-    setPlaylist: (value?: IPlaylist) => void;
-}
