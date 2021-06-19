@@ -31,6 +31,9 @@ npm i
     |   ├── audio-helper.ts                         # Helper dùng cho tính năng chơi nhạc của ứng dụng
     |   ├── modal-helper.ts                         # Helper dùng cho tính năng hiển thị/ẩn modal
     |   ├── index.ts                                # Helper dùng cho nhiều nơi
+    ├── hocs                                        # Chứa các Higher-Order Component/Function dùng chung hoặc cho từng màn hình
+    │   ├── shared                                  # Chứa các Higher-Order Component/Function dùng cho nhiều nơi
+    |   ├── ...
     ├── hooks                                       # Chứa các custom hook dùng chung hoặc cho từng màn hình
     |   ├── index.ts                                # Custom hook dùng chung cho nhiều nơi
     |   ├── albums-screen-hooks.ts                  # Custom hook dùng cho màn hình AlbumsScreen
