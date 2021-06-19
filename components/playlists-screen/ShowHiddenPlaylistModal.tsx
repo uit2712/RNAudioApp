@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { CheckBox, ListItem, } from 'react-native-elements';
-import { StyleSheet, TouchableOpacity, View, VirtualizedList } from 'react-native';
-
+import { CheckBox, } from 'react-native-elements';
 import CustomModal from '@components/shared/CustomModal';
-import FastImage from 'react-native-fast-image';
 import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
 import { IUseListChecked } from '@interfaces/index';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { ScreenWidth } from 'react-native-elements/dist/helpers';
+import PlaylistsItem from './PlaylistsItem';
+import { VirtualizedList } from 'react-native';
 import { useGetHiddenPlaylistsSelector } from '@store/selectors/playlists-screen-selectors';
 import { useListChecked } from '@hooks/index';
 
@@ -92,103 +90,30 @@ class ListHiddenPlaylistItem extends React.Component<IListHiddenPlaylistItemProp
     render() {
         const { item, onCheck, isChecked } = this.props;
         return (
-            <ListItem
-                Component={TouchableOpacity}
+            <PlaylistsItem
+                value={item}
                 onPress={onCheck}
-                style={{
-                    width: '100%',
-                }}
-                bottomDivider
             >
-                <View
-                    style={{
-                        position: 'absolute',
-                        backgroundColor: item.shadowColor,
-                        left: 48,
-                        width: 90,
-                        height: 90,
-                        borderRadius: 45,
-                    }}
+                <CheckBox
+                    center
+                    checkedIcon={
+                        <MaterialIcons
+                            name='check-box'
+                            size={30}
+                        />
+                    }
+                    uncheckedIcon={
+                        <MaterialIcons
+                            name='check-box-outline-blank'
+                            size={30}
+                        />
+                    }
+                    checked={isChecked}
+                    onPress={onCheck}
                 />
-                <FastImage
-                    style={{ width: 100, height: 100, borderRadius: 50, }}
-                    source={item.cover}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-                <ListItem.Content>
-                    <ListItem.Title>{item.name}</ListItem.Title>
-                </ListItem.Content>
-                <ListHiddenPlaylistItemCheckbox
-                    onCheck={onCheck}
-                    isChecked={isChecked}
-                />
-            </ListItem>
+            </PlaylistsItem>
         )
     }
 }
-
-interface ListHiddenPlaylistItemCheckboxProps {
-    onCheck?: () => void,
-    isChecked: boolean,
-}
-function ListHiddenPlaylistItemCheckbox({
-    isChecked,
-    onCheck,
-}: ListHiddenPlaylistItemCheckboxProps) {
-    return (
-        <CheckBox
-            center
-            checkedIcon={
-                <MaterialIcons
-                    name='check-box'
-                    size={30}
-                />
-            }
-            uncheckedIcon={
-                <MaterialIcons
-                    name='check-box-outline-blank'
-                    size={30}
-                />
-            }
-            checked={isChecked}
-            onPress={onCheck}
-        />
-    )
-}
-
-const styles = StyleSheet.create({
-    modal: {
-        width: ScreenWidth * 0.8,
-        borderRadius: 15,
-    },
-    modalTitle: {
-        backgroundColor: 'rgb(66, 76, 177)',
-        marginTop: -10,
-        marginHorizontal: -10,
-        paddingVertical: 20,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        marginBottom: 10,
-    },
-    modalCover: {
-        width: ScreenWidth * 0.4,
-        height: ScreenWidth * 0.4,
-        alignSelf: 'center',
-        backgroundColor: 'lightgray',
-        justifyContent: 'center',
-        marginBottom: 10,
-        borderRadius: 5,
-    },
-    modalTitleText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
-    },
-    modalInput: {
-        flexDirection: 'row',
-        paddingRight: 20,
-        alignItems: 'center',
-    },
-});
 
 export default ShowHiddenPlaylistModal;
