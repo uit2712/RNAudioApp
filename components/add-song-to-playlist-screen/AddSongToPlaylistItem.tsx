@@ -1,21 +1,13 @@
 import { CheckBox, ListItem } from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image';
-import { IPlaylist } from '@interfaces/playlists-screen-interfaces';
+import { IAddSongToPlaylistItemProps } from '@interfaces/add-song-to-playlist-item';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
-class AddSongToPlaylistItem extends React.Component<{
-    value: IPlaylist,
-    onCheck?: () => void,
-    isChecked: boolean,
-}> {
-    shouldComponentUpdate(nextProps: {
-        value: IPlaylist,
-        onCheck?: () => void,
-        isChecked: boolean,
-    }) {
+class AddSongToPlaylistItem extends React.Component<IAddSongToPlaylistItemProps> {
+    shouldComponentUpdate(nextProps: IAddSongToPlaylistItemProps) {
         const isShouldUpdate = nextProps.value.id === this.props.value.id && nextProps.isChecked !== this.props.isChecked;
         return isShouldUpdate;
     }
