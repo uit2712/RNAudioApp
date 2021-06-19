@@ -1,56 +1,52 @@
 import * as React from 'react';
 
+import { IBottomSheetSectionWithType, ISortByBottomSheetContextWithType, } from '@interfaces/index';
 import { setSongOrderTypeAction, setSortSongByPropertyTypeAction } from '@store/actions/songs-screen-actions';
 import { useGetSongOrderType, useGetSongSortByPropertyType } from '@store/selectors/songs-screen-selectors';
 
 import HomeHeader from '@components/shared/HomeHeader';
-import { IBottomSheetSectionWithType, } from '@interfaces/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SongsScreen from '@screens/SongsScreen';
-import SortByBottomSheet from '@components/shared/SortByBottomSheet';
-import { SortByBottomSheetContext } from '@context-api/index';
 import { SortOrderType } from 'types/index';
 import { SortSongByPropertyType } from 'types/songs-screen-types';
 import { TabSongsParams } from '@navigators/config/drawer-home/tab-songs';
 import UpdatingSongScreen from '@screens/UpdatingSongScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
-import { useSortByBottomSheetSettings } from '@hooks/index';
+import withBottomSheet from '@hocs/shared/withBottomSheet';
 
 const TabSongs = createStackNavigator<TabSongsParams>();
 
-function TabSongsNavigators() {
-    const listDataInBottomSheet = useGetListDataInBottomSheet();
-    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
-
+function TabSongsNavigators({
+    settings,
+}: {
+    settings: ISortByBottomSheetContextWithType<any>,
+}) {
     return (
-        <SortByBottomSheetContext.Provider value={settings}>
-            <SortByBottomSheet/>
-            <TabSongs.Navigator
-                screenOptions={{
-                    header: () => (
-                        <HomeHeader
-                            listMenuSelections={[
-                                { text: 'Trộn' },
-                                { text: 'Cân bằng' },
-                                { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true)},
-                            ]}
-                        />
-                    )
-                }}
-            >
-                <TabSongs.Screen
-                    name='Songs'
-                    component={SongsScreen}
-                />
-                <TabSongs.Screen
-                    name='UpdatingSong'
-                    component={UpdatingSongScreen}
-                />
-            </TabSongs.Navigator>
-        </SortByBottomSheetContext.Provider>
+        <TabSongs.Navigator
+            screenOptions={{
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Trộn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true)},
+                        ]}
+                    />
+                )
+            }}
+        >
+            <TabSongs.Screen
+                name='Songs'
+                component={SongsScreen}
+            />
+            <TabSongs.Screen
+                name='UpdatingSong'
+                component={UpdatingSongScreen}
+            />
+        </TabSongs.Navigator>
     )
 }
 
@@ -125,4 +121,4 @@ function useGetListDataInBottomSheet() {
     return listDataInBottomSheet;
 }
 
-export default TabSongsNavigators;
+export default withBottomSheet(TabSongsNavigators, useGetListDataInBottomSheet);
