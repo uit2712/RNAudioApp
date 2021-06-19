@@ -1,54 +1,50 @@
 import * as React from 'react';
 
+import { IBottomSheetSectionWithType, ISortByBottomSheetContextWithType } from '@interfaces/index';
 import { setArtistByPropertyTypeAction, setArtistOrderTypeAction, } from '@store/actions/artists-screen-actions';
 import { useGetArtistOrderType, useGetArtistSortByPropertyType } from '@store/selectors/artists-screen-selectors';
 
 import ArtistsScreen from '@screens/ArtistsScreen';
 import Foundation from 'react-native-vector-icons/Foundation';
 import HomeHeader from '@components/shared/HomeHeader';
-import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SortArtistByPropertyType } from 'types/artists-screen-types';
-import SortByBottomSheet from '@components/shared/SortByBottomSheet';
-import { SortByBottomSheetContext } from '@context-api/index';
 import { SortOrderType } from 'types/index';
 import { TabArtistsParams } from '@navigators/config/drawer-home/tab-artists';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
-import { useSortByBottomSheetSettings } from '@hooks/index';
+import withBottomSheet from '@hocs/shared/withBottomSheet';
 
 const TabArtists = createStackNavigator<TabArtistsParams>();
 
-function TabArtistsNavigators() {
-    const listDataInBottomSheet = useGetListDataInBottomSheet();
-    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
-
+function TabArtistsNavigators({
+    settings,
+}: {
+    settings: ISortByBottomSheetContextWithType<any>,
+}) {
     return (
-        <SortByBottomSheetContext.Provider value={settings}>
-            <SortByBottomSheet/>
-            <TabArtists.Navigator
-                screenOptions={{
-                    header: () => (
-                        <HomeHeader
-                            listMenuSelections={[
-                                { text: 'Hiển thị nghệ sĩ ẩn' },
-                                { text: 'Cân bằng' },
-                                { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
-                            ]}
-                        />
-                    )
+        <TabArtists.Navigator
+            screenOptions={{
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Hiển thị nghệ sĩ ẩn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
+                        ]}
+                    />
+                )
+            }}
+        >
+            <TabArtists.Screen
+                name='Artists'
+                component={ArtistsScreen}
+                options={{
+                    title: 'Nghệ sĩ'
                 }}
-            >
-                <TabArtists.Screen
-                    name='Artists'
-                    component={ArtistsScreen}
-                    options={{
-                        title: 'Nghệ sĩ'
-                    }}
-                />
-            </TabArtists.Navigator>
-        </SortByBottomSheetContext.Provider>
+            />
+        </TabArtists.Navigator>
     )
 }
 
@@ -106,4 +102,4 @@ function useGetListDataInBottomSheet() {
     return listDataInBottomSheet;
 }
 
-export default TabArtistsNavigators;
+export default withBottomSheet(TabArtistsNavigators, useGetListDataInBottomSheet);
