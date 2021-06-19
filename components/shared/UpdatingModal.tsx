@@ -2,72 +2,34 @@ import * as React from 'react';
 
 import { IShowUpdatingModal, IUpdatingModal, IUpdatingModalRef } from '@interfaces/index';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { initialStateUpdatingModal, updatingModalManager } from '@constants/index';
 
 import CustomModal from './CustomModal';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { Input, } from 'react-native-elements';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
-import modalManager from '@helpers/modal-helper';
+import { hideUpdatingModal } from '@functions/index';
+import { withGlobalModal } from '@hocs/shared/withGlobalModal';
 
-const initialState: IUpdatingModal = {
-    isVisible: false,
-    inputLabel: '',
-    title: '',
-    onConfirm: (param: any, onFinish: () => void) => {},
-    cancelLabel: '',
-    confirmLabel: '',
-    input: '',
-};
-class UpdatingModal extends React.Component<{}, IUpdatingModal> {
-    readonly current: IUpdatingModalRef = this;
-    
-    state = {
-        ...initialState,
-    }
-    
-    componentDidMount() {
-        modalManager.register(this);
-    }
-
-    componentWillUnmount() {
-        modalManager.unregister(this);
-    }
-
-    showModal({ inputLabel, onConfirm, title, cancelLabel, confirmLabel, input }: IShowUpdatingModal) {
-        this.setState({
-            inputLabel,
-            isVisible: true,
-            onConfirm,
-            title,
-            cancelLabel,
-            confirmLabel,
-            input: input ?? '',
-        });
-    }
-
-    hideModal() {
-        this.setState({
-            ...initialState,
-        })
+class UpdatingModal extends React.Component<IUpdatingModal> {
+    state ={
+        input: '',
     }
 
     onFinished = () => {
+        hideUpdatingModal();
         this.setState({
             input: '',
-            isVisible: false,
         });
     }
 
-    isVisible = () => this.state.isVisible;
-
     render() {
-        const { isVisible, input, inputLabel, onConfirm, title, cancelLabel, confirmLabel, } = this.state;
-        const toggleOverlay = () => this.setState({ isVisible: !isVisible });
+        const { isVisible, inputLabel, onConfirm, title, cancelLabel, confirmLabel, } = this.props;
+        const input = this.state.input;
 
         return (
             <CustomModal
                 onCancel={this.onFinished}
-                toggleOverlay={toggleOverlay}
                 cancelLabel={cancelLabel}
                 confirmLabel={confirmLabel}
                 isVisible={isVisible}
@@ -118,4 +80,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UpdatingModal;
+export default withGlobalModal(UpdatingModal, updatingModalManager, initialStateUpdatingModal);

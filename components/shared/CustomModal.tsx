@@ -11,7 +11,6 @@ class CustomModal extends React.PureComponent<ICustomModal> {
     render() {
         const {
             isVisible,
-            toggleOverlay,
             title,
             cancelLabel,
             confirmLabel,
@@ -23,7 +22,7 @@ class CustomModal extends React.PureComponent<ICustomModal> {
         return (
             <Overlay
                 isVisible={isVisible}
-                onBackdropPress={toggleOverlay}
+                onBackdropPress={onCancel}
                 transparent={true}
             >
                 <View style={styles.modal}>

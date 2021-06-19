@@ -1,11 +1,9 @@
-import { IShowUpdatingModal, IUpdatingModal } from '@interfaces/index';
-
 import { ITrackInfo } from '@interfaces/songs-screen-interfaces';
 import { SoundFileType } from 'types/songs-screen-types';
 import { avatarHelper } from '@helpers/songs-screen-helpers';
 import memoizeOne from 'memoize-one';
-import modalManager from '@helpers/modal-helper';
 import { navigate } from '@navigators/config';
+import { updatingModalManager } from '@constants/index';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 export function shuffleArray<T>(array: T[]) {
@@ -120,22 +118,22 @@ export function navigateToAddToPlaylistScreen(item: SoundFileType) {
     })
 }
 
-export function showUpdatingModal(props: IShowUpdatingModal) {
-    const ref = modalManager.getDefault();
+export function showUpdatingModal(props: any) {
+    const ref = updatingModalManager.getDefault();
     if (!!ref) {
         ref.current?.showModal(props);
     }
 }
 
 export function hideUpdatingModal() {
-    const ref = modalManager.getDefault();
+    const ref = updatingModalManager.getDefault();
     if (!!ref) {
         ref.current?.hideModal();
     }
 }
 
 export function isUpdatingModalVisible() {
-    const ref = modalManager.getDefault();
+    const ref = updatingModalManager.getDefault();
     if (!!ref) {
         return ref.current?.isVisible();
     }

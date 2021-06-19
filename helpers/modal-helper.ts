@@ -1,6 +1,6 @@
 import { IUpdatingModalRef } from "@interfaces/index";
 
-class ModalManager {
+export class ModalManager {
     private _defaultAlert?: React.RefObject<IUpdatingModalRef>;
     public register(_ref: React.RefObject<IUpdatingModalRef>): void {
         this._defaultAlert = _ref;
@@ -12,6 +12,3 @@ class ModalManager {
         return this._defaultAlert;
     }
 }
-
-const modalManager = new ModalManager();
-export default modalManager;

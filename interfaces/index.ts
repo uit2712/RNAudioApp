@@ -164,11 +164,12 @@ export interface IShowUpdatingModal {
     onConfirm: (param: any, onFinished: () => void) => void;
     cancelLabel: string;
     confirmLabel: string;
-    input?: string;
+    // input?: string;
 }
 
 export interface IUpdatingModal extends IShowUpdatingModal {
     isVisible: boolean;
+    initialState?: IUpdatingModal;
 }
 
 export interface IUpdatingModalRef {
@@ -191,6 +192,5 @@ export interface ICustomModal {
     cancelLabel: string;
     confirmLabel: string;
     isVisible: boolean;
-    toggleOverlay: () => void;
     isDisableButtonConfirm?: boolean;
 }
