@@ -1,13 +1,24 @@
 import { IAlbum } from '@interfaces/albums-screen-interfaces';
 import { IApplicationState } from '@store/interfaces';
+import { IResponseGetAllAlbumsSelector } from '@store/interfaces/albums-screen-interfaces';
 import { SortAlbumByPropertyType } from 'types/albums-screen-types';
 import { SortOrderType } from 'types/index';
 import { dynamicSortMultiple } from '@functions/index';
 import { useGetSearchTextSelector } from './search-screen-selectors';
 import { useSelector } from 'react-redux';
 
+export function getAllAlbumsSelector(state: IApplicationState): IResponseGetAllAlbumsSelector {
+    const orderStr = state.albums.orderType === 'asc' ? '' : '-';
+    const albums = state.albums.albums.sort(dynamicSortMultiple(orderStr + state.albums.sortByProperyType, orderStr + 'name'));
+
+    return {
+        albums,
+        isLoadFirstTime: state.albums.isLoadListAlbumsFirstTime,
+    }
+}
+
 export function useGetAllAlbumsSelector() {
-    return useSelector<IApplicationState, { albums: IAlbum[], isLoadFirstTime: boolean }>(state => {
+    return useSelector<IApplicationState, IResponseGetAllAlbumsSelector>(state => {
         const orderStr = state.albums.orderType === 'asc' ? '' : '-';
         const albums = state.albums.albums.sort(dynamicSortMultiple(orderStr + state.albums.sortByProperyType, orderStr + 'name'));
 

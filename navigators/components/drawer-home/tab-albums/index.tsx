@@ -1,51 +1,47 @@
 import * as React from 'react';
 
+import { IBottomSheetSectionWithType, ISortByBottomSheetContextWithType } from '@interfaces/index';
 import { setAlbumByPropertyTypeAction, setAlbumOrderTypeAction } from '@store/actions/albums-screen-actions';
 import { useGetAlbumOrderTypeSelector, useGetAlbumSortByPropertyTypeSelector } from '@store/selectors/albums-screen-selectors';
 
 import AlbumsScreen from '@screens/AlbumsScreen';
 import Foundation from 'react-native-vector-icons/Foundation';
 import HomeHeader from '@components/shared/HomeHeader';
-import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SortAlbumByPropertyType } from 'types/albums-screen-types';
-import SortByBottomSheet from '@components/shared/SortByBottomSheet';
-import { SortByBottomSheetContext } from '@context-api/index';
 import { SortOrderType } from 'types/index';
 import { TabAlbumsParams } from '@navigators/config/drawer-home/tab-albums';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
-import { useSortByBottomSheetSettings } from '@hooks/index';
+import withBottomSheet from '@hocs/shared/withBottomSheet';
 
 const TabAlbums = createStackNavigator<TabAlbumsParams>();
 
-function TabAlbumsNavigator() {
-    const listDataInBottomSheet = useGetListDataInBottomSheet();
-    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
-
+function TabAlbumsNavigator({
+    settings,
+}: {
+    settings: ISortByBottomSheetContextWithType<any>,
+}) {
     return (
-        <SortByBottomSheetContext.Provider value={settings}>
-            <SortByBottomSheet/>
-            <TabAlbums.Navigator
-                screenOptions={{
-                    header: () => (
-                        <HomeHeader
-                            listMenuSelections={[
-                                { text: 'Hiển thị album ẩn' },
-                                { text: 'Cân bằng' },
-                                { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
-                            ]}
-                        />
-                    )
-                }}
-            >
-                <TabAlbums.Screen
-                    name='Albums'
-                    component={AlbumsScreen}
-                />
-            </TabAlbums.Navigator>
-        </SortByBottomSheetContext.Provider>
+        <TabAlbums.Navigator
+            screenOptions={{
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            { text: 'Hiển thị album ẩn' },
+                            { text: 'Cân bằng' },
+                            { text: 'Sắp xếp theo', onSelect: () => settings.setIsShowSortByBottomSheet(true) },
+                        ]}
+                    />
+                )
+            }}
+        >
+            <TabAlbums.Screen
+                name='Albums'
+                component={AlbumsScreen}
+            />
+        </TabAlbums.Navigator>
     )
 }
 
@@ -103,4 +99,4 @@ function useGetListDataInBottomSheet() {
     return listDataInBottomSheet;
 }
 
-export default TabAlbumsNavigator;
+export default withBottomSheet(TabAlbumsNavigator, useGetListDataInBottomSheet);

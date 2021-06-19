@@ -25,7 +25,8 @@
             "@screens/*": ["screens/*"],
             "@store/*": ["store/*"],
             "types/*": ["types/*"],
-            "@components/*": ["components/*"]
+            "@components/*": ["components/*"],
+            "@hocs/*": ["hocs/*"]
         }
     },
     "exclude": [
