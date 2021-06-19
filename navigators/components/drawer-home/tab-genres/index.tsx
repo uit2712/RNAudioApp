@@ -1,15 +1,13 @@
 import * as React from 'react';
 
+import { IBottomSheetSectionWithType, ISortByBottomSheetContextWithType } from '@interfaces/index';
 import { setGenreByPropertyTypeAction, setGenreIsShouldRefreshAction, setGenreOrderTypeAction } from '@store/actions/genres-screen-actions';
 import { useGetGenreOrderTypeSelector, useGetGenreSortByPropertyTypeSelector } from '@store/selectors/genres-screen-selectors';
 
 import GenresScreen from '@screens/GenresScreen';
 import HomeHeader from '@components/shared/HomeHeader';
-import { IBottomSheetSectionWithType } from '@interfaces/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SortByBottomSheet from '@components/shared/SortByBottomSheet';
-import { SortByBottomSheetContext, } from '@context-api/index';
 import { SortGenreByPropertyType } from 'types/genres-screen-types';
 import { SortOrderType } from 'types/index';
 import { TabGenresParams } from '@navigators/config/drawer-home/tab-genres';
@@ -17,57 +15,56 @@ import { createGenre } from '@functions/genres-screen-functions';
 import { createStackNavigator } from '@react-navigation/stack';
 import { showUpdatingModal } from '@functions/index';
 import { useDispatch } from 'react-redux';
-import { useSortByBottomSheetSettings } from '@hooks/index';
+import withBottomSheet from '@hocs/shared/withBottomSheet';
 
 const TabGenres = createStackNavigator<TabGenresParams>()
 
-function TabGenresNavigator() {
-    const listDataInBottomSheet = useGetListDataInBottomSheet();
-    const settings = useSortByBottomSheetSettings<string>(listDataInBottomSheet);
+function TabGenresNavigator({
+    settings,
+}: {
+    settings: ISortByBottomSheetContextWithType<any>,
+}) {
     const dispatch = useDispatch();
 
     return (
-        <SortByBottomSheetContext.Provider value={settings}>
-            <SortByBottomSheet/>
-            <TabGenres.Navigator
-                screenOptions={{
-                    header: () => (
-                        <HomeHeader
-                            listMenuSelections={[
-                                {
-                                    text: 'Tạo thể loại mới',
-                                    onSelect: () => {
-                                        const onConfirm = (name: string, onFinished: () => void) => {
-                                            createGenre(name).then(() => {
-                                                onFinished();
-                                                dispatch(setGenreIsShouldRefreshAction(true));
-                                            }).catch(console.log)
-                                        };
-                                        showUpdatingModal({
-                                            inputLabel: 'Tên',
-                                            title: 'Tạo thể loại mới',
-                                            onConfirm,
-                                            cancelLabel: 'Hủy',
-                                            confirmLabel: 'Xong',
-                                        });
-                                    },
+        <TabGenres.Navigator
+            screenOptions={{
+                header: () => (
+                    <HomeHeader
+                        listMenuSelections={[
+                            {
+                                text: 'Tạo thể loại mới',
+                                onSelect: () => {
+                                    const onConfirm = (name: string, onFinished: () => void) => {
+                                        createGenre(name).then(() => {
+                                            onFinished();
+                                            dispatch(setGenreIsShouldRefreshAction(true));
+                                        }).catch(console.log)
+                                    };
+                                    showUpdatingModal({
+                                        inputLabel: 'Tên',
+                                        title: 'Tạo thể loại mới',
+                                        onConfirm,
+                                        cancelLabel: 'Hủy',
+                                        confirmLabel: 'Xong',
+                                    });
                                 },
-                                { text: 'Trợ lý giọng nói' },
-                                {
-                                    text: 'Sắp xếp theo',
-                                    onSelect: () => settings.setIsShowSortByBottomSheet(true),
-                                },
-                            ]}
-                        />
-                    )
-                }}
-            >
-                <TabGenres.Screen
-                    name='Genres'
-                    component={GenresScreen}
-                />
-            </TabGenres.Navigator>
-        </SortByBottomSheetContext.Provider>
+                            },
+                            { text: 'Trợ lý giọng nói' },
+                            {
+                                text: 'Sắp xếp theo',
+                                onSelect: () => settings.setIsShowSortByBottomSheet(true),
+                            },
+                        ]}
+                    />
+                )
+            }}
+        >
+            <TabGenres.Screen
+                name='Genres'
+                component={GenresScreen}
+            />
+        </TabGenres.Navigator>
     )
 }
 
@@ -113,4 +110,4 @@ function useGetListDataInBottomSheet() {
     return listDataInBottomSheet;
 }
 
-export default TabGenresNavigator;
+export default withBottomSheet(TabGenresNavigator, useGetListDataInBottomSheet);
