@@ -18,7 +18,7 @@ export function shuffleArray<T>(array: T[]) {
 }
 
 export function formatTimeString(miliseconds: number) {
-    return miliseconds > 0 ? new Date(miliseconds).toISOString().substr(11, 8) : '';
+    return new Date(miliseconds > 0 ? miliseconds : 0).toISOString().substr(11, 8);
 }
 
 export function listToMatrix<T>(list: T[], elementsPerSubArray: number): Array<T[]> {
