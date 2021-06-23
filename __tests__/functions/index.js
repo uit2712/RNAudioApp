@@ -45,13 +45,13 @@ expect.extend({
         if (pass) {
             return {
                 message: () =>
-                    `expected ${received} is one of ${result}`,
+                    `${JSON.stringify(result)} expected is one of ${JSON.stringify(received)} `,
                 pass: true,
             };
         } else {
             return {
                 message: () =>
-                    `expected ${received} is not one of ${result}`,
+                    `${JSON.stringify(result)} expected is not one of ${JSON.stringify(received)} `,
                 pass: false,
             };
         }
@@ -71,14 +71,19 @@ describe('shuffleArray', () => {
     test('shuffleArray: input ([1, 2, 3]) is one of [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]', () => {
         expect(shuffleArray([1, 2, 3])).toBeOneOf([[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]);
     });
+
+    const data = [{ name: 'ab', }, { name: 'cd', }];
+    test(`shuffleArray: input (${JSON.stringify(data)}) is one of [[{ name: 'ab', }, { name: 'cd', }], [{ name: 'cd', }, { name: 'ab', }]]`, () => {
+        expect(shuffleArray(data)).toBeOneOf([[{ name: 'ab', }, { name: 'cd', }], [{ name: 'cd', }, { name: 'ab', }]]);
+    });
 });
 
 describe('dynamicSort', () => {
-    test.only('dynamicSort: input ([], "") get []', () => {
+    test('dynamicSort: input ([], "") get []', () => {
         expect([].sort(dynamicSort(''))).toEqual([]);
     });
 
-    test.only('dynamicSort: input ([2, 3, 4], "") get [2,3,4]', () => {
+    test('dynamicSort: input ([2, 3, 4], "") get [2,3,4]', () => {
         expect([2,3,4].sort(dynamicSort(''))).toEqual([2,3,4]);
     });
 
@@ -92,11 +97,11 @@ describe('dynamicSort', () => {
             age: 40,
         }
     ]
-    test.only(`dynamicSort: input (${JSON.stringify(data)}, '') get ${JSON.stringify(data)}`, () => {
+    test(`dynamicSort: input (${JSON.stringify(data)}, '') get ${JSON.stringify(data)}`, () => {
         expect(data.sort(dynamicSort(''))).toEqual(data);
     });
 
-    test.only(`dynamicSort: input (${JSON.stringify(data)}, 'name') get ${JSON.stringify([{ 
+    test(`dynamicSort: input (${JSON.stringify(data)}, 'name') get ${JSON.stringify([{ 
         name: 'ab',
         age: 40,
     }, { 
@@ -112,7 +117,7 @@ describe('dynamicSort', () => {
         }]);
     });
 
-    test.only(`dynamicSort: input (${JSON.stringify(data)}, 'age') get ${JSON.stringify(data)}`, () => {
+    test(`dynamicSort: input (${JSON.stringify(data)}, 'age') get ${JSON.stringify(data)}`, () => {
         expect(data.sort(dynamicSort('age'))).toEqual(data);
     });
 
@@ -126,10 +131,10 @@ describe('dynamicSort', () => {
             age: 40,
         }
     ]
-    test.only(`dynamicSort: input (${JSON.stringify(data1)}, 'age') get ${JSON.stringify(data1)}`, () => {
+    test(`dynamicSort: input (${JSON.stringify(data1)}, 'age') get ${JSON.stringify(data1)}`, () => {
         expect(data1.sort(dynamicSort('age'))).toEqual(data1);
     });
-    test.only(`dynamicSort: input (${JSON.stringify(data1)}, 'name') get ${JSON.stringify([
+    test(`dynamicSort: input (${JSON.stringify(data1)}, 'name') get ${JSON.stringify([
         { 
             name: 'ab',
             age: 40,
